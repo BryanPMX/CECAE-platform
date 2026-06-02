@@ -29,14 +29,14 @@ export function SectionHeading({
       </p>
       <h2
         className={cn(
-          'mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl',
+          'mt-3 font-display text-2xl font-bold leading-tight sm:text-3xl',
           inverse ? 'text-white' : 'text-navy',
         )}
       >
         {title}
       </h2>
       {children ? (
-        <div className={cn('mt-4 text-lg leading-8', inverse ? 'text-white/72' : 'text-midGray')}>
+        <div className={cn('mt-4 text-base leading-7 sm:text-lg sm:leading-8', inverse ? 'text-white/72' : 'text-midGray')}>
           {children}
         </div>
       ) : null}

@@ -25,7 +25,7 @@ export function AboutSection() {
           className="rounded-lg border border-line bg-skySurface p-6 sm:p-8"
         >
           {paragraphs.map((paragraph) => (
-            <p key={paragraph} className="mb-5 text-lg leading-8 text-charcoal last:mb-0">
+            <p key={paragraph} className="mb-5 text-base leading-7 text-charcoal last:mb-0 sm:text-lg sm:leading-8">
               {paragraph}
             </p>
           ))}

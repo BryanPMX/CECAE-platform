@@ -9,25 +9,50 @@ export function Footer() {
 
   return (
     <footer className="bg-navy text-white">
-      <div className="section-shell grid gap-10 py-12 md:grid-cols-[1.4fr_1fr]">
-        <div>
+      <div className="section-shell grid gap-10 py-12 lg:grid-cols-[1.6fr_1fr_1fr]">
+        <div className="space-y-6">
           <img
             src="/cecae-footer-logo-2048x512.png"
             alt="CECAE"
             className="h-14 w-auto rounded bg-white object-contain px-3 sm:h-16"
           />
-          <p className="mt-5 max-w-xl text-lg text-white/82">{t('footer.tagline')}</p>
-          <p className="mt-3 flex items-center gap-2 text-sm text-white/70">
+          <p className="max-w-xl text-base leading-7 text-white/82 sm:text-lg">{t('footer.tagline')}</p>
+          <p className="flex items-center gap-2 text-sm text-white/70">
             <MapPin className="h-4 w-4 text-orange" aria-hidden="true" />
             {t('footer.location')}
           </p>
+          <Link
+            to="/contacto"
+            className="focus-ring inline-flex items-center justify-center rounded-md bg-orange px-4 py-2 text-sm font-semibold text-white shadow-orange transition hover:bg-[#C96513]"
+          >
+            {t('nav.contact')}
+          </Link>
         </div>
 
-        <div className="grid gap-3 text-sm">
+        <div className="grid gap-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">Navegación</p>
+          <nav className="grid gap-2 text-sm text-white/80">
+            <Link to="/" className="focus-ring rounded-md px-3 py-2 transition hover:text-white">
+              {t('nav.home')}
+            </Link>
+            <Link to="/eventos" className="focus-ring rounded-md px-3 py-2 transition hover:text-white">
+              {t('nav.events')}
+            </Link>
+            <Link to="/contacto" className="focus-ring rounded-md px-3 py-2 transition hover:text-white">
+              {t('nav.contact')}
+            </Link>
+            <Link to="/aviso-de-privacidad" className="focus-ring rounded-md px-3 py-2 transition hover:text-white">
+              {t('footer.privacy')}
+            </Link>
+          </nav>
+        </div>
+
+        <div className="grid gap-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">Contacto</p>
           <a
             href={`tel:${config.phone}`}
             onClick={() => trackEvent('phone_click', { location: 'footer' })}
-            className="focus-ring inline-flex items-center gap-3 rounded-md py-1 text-white/82 hover:text-white"
+            className="focus-ring inline-flex items-center gap-3 rounded-md py-2 text-sm text-white/82 transition hover:text-white"
           >
             <Phone className="h-4 w-4 text-orange" aria-hidden="true" />
             {displayContact.phone}
@@ -35,17 +60,18 @@ export function Footer() {
           <a
             href={`mailto:${config.email}`}
             onClick={() => trackEvent('email_click', { location: 'footer' })}
-            className="focus-ring inline-flex items-center gap-3 rounded-md py-1 text-white/82 hover:text-white"
+            className="focus-ring inline-flex items-center gap-3 rounded-md py-2 text-sm text-white/82 transition hover:text-white"
           >
             <Mail className="h-4 w-4 text-orange" aria-hidden="true" />
             {displayContact.email}
           </a>
-          <Link
-            to="/aviso-de-privacidad"
-            className="focus-ring mt-3 inline-flex w-fit rounded-md py-1 text-white/82 hover:text-white"
-          >
-            {t('footer.privacy')}
-          </Link>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10 py-6">
+        <div className="section-shell flex flex-col gap-4 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} CECAE. Todos los derechos reservados.</p>
+          <p>Formación empresarial para cumplir con NOM-035 y desarrollar talento.</p>
         </div>
       </div>
     </footer>
