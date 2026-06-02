@@ -1,0 +1,198 @@
+{
+  "nav": {
+    "about": "Nosotros",
+    "services": "Capacitaciones",
+    "nom": "NOM-035",
+    "method": "Metodología",
+    "events": "Eventos",
+    "faq": "FAQ",
+    "contact": "Contacto",
+    "cta": "Solicita información"
+  },
+  "hero": {
+    "eyebrow": "Centro de Capacitación Empresarial",
+    "tagline": "Formación que impulsa tu crecimiento",
+    "title": "Capacitaciones profesionales para fortalecer el bienestar y desarrollo de tu organización",
+    "subtitle": "En CECAE ofrecemos soluciones de capacitación diseñadas para fortalecer el desarrollo organizacional, promoviendo el bienestar psicosocial, la salud mental y el crecimiento de las competencias profesionales dentro de empresas e instituciones.",
+    "primary": "Agenda tu capacitación con nosotros",
+    "secondary": "Agenda por WhatsApp",
+    "scroll": "Explorar"
+  },
+  "about": {
+    "eyebrow": "Nosotros",
+    "title": "Un aliado profesional para fortalecer el desarrollo organizacional.",
+    "body": "En el Centro de Capacitación Empresarial (CECAE) trabajamos con el compromiso de impulsar el desarrollo integral de las organizaciones a través de procesos formativos de alta calidad. Nuestra labor se centra en identificar las necesidades específicas de cada empresa para diseñar intervenciones pertinentes, orientadas al fortalecimiento del capital humano y la mejora del entorno laboral.\n\nPromovemos una cultura organizacional saludable, ética y sostenible, basada en el respeto, la comunicación efectiva y el bienestar psicológico.",
+    "stats": {
+      "modalities": "Modalidades de capacitación",
+      "areas": "Áreas profesionales",
+      "cities": "Ciudades de servicio"
+    }
+  },
+  "services": {
+    "eyebrow": "Capacitaciones profesionales",
+    "title": "Programas diseñados para las necesidades reales de tu equipo",
+    "cta": "Más información",
+    "items": [
+      {
+        "title": "Bienestar Psicosocial y Salud Mental",
+        "description": "Intervenciones orientadas a la prevención de riesgos psicosociales, manejo del estrés laboral y promoción de la salud mental en el entorno de trabajo."
+      },
+      {
+        "title": "Análisis conforme a la NOM-035-STPS-2018",
+        "description": "Evaluación e intervención en factores de riesgo psicosocial, cumpliendo con la normativa vigente en México, mediante diagnósticos organizacionales y estrategias de mejora."
+      },
+      {
+        "title": "Clima Organizacional",
+        "description": "Diagnóstico y fortalecimiento del ambiente laboral, favoreciendo relaciones interpersonales saludables y una cultura organizacional positiva."
+      },
+      {
+        "title": "Liderazgo y Gestión",
+        "description": "Desarrollo de habilidades directivas que permitan una conducción efectiva de equipos de trabajo, toma de decisiones y manejo estratégico de recursos humanos."
+      },
+      {
+        "title": "Habilidades de Comunicación y Resolución de Conflictos",
+        "description": "Capacitación enfocada en mejorar la comunicación interpersonal, la asertividad y la gestión adecuada de conflictos dentro de la organización."
+      }
+    ]
+  },
+  "nom": {
+    "eyebrow": "NOM-035-STPS-2018",
+    "title": "Diagnóstico, intervención y estrategias de mejora para cumplir con la normativa.",
+    "body": "La NOM-035-STPS-2018 busca identificar, analizar y prevenir factores de riesgo psicosocial en los centros de trabajo. CECAE acompaña a empresas e instituciones con evaluación e intervención en factores de riesgo psicosocial, cumpliendo con la normativa vigente en México, mediante diagnósticos organizacionales y estrategias de mejora.",
+    "cta": "Agenda tu diagnóstico organizacional",
+    "points": ["Diagnóstico organizacional", "Intervenciones pertinentes", "Estrategias de mejora"]
+  },
+  "method": {
+    "eyebrow": "Metodología",
+    "title": "Un proceso claro para convertir necesidades en resultados sostenibles",
+    "steps": [
+      {
+        "title": "Diagnóstico organizacional",
+        "description": "Identificación de necesidades específicas."
+      },
+      {
+        "title": "Diseño de capacitación",
+        "description": "Elaboración de programas personalizados."
+      },
+      {
+        "title": "Implementación",
+        "description": "Desarrollo de talleres dinámicos y participativos."
+      },
+      {
+        "title": "Evaluación de resultados",
+        "description": "Medición del impacto de la intervención."
+      },
+      {
+        "title": "Seguimiento",
+        "description": "Acompañamiento continuo para asegurar la mejora sostenida."
+      }
+    ]
+  },
+  "events": {
+    "eyebrow": "Eventos",
+    "title": "Próximos eventos",
+    "intro": "Capacitaciones, webinars y pláticas disponibles para empresas e instituciones.",
+    "emptyTitle": "No hay eventos próximos",
+    "emptyText": "¡Vuelve pronto!",
+    "emptyCta": "Contáctanos para más información",
+    "viewAll": "Ver todos los eventos",
+    "filters": {
+      "search": "Buscar por palabra clave",
+      "type": "Tipo",
+      "modality": "Modalidad",
+      "all": "Todos",
+      "training": "Capacitación",
+      "webinar": "Webinar",
+      "talk": "Plática",
+      "presencial": "Presencial",
+      "virtual": "Virtual",
+      "hibrida": "Híbrida"
+    },
+    "detailStub": "La ruta de detalle está preparada para V2. Cuando existan eventos publicados, este espacio mostrará información completa y registro."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Las capacitaciones son presenciales o virtuales?",
+        "answer": "Podemos trabajar en modalidad presencial, virtual o híbrida, según las necesidades y ubicación de la organización."
+      },
+      {
+        "question": "¿CECAE trabaja con empresas de cualquier tamaño?",
+        "answer": "Sí. Adaptamos las intervenciones para empresas, instituciones, escuelas, organizaciones sociales y equipos de distintos tamaños."
+      },
+      {
+        "question": "¿Se entregan constancias o documentación?",
+        "answer": "Sí, se puede entregar documentación de participación. El formato final de constancias se confirmará con CECAE antes del lanzamiento."
+      },
+      {
+        "question": "¿Pueden adaptar la capacitación a las necesidades de mi organización?",
+        "answer": "Sí. El proceso parte de un diagnóstico para diseñar programas pertinentes y personalizados."
+      },
+      {
+        "question": "¿Cómo puedo solicitar más información?",
+        "answer": "Puedes contactarnos por WhatsApp, teléfono, correo electrónico o completar el formulario para preparar tu mensaje."
+      },
+      {
+        "question": "¿Qué es la NOM-035-STPS-2018?",
+        "answer": "Es una norma mexicana orientada a identificar, analizar y prevenir factores de riesgo psicosocial en los centros de trabajo."
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contacto",
+    "title": "Solicita información sobre nuestras capacitaciones",
+    "subtitle": "Comparte tus datos y prepararemos un mensaje de WhatsApp con la información de tu organización.",
+    "form": {
+      "name": "Nombre completo",
+      "organization": "Organización / Empresa",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "city": "Ciudad",
+      "service": "Servicio de interés",
+      "modality": "Modalidad preferida",
+      "size": "Tamaño aproximado de la organización",
+      "message": "Mensaje",
+      "submit": "Preparar mensaje por WhatsApp",
+      "success": "Tu mensaje de WhatsApp fue preparado.",
+      "turnstileMissing": "Cloudflare Turnstile se activará cuando se configure la llave del sitio.",
+      "turnstileRequired": "Completa la verificación de seguridad para continuar.",
+      "required": "Este campo es obligatorio.",
+      "emailInvalid": "Ingresa un correo electrónico válido.",
+      "phoneInvalid": "Ingresa un teléfono válido."
+    },
+    "methods": {
+      "phone": "Teléfono",
+      "whatsapp": "WhatsApp",
+      "email": "Correo"
+    }
+  },
+  "privacy": {
+    "title": "Aviso de privacidad",
+    "intro": "Este aviso describe el tratamiento de datos personales de contacto recopilados a través del sitio web de CECAE.",
+    "sections": [
+      {
+        "title": "Datos recabados",
+        "body": "Podemos solicitar nombre, organización, teléfono, correo electrónico, ciudad, servicio de interés y el mensaje enviado voluntariamente por la persona usuaria."
+      },
+      {
+        "title": "Finalidad",
+        "body": "Los datos se utilizan para responder solicitudes de información, coordinar consultas y dar seguimiento a servicios de capacitación profesional."
+      },
+      {
+        "title": "Responsable y derechos ARCO",
+        "body": "CECAE es responsable del tratamiento de los datos personales. Las solicitudes de acceso, rectificación, cancelación u oposición pueden enviarse al correo capacitacion@cecae.org."
+      },
+      {
+        "title": "Revisión legal",
+        "body": "El texto final deberá ser validado por un profesional legal antes de publicarse como aviso definitivo."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Formación que impulsa tu crecimiento",
+    "location": "Ciudad Juárez, Chihuahua & Chihuahua, Chihuahua",
+    "privacy": "Aviso de privacidad"
+  }
+}
