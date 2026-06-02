@@ -1,5 +1,6 @@
 import { ArrowDown, Building2, MessageCircle } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
 import { trackEvent } from '@/lib/analytics';
@@ -39,18 +40,20 @@ export function HeroSection() {
           <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
             {t('hero.title')}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/78">{t('hero.subtitle')}</p>
+          <p className="mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 text-white/78">
+            {t('hero.subtitle')}
+          </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#contacto"
+            <Link
+              to="/contacto#contacto"
               onClick={() => trackEvent('cta_click', { location: 'hero_primary' })}
               className="focus-ring inline-flex min-h-12 items-center justify-center rounded-md bg-orange px-6 py-3 font-semibold text-white shadow-orange transition hover:-translate-y-0.5 hover:bg-[#C96513]"
             >
               {t('hero.primary')}
-            </a>
+            </Link>
             <a
               href={buildWhatsAppUrl(message)}
               target="_blank"

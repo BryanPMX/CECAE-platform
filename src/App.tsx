@@ -12,6 +12,9 @@ const EventDetailPage = lazy(() =>
 const PrivacyPage = lazy(() =>
   import('@/pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })),
 );
+const ContactPage = lazy(() =>
+  import('@/pages/ContactPage').then((module) => ({ default: module.ContactPage })),
+);
 
 export default function App() {
   return (
@@ -21,6 +24,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/eventos" element={<EventsPage />} />
+          <Route path="/contacto" element={<ContactPage />} />
           <Route path="/eventos/:id" element={<EventDetailPage />} />
           <Route path="/aviso-de-privacidad" element={<PrivacyPage />} />
         </Routes>

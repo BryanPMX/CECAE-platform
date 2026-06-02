@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Brain, ClipboardCheck, Handshake, MessagesSquare, UsersRound } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { trackEvent } from '@/lib/analytics';
@@ -42,15 +43,15 @@ export function ServicesSection() {
                   {service.title}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-6 text-midGray">{service.description}</p>
-                <a
-                  href="#contacto"
+                <Link
+                  to="/contacto#contacto"
                   onClick={() =>
                     trackEvent('cta_click', { location: 'service_card', service: service.title })
                   }
                   className="focus-ring mt-5 inline-flex w-fit rounded-md font-semibold text-orange hover:text-navy"
                 >
                   {t('services.cta')}
-                </a>
+                </Link>
               </motion.article>
             );
           })}

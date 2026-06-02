@@ -1,5 +1,6 @@
 import { CheckCircle2, FileCheck2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { trackEvent } from '@/lib/analytics';
@@ -31,13 +32,13 @@ export function NomSection() {
         </motion.div>
         <SectionHeading eyebrow={t('nom.eyebrow')} title={t('nom.title')}>
           <p>{t('nom.body')}</p>
-          <a
-            href="#contacto"
+          <Link
+            to="/contacto#contacto"
             onClick={() => trackEvent('cta_click', { location: 'nom035' })}
             className="focus-ring mt-7 inline-flex min-h-12 items-center rounded-md bg-orange px-6 py-3 text-base font-semibold text-white shadow-orange transition hover:-translate-y-0.5 hover:bg-[#C96513]"
           >
             {t('nom.cta')}
-          </a>
+          </Link>
         </SectionHeading>
       </div>
     </section>

@@ -1,7 +1,5 @@
 import { AboutSection } from '@/components/sections/AboutSection';
-import { ContactSection } from '@/components/sections/ContactSection';
 import { EventsPreviewSection } from '@/components/sections/EventsPreviewSection';
-import { FaqSection } from '@/components/sections/FaqSection';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { MethodologySection } from '@/components/sections/MethodologySection';
 import { NomSection } from '@/components/sections/NomSection';
@@ -22,8 +20,6 @@ export function HomePage() {
       <NomSection />
       <MethodologySection />
       <EventsPreviewSection />
-      <FaqSection />
-      <ContactSection />
     </PageShell>
   );
 }
