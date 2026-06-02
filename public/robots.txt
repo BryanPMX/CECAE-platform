@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cecae.org/sitemap.xml
