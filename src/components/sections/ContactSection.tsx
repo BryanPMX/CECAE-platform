@@ -151,7 +151,7 @@ export function ContactSection() {
               <textarea {...register('message')} rows={5} className={cn(inputClasses, 'resize-y')} />
             </Field>
 
-            <div className="flex justify-center rounded-md border border-line bg-skySurface p-3">
+            <div className="flex justify-center rounded-md border border-line bg-skySurface p-3 sm:w-fit sm:justify-start sm:px-2.5 sm:py-2">
               {hasTurnstile ? (
                 <Turnstile
                   siteKey={config.turnstileSiteKey}
