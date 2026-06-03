@@ -1,12 +1,13 @@
-import { motion } from 'framer-motion';
+import { animate, motion, useInView, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Building2, MapPinned, UsersRound } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
 const stats = [
-  { value: '3', icon: UsersRound, label: 'about.stats.modalities' },
-  { value: '5', icon: Building2, label: 'about.stats.areas' },
-  { value: '2', icon: MapPinned, label: 'about.stats.cities' },
+  { value: 3, icon: UsersRound, label: 'about.stats.modalities' },
+  { value: 5, icon: Building2, label: 'about.stats.areas' },
+  { value: 2, icon: MapPinned, label: 'about.stats.cities' },
 ];
 
 export function AboutSection() {
@@ -58,7 +59,7 @@ export function AboutSection() {
                 className="flex flex-col items-center rounded-lg border border-line bg-white/95 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-orange/60 hover:shadow-soft"
               >
                 <Icon className="h-7 w-7 text-orange" aria-hidden="true" />
-                <p className="mt-4 font-display text-3xl font-bold text-navy">{stat.value}</p>
+                <RollingStat value={stat.value} delay={index * 0.08} />
                 <p className="mt-1 text-sm font-semibold text-midGray">{t(stat.label)}</p>
               </motion.div>
             );
@@ -66,5 +67,42 @@ export function AboutSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function RollingStat({ value, delay }: { value: number; delay: number }) {
+  const ref = useRef<HTMLParagraphElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
+  const reduceMotion = useReducedMotion();
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) {
+      return;
+    }
+
+    if (reduceMotion) {
+      setDisplayValue(value);
+      return;
+    }
+
+    const controls = animate(0, value, {
+      delay,
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (latest) => {
+        setDisplayValue(Math.round(latest));
+      },
+    });
+
+    return () => {
+      controls.stop();
+    };
+  }, [delay, isInView, reduceMotion, value]);
+
+  return (
+    <p ref={ref} className="mt-4 font-display text-3xl font-bold tabular-nums text-navy" aria-label={`${value}`}>
+      {displayValue}
+    </p>
   );
 }
