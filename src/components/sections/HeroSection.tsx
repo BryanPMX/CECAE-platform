@@ -24,7 +24,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="mx-auto max-w-[46rem] lg:max-w-[43rem]"
+          className="mx-auto -translate-y-8 max-w-[46rem] lg:max-w-[43rem] lg:-translate-y-10"
         >
           <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm">
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
