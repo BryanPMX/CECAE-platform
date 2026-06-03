@@ -18,8 +18,24 @@
     "tagline": "Training that drives your growth",
     "title": "Professional training for healthier, stronger teams",
     "subtitle": "At CECAE, we design training solutions that strengthen organizational development, psychosocial wellbeing, mental health, and professional competencies for companies and institutions.",
-    "primary": "Schedule your training",
-    "secondary": "Schedule via WhatsApp",
+    "benefits": [
+      {
+        "title": "Continuous learning",
+        "description": "Tools your team can apply from the first session."
+      },
+      {
+        "title": "Organizational wellbeing",
+        "description": "Mental health, workplace climate, and prevention."
+      },
+      {
+        "title": "Measurable results",
+        "description": "Performance, culture, and follow-up improvement."
+      },
+      {
+        "title": "Personalized design",
+        "description": "Programs aligned to specific organizational needs."
+      }
+    ],
     "scroll": "Explore"
   },
   "about": {

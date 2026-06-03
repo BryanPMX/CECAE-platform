@@ -18,8 +18,24 @@
     "tagline": "Formación que impulsa tu crecimiento",
     "title": "Capacitación profesional para equipos más sanos y preparados",
     "subtitle": "En CECAE diseñamos soluciones de capacitación para fortalecer el desarrollo organizacional, el bienestar psicosocial, la salud mental y las competencias profesionales de empresas e instituciones.",
-    "primary": "Agenda tu capacitación",
-    "secondary": "Agenda por WhatsApp",
+    "benefits": [
+      {
+        "title": "Aprendizaje continuo",
+        "description": "Herramientas aplicables desde la primera sesión."
+      },
+      {
+        "title": "Bienestar organizacional",
+        "description": "Salud mental, clima laboral y prevención psicosocial."
+      },
+      {
+        "title": "Resultados medibles",
+        "description": "Mejora del desempeño, la cultura y el seguimiento."
+      },
+      {
+        "title": "Diseño personalizado",
+        "description": "Programas alineados a necesidades específicas."
+      }
+    ],
     "scroll": "Explorar"
   },
   "about": {
