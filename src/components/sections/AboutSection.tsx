@@ -12,11 +12,26 @@ const stats = [
 export function AboutSection() {
   const { t } = useTranslation();
   const paragraphs = t('about.body').split('\n\n');
+  const aboutIllustrationAlt = `${t('about.title')} ${t('about.eyebrow')}`;
 
   return (
     <section id="nosotros" className="flow-section flow-section-light py-20 sm:py-24 lg:py-28">
-      <div className="section-shell grid justify-items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-        <SectionHeading eyebrow={t('about.eyebrow')} title={t('about.title')} />
+      <div className="section-shell grid justify-items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          className="flex w-full max-w-2xl flex-col items-center gap-8 lg:-mt-8"
+        >
+          <SectionHeading eyebrow={t('about.eyebrow')} title={t('about.title')} />
+          <img
+            src={encodeURI('/"Nosotros" illustration.png')}
+            alt={aboutIllustrationAlt}
+            className="h-auto w-full max-w-[22rem] object-contain opacity-72 saturate-95 contrast-105 sm:max-w-[24rem]"
+            loading="lazy"
+          />
+        </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +45,7 @@ export function AboutSection() {
             </p>
           ))}
         </motion.div>
-        <div className="grid gap-4 sm:grid-cols-3 lg:col-span-2">
+        <div className="grid gap-4 sm:grid-cols-3 lg:col-span-2 lg:-mt-6">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
