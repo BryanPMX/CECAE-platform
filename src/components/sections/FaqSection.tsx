@@ -16,7 +16,7 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="flow-section flow-section-light py-16 sm:py-20 lg:py-24">
+    <section id="faq" className="flow-section flow-section-light flow-section-no-divider py-16 sm:py-20 lg:py-24">
       <div className="section-shell">
         <SectionHeading eyebrow={t('faq.eyebrow')} title={t('faq.title')} align="center" />
         <div className="mx-auto mt-10 max-w-3xl overflow-hidden rounded-lg border border-line bg-white shadow-soft">

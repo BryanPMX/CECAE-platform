@@ -127,7 +127,7 @@ export function ContactSection() {
               <Field label={t('contact.form.city')} error={errors.city?.message}>
                 <input {...register('city')} autoComplete="address-level2" className={inputClasses} />
               </Field>
-              <Field label={t('contact.form.service')}>
+              <Field label={t('contact.form.service')} className="sm:col-span-2">
                 <select {...register('service')} className={inputClasses}>
                   {services.map((service) => (
                     <option key={service.title} value={service.title}>
@@ -245,13 +245,15 @@ function Field({
   label,
   error,
   children,
+  className,
 }: {
   label: string;
   error?: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <label className="grid min-w-0 gap-2 text-sm font-semibold text-charcoal">
+    <label className={cn('grid min-w-0 gap-2 text-sm font-semibold text-charcoal', className)}>
       {label}
       {children}
       {error ? <span className="text-xs font-semibold text-orange">{error}</span> : null}
