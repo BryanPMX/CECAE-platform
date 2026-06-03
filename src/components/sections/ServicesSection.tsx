@@ -25,7 +25,7 @@ export function ServicesSection() {
             title={t('services.title')}
             align="center"
           />
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-5">
             {services.map((service, index) => {
               const Icon = icons[index] ?? ClipboardCheck;
               return (
@@ -35,7 +35,7 @@ export function ServicesSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.45, delay: index * 0.06 }}
-                  className="group flex min-h-[276px] flex-col items-center rounded-lg border border-line bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
+                  className="group flex min-h-[276px] w-full max-w-sm flex-col items-center rounded-lg border border-line bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow md:w-[calc(50%-0.625rem)] xl:w-[calc((100%-2.5rem)/3)]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-md bg-skySurface text-steel transition group-hover:bg-orange group-hover:text-white">
                     <Icon className="h-6 w-6" aria-hidden="true" />
