@@ -25,7 +25,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="max-w-4xl"
+          className="max-w-[42rem]"
         >
           <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm sm:text-base">
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
@@ -39,10 +39,10 @@ export function HeroSection() {
           <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 font-display text-3xl font-extrabold text-[clamp(2.6rem,5vw,5.2rem)] !leading-[1.18] tracking-[-0.025em] [text-wrap:balance]">
+          <h1 className="mt-4 max-w-[13ch] font-display text-3xl font-extrabold text-[clamp(2.5rem,4.35vw,4.35rem)] !leading-[0.94] tracking-[-0.03em] [text-wrap:balance]">
             {t('hero.title')}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 sm:text-lg sm:leading-10 text-white/82">
+          <p className="mt-5 max-w-[36rem] text-base leading-7 text-white/82 sm:text-lg sm:leading-8">
             {t('hero.subtitle')}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
