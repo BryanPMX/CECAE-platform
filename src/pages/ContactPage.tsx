@@ -11,8 +11,10 @@ export function ContactPage() {
         description="Contacta a CECAE para capacitación, NOM-035, bienestar psicosocial y desarrollo organizacional."
         path="/contacto"
       />
-      <ContactSection />
-      <FaqSection />
+      <div className="home-flow">
+        <ContactSection />
+        <FaqSection />
+      </div>
     </PageShell>
   );
 }

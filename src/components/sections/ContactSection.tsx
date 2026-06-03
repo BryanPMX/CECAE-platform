@@ -95,7 +95,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contacto" className="bg-surface py-16 sm:py-20 lg:py-24">
+    <section id="contacto" className="flow-section flow-section-dark py-16 sm:py-20 lg:py-24">
       <div className="section-shell grid justify-items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -103,8 +103,8 @@ export function ContactSection() {
           viewport={{ once: true, margin: '-120px' }}
           transition={{ duration: 0.55 }}
         >
-          <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')} level={1}>
-            <p>{t('contact.subtitle')}</p>
+          <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')} level={1} inverse>
+            <p className="text-white/80">{t('contact.subtitle')}</p>
           </SectionHeading>
 
           <form
