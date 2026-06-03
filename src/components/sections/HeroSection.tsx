@@ -39,10 +39,10 @@ export function HeroSection() {
           <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base lg:mt-4 lg:text-[0.95rem]">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 max-w-[13ch] font-display text-3xl font-extrabold text-[clamp(2.5rem,4.35vw,4.35rem)] !leading-[1.02] tracking-[-0.03em] [text-wrap:balance] lg:mt-3 lg:max-w-[16ch] lg:text-[clamp(2.35rem,2.75vw,3.1rem)]">
+          <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight sm:text-5xl lg:mt-3 lg:text-[clamp(2.5rem,3.1vw,3.5rem)]">
             {t('hero.title')}
           </h1>
-          <p className="mt-5 max-w-[36rem] text-base leading-7 text-white/82 sm:text-lg sm:leading-8 lg:mt-2 lg:max-w-[32rem] lg:text-[0.96rem] lg:leading-6">
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8 lg:mt-4 lg:text-base lg:leading-7">
             {t('hero.subtitle')}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-5">
