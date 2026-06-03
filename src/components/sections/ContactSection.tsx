@@ -294,4 +294,4 @@ function ContactLink({
 }
 
 const inputClasses =
-  'focus-ring min-h-11 rounded-md border border-line bg-white px-3 py-2 text-base font-normal text-charcoal shadow-sm transition placeholder:text-midGray focus:border-orange';
+  'focus-ring relative z-10 min-h-11 rounded-md border border-line bg-white px-3 py-2 text-base font-normal text-charcoal shadow-sm transition placeholder:text-midGray focus:border-orange';
