@@ -1,21 +1,21 @@
 import { Menu, MessageCircle, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { trackEvent } from '@/lib/analytics';
-
-const links = [
-  ['/', 'nav.home'],
-  ['/eventos', 'nav.events'],
-  ['/contacto', 'nav.contact'],
-] as const;
+import { navLinks } from '@/components/layout/navigation';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { i18n, t } = useTranslation();
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname, location.hash]);
 
   const changeLanguage = (language: 'es' | 'en') => {
     void i18n.changeLanguage(language);
@@ -35,14 +35,17 @@ export function Navbar() {
         </div>
 
         <div className="hidden justify-center lg:flex lg:gap-1">
-          {links.map(([href, label]) => (
+          {navLinks.map(([href, label]) => (
             <NavLink
               key={href}
               to={href}
+              end={href === '/'}
               className={({ isActive }) =>
                 cn(
                   'focus-ring rounded-md px-3 py-2 text-sm font-semibold transition',
-                  isActive ? 'text-navy' : 'text-charcoal hover:text-orange',
+                  isActive
+                    ? 'bg-skySurface text-navy shadow-sm'
+                    : 'text-charcoal hover:bg-skySurface/70 hover:text-orange',
                 )
               }
             >
@@ -82,28 +85,35 @@ export function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-t border-line bg-white lg:hidden"
           >
             <div className="section-shell grid gap-2 py-5">
-              {links.map(([href, label]) => (
-                <Link
+              {navLinks.map(([href, label]) => (
+                <NavLink
                   key={href}
                   to={href}
-                  onClick={() => setIsOpen(false)}
-                  className="focus-ring rounded-md px-3 py-3 font-semibold text-charcoal hover:bg-skySurface"
+                  end={href === '/'}
+                  className={({ isActive }) =>
+                    cn(
+                      'focus-ring rounded-md px-3 py-3 font-semibold transition',
+                      isActive
+                        ? 'bg-skySurface text-navy shadow-sm'
+                        : 'text-charcoal hover:bg-skySurface hover:text-orange',
+                    )
+                  }
                 >
                   {t(label)}
-                </Link>
+                </NavLink>
               ))}
               <div className="mt-2 flex items-center justify-between gap-3">
                 <LanguageToggle current={i18n.language} onChange={changeLanguage} />
                 <Link
                   to="/contacto#contacto"
                   onClick={() => {
-                    setIsOpen(false);
                     trackEvent('cta_click', { location: 'mobile_navbar' });
                   }}
-                  className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-md bg-orange px-4 py-2 text-sm font-semibold text-white"
+                  className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-md bg-orange px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#C96513]"
                 >
                   <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   {t('nav.cta')}

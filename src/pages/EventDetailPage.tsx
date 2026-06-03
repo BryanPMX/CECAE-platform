@@ -1,7 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { PageShell } from '@/components/layout/PageShell';
 import { Seo } from '@/components/layout/Seo';
 
 export function EventDetailPage() {
@@ -9,7 +8,7 @@ export function EventDetailPage() {
   const { t } = useTranslation();
 
   return (
-    <PageShell>
+    <>
       <Seo
         title="Detalle de evento CECAE"
         description="Ruta preparada para los detalles de eventos CECAE en la versión V2."
@@ -37,6 +36,6 @@ export function EventDetailPage() {
           </div>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

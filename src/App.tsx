@@ -1,6 +1,7 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { FloatingWhatsApp } from '@/components/layout/FloatingWhatsApp';
+import { PageShell } from '@/components/layout/PageShell';
 
 const HomePage = lazy(() => import('@/pages/HomePage').then((module) => ({ default: module.HomePage })));
 const EventsPage = lazy(() =>
@@ -20,15 +21,15 @@ export default function App() {
   return (
     <>
       <ScrollToHash />
-      <Suspense fallback={<div className="min-h-screen bg-white" />}>
-        <Routes>
+      <Routes>
+        <Route element={<PageShell />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/eventos" element={<EventsPage />} />
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/eventos/:id" element={<EventDetailPage />} />
           <Route path="/aviso-de-privacidad" element={<PrivacyPage />} />
-        </Routes>
-      </Suspense>
+        </Route>
+      </Routes>
       <FloatingWhatsApp />
     </>
   );

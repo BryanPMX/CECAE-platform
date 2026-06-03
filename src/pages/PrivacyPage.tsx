@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { PageShell } from '@/components/layout/PageShell';
 import { Seo } from '@/components/layout/Seo';
 
 type PrivacySection = {
@@ -12,7 +11,7 @@ export function PrivacyPage() {
   const sections = t('privacy.sections', { returnObjects: true }) as PrivacySection[];
 
   return (
-    <PageShell>
+    <>
       <Seo
         title="Aviso de privacidad | CECAE"
         description="Aviso de privacidad de CECAE conforme a datos de contacto recopilados en el sitio."
@@ -44,6 +43,6 @@ export function PrivacyPage() {
           </div>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

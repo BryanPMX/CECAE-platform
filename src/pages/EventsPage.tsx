@@ -2,7 +2,6 @@ import { Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EventCard } from '@/components/events/EventCard';
-import { PageShell } from '@/components/layout/PageShell';
 import { Seo } from '@/components/layout/Seo';
 import { EmptyEventsState } from '@/components/ui/EmptyEventsState';
 import { useEvents } from '@/hooks/useEvents';
@@ -30,7 +29,7 @@ export function EventsPage() {
   }, []);
 
   return (
-    <PageShell>
+    <>
       <Seo
         title="Eventos CECAE | Capacitaciones y webinars"
         description="Próximos eventos, capacitaciones, webinars y pláticas de CECAE para empresas e instituciones."
@@ -108,6 +107,6 @@ export function EventsPage() {
           </div>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

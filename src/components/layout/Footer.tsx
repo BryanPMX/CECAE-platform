@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { config, displayContact } from '@/lib/config';
 import { trackEvent } from '@/lib/analytics';
+import { cn } from '@/lib/utils';
+import { navLinks } from '@/components/layout/navigation';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -27,15 +29,21 @@ export function Footer() {
               {t('footer.navigation')}
             </p>
             <nav className="flex flex-wrap items-center justify-center gap-2 text-sm text-white/80">
-              <Link to="/" className="focus-ring rounded-md px-3 py-1.5 transition hover:text-white">
-                {t('nav.home')}
-              </Link>
-              <Link to="/eventos" className="focus-ring rounded-md px-3 py-1.5 transition hover:text-white">
-                {t('nav.events')}
-              </Link>
-              <Link to="/contacto" className="focus-ring rounded-md px-3 py-1.5 transition hover:text-white">
-                {t('nav.contact')}
-              </Link>
+              {navLinks.map(([href, label]) => (
+                <NavLink
+                  key={href}
+                  to={href}
+                  end={href === '/'}
+                  className={({ isActive }) =>
+                    cn(
+                      'focus-ring rounded-md px-3 py-1.5 transition',
+                      isActive ? 'bg-white/10 text-white' : 'hover:bg-white/10 hover:text-white',
+                    )
+                  }
+                >
+                  {t(label)}
+                </NavLink>
+              ))}
             </nav>
           </div>
 
