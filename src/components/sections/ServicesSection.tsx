@@ -17,9 +17,10 @@ export function ServicesSection() {
   const services = t('services.items', { returnObjects: true }) as ServiceCopy[];
 
   return (
-    <section id="capacitaciones" className="bg-skySurface py-20 sm:py-24">
+    <section id="capacitaciones" className="bg-surface py-24 sm:py-28">
       <div className="section-shell">
-        <SectionHeading
+        <div className="section-spotlight border border-line bg-white/90 p-8 shadow-soft">
+          <SectionHeading
           eyebrow={t('services.eyebrow')}
           title={t('services.title')}
           align="center"
@@ -34,15 +35,15 @@ export function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="group flex min-h-[320px] flex-col rounded-lg border border-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
+                className="group flex min-h-[320px] flex-col rounded-3xl border border-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-md bg-skySurface text-steel transition group-hover:bg-orange group-hover:text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-skySurface text-steel transition group-hover:bg-orange group-hover:text-white">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <h3 className="mt-5 font-display text-xl font-bold leading-snug text-navy">
                   {service.title}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-midGray">{service.description}</p>
+                <p className="mt-3 flex-1 text-base leading-7 text-midGray">{service.description}</p>
                 <Link
                   to="/contacto#contacto"
                   onClick={() =>

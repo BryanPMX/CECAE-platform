@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -94,16 +95,21 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contacto" className="py-20 sm:py-24">
-      <div className="section-shell grid gap-12 lg:grid-cols-[1fr_0.9fr]">
-        <div>
+    <section id="contacto" className="bg-surface py-24 sm:py-28">
+      <div className="section-shell grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-120px' }}
+          transition={{ duration: 0.55 }}
+        >
           <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')}>
             <p>{t('contact.subtitle')}</p>
           </SectionHeading>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mt-8 grid gap-4 rounded-lg border border-line bg-white p-5 shadow-sm sm:p-6"
+            className="mt-8 grid gap-4 rounded-[1.75rem] border border-line bg-white p-6 shadow-soft"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label={t('contact.form.name')} error={errors.name?.message}>
@@ -174,10 +180,16 @@ export function ContactSection() {
               {t('contact.form.submit')}
             </Button>
           </form>
-        </div>
+        </motion.div>
 
         <aside className="grid gap-5">
-          <div className="rounded-lg border border-line bg-skySurface p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="rounded-[1.75rem] border border-line bg-skySurface p-6 shadow-soft"
+          >
             <h3 className="font-display text-2xl font-bold text-navy">{t('nav.contact')}</h3>
             <div className="mt-5 grid gap-3">
               <ContactLink
@@ -202,9 +214,15 @@ export function ContactSection() {
                 event="email_click"
               />
             </div>
-          </div>
+          </motion.div>
 
-          <div className="overflow-hidden rounded-lg border border-line bg-white shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.55, delay: 0.12 }}
+            className="overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-soft"
+          >
             <div className="flex items-center gap-2 border-b border-line px-5 py-4 text-sm font-semibold text-navy">
               <MapPin className="h-4 w-4 text-orange" aria-hidden="true" />
               Ciudad Juárez, Chihuahua

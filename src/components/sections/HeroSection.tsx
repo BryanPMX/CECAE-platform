@@ -16,10 +16,9 @@ export function HeroSection() {
 
   return (
     <section className="relative isolate min-h-[calc(100vh-5rem)] overflow-hidden bg-navy text-white">
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_20%,rgba(43,108,176,0.55),transparent_32%),radial-gradient(circle_at_80%_12%,rgba(217,114,24,0.23),transparent_30%),linear-gradient(135deg,#1A3A6B_0%,#17315B_54%,#0F2443_100%)]"
-      />
+      <motion.div style={{ y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
+      <div className="absolute left-10 top-24 h-56 w-56 rounded-full bg-white/5 blur-2xl" />
+      <div className="absolute right-12 bottom-24 h-72 w-72 rounded-full bg-orange/10 blur-3xl" />
       <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
       <div className="section-shell grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:grid-cols-[1.08fr_0.92fr]">
         <motion.div
@@ -28,22 +27,22 @@ export function HeroSection() {
           transition={{ duration: 0.75, ease: 'easeOut' }}
           className="max-w-3xl"
         >
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm sm:text-base">
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
             {t('hero.eyebrow')}
           </p>
           <img
             src="/cecae-footer-logo-1600x400.png"
             alt="CECAE"
-            className="mt-8 h-auto w-full max-w-md rounded-md bg-white px-4 py-3 shadow-glow"
+            className="mt-8 h-auto w-full max-w-md rounded-3xl bg-white px-4 py-3 shadow-glow"
           />
-          <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange">
+          <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight sm:text-5xl lg:text-[4.8rem]">
             {t('hero.title')}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 text-white/78">
+          <p className="mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-9 text-white/82">
             {t('hero.subtitle')}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

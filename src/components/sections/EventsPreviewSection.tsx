@@ -12,7 +12,7 @@ export function EventsPreviewSection() {
   const featured = events.slice(0, 3);
 
   return (
-    <section id="eventos" className="py-20 sm:py-24">
+    <section id="eventos" className="bg-surface py-24 sm:py-28">
       <div className="section-shell">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading eyebrow={t('events.eyebrow')} title={t('events.title')}>
@@ -25,7 +25,7 @@ export function EventsPreviewSection() {
 
         <div className="mt-10">
           {isLoading ? (
-            <div className="h-64 animate-pulse rounded-lg bg-skySurface" />
+            <div className="h-64 animate-pulse rounded-3xl bg-skySurface" />
           ) : featured.length > 0 ? (
             <motion.div
               initial="hidden"
@@ -37,8 +37,16 @@ export function EventsPreviewSection() {
               }}
               className="grid gap-5 md:grid-cols-3"
             >
-              {featured.map((event) => (
-                <EventCard key={event.id} event={event} />
+              {featured.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-120px' }}
+                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                >
+                  <EventCard event={event} />
+                </motion.div>
               ))}
             </motion.div>
           ) : (

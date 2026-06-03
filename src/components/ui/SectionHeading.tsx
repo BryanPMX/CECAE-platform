@@ -29,7 +29,7 @@ export function SectionHeading({
       </p>
       <h2
         className={cn(
-          'mt-3 font-display text-2xl font-bold leading-tight sm:text-3xl',
+          'mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl',
           inverse ? 'text-white' : 'text-navy',
         )}
       >

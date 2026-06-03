@@ -6,7 +6,7 @@
 
 :root {
   color: #333333;
-  background: #ffffff;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.95), rgba(244, 247, 251, 0.95) 40%, #ffffff 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -42,6 +42,20 @@ body {
 
 section[id] {
   scroll-margin-top: 6rem;
+}
+
+@layer utilities {
+  .section-spotlight {
+    @apply relative overflow-hidden rounded-[2rem] bg-white/90 shadow-soft;
+  }
+
+  .section-spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 10% 10%, rgba(217, 114, 24, 0.16), transparent 26%), radial-gradient(circle at 90% 30%, rgba(26, 58, 107, 0.08), transparent 28%);
+    pointer-events: none;
+  }
 }
 
 .grid-overlay {
