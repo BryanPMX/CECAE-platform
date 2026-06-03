@@ -12,8 +12,8 @@ export function MethodologySection() {
   const steps = t('method.steps', { returnObjects: true }) as StepCopy[];
 
   return (
-    <section id="metodologia" className="relative overflow-hidden bg-navy py-20 text-white sm:py-24 lg:py-28">
-      <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(217,114,24,0.14),transparent_28%)]" />
+    <section id="metodologia" className="flow-section flow-section-dark overflow-hidden py-20 text-white sm:py-24 lg:py-28">
+      <div className="absolute inset-0 -z-[1] opacity-30 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(217,114,24,0.14),transparent_28%)]" />
       <div className="section-shell relative">
         <SectionHeading
           eyebrow={t('method.eyebrow')}

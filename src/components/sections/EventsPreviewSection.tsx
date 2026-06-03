@@ -12,7 +12,7 @@ export function EventsPreviewSection() {
   const featured = events.slice(0, 3);
 
   return (
-    <section id="eventos" className="flow-section py-20 sm:py-24 lg:py-28">
+    <section id="eventos" className="flow-section flow-section-light py-20 sm:py-24 lg:py-28">
       <div className="section-shell">
         <div className="flex flex-col items-center gap-6 text-center">
           <SectionHeading eyebrow={t('events.eyebrow')} title={t('events.title')}>
