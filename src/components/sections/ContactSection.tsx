@@ -96,7 +96,7 @@ export function ContactSection() {
 
   return (
     <section id="contacto" className="flow-section flow-section-dark py-16 sm:py-20 lg:py-24">
-      <div className="section-shell grid justify-items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="section-shell grid justify-items-center gap-16 lg:items-start lg:gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -182,7 +182,7 @@ export function ContactSection() {
           </form>
         </motion.div>
 
-        <aside className="grid w-full gap-5">
+        <aside className="grid w-full self-start gap-5">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -232,7 +232,7 @@ export function ContactSection() {
               title="Mapa de CECAE"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="h-[360px] w-full"
+              className="h-[300px] w-full lg:h-[240px] xl:h-[280px]"
             />
           </motion.div>
         </aside>
