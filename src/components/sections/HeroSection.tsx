@@ -19,12 +19,12 @@ export function HeroSection() {
       <motion.div style={{ y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
       <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent" />
-      <div className="section-shell grid min-h-[calc(100svh-5rem)] items-center justify-items-center gap-12 py-14 text-center sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-10">
+      <div className="section-shell grid min-h-[calc(100svh-5rem)] content-start justify-items-center gap-12 pb-14 pt-8 text-center sm:pb-16 sm:pt-12 lg:pb-10 lg:pt-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="mx-auto -translate-y-8 max-w-[46rem] lg:max-w-[43rem] lg:-translate-y-10"
+          className="mx-auto max-w-[46rem] lg:max-w-[43rem]"
         >
           <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm">
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
@@ -57,43 +57,6 @@ export function HeroSection() {
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
               {t('hero.secondary')}
             </a>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.75, delay: 0.15, ease: 'easeOut' }}
-          className="relative hidden min-h-[540px] lg:block"
-          aria-hidden="true"
-        >
-          <div className="absolute right-0 top-8 h-72 w-72 rounded-full border border-white/15" />
-          <div className="absolute bottom-12 left-4 h-56 w-56 rounded-full border border-orange/40" />
-          <div className="absolute inset-x-8 top-28 rounded-lg border border-white/18 bg-white/10 p-6 shadow-glow backdrop-blur-xl">
-            <div className="mb-6 flex items-center justify-between">
-              <span className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
-                NOM-035
-              </span>
-              <span className="rounded-full bg-orange px-3 py-1 text-xs font-bold text-white">
-                CECAE
-              </span>
-            </div>
-            <div className="grid grid-cols-5 items-end gap-4">
-              {[36, 58, 46, 72, 92].map((height, index) => (
-                <motion.div
-                  key={height}
-                  initial={{ height: 30 }}
-                  animate={{ height }}
-                  transition={{ duration: 0.7, delay: 0.4 + index * 0.1 }}
-                  className="rounded-t bg-orange"
-                />
-              ))}
-            </div>
-            <div className="mt-8 grid gap-3">
-              {[0, 1, 2].map((item) => (
-                <div key={item} className="h-4 rounded-full bg-white/20" />
-              ))}
-            </div>
           </div>
         </motion.div>
       </div>
