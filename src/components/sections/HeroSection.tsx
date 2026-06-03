@@ -15,28 +15,28 @@ export function HeroSection() {
       : 'Hola CECAE, me gustaría agendar una capacitación profesional para mi organización.';
 
   return (
-    <section className="relative isolate min-h-[calc(100vh-5rem)] overflow-hidden bg-navy text-white">
+    <section className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-white">
       <motion.div style={{ y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
       <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent" />
-      <div className="section-shell grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:gap-10 lg:py-8 xl:py-10 lg:grid-cols-[1.08fr_0.92fr]">
+      <div className="section-shell grid min-h-[calc(100svh-5rem)] items-center gap-12 py-14 sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="max-w-[42rem] lg:max-w-[40rem]"
+          className="max-w-[46rem] lg:max-w-[43rem]"
         >
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm sm:text-base">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm">
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
             {t('hero.eyebrow')}
           </p>
-          <p className="mt-8 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base lg:mt-5 lg:text-[0.95rem]">
+          <p className="mt-7 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-orange sm:text-sm lg:mt-5">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 max-w-[13ch] font-display text-4xl font-extrabold leading-tight sm:text-6xl lg:mt-3 lg:text-[clamp(3rem,4.3vw,4.8rem)]">
+          <h1 className="text-balance mt-4 max-w-[15ch] font-display text-[2.65rem] font-extrabold leading-[1.06] sm:text-6xl lg:mt-3 lg:text-[clamp(3.1rem,4.1vw,4.65rem)]">
             {t('hero.title')}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8 lg:mt-4 lg:text-base lg:leading-7">
+          <p className="text-pretty mt-6 max-w-2xl text-base leading-7 text-white/80 sm:text-lg sm:leading-8 lg:mt-4 lg:text-[1.0625rem]">
             {t('hero.subtitle')}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-5">

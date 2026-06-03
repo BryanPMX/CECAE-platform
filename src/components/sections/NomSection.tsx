@@ -10,20 +10,20 @@ export function NomSection() {
   const points = t('nom.points', { returnObjects: true }) as string[];
 
   return (
-    <section id="nom035" className="flow-section py-24 sm:py-28">
+    <section id="nom035" className="flow-section py-20 sm:py-24 lg:py-28">
       <div className="section-shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="rounded-[2rem] bg-navy p-10 text-white shadow-glow"
+          className="rounded-lg bg-navy p-7 text-white shadow-glow sm:p-9 lg:p-10"
         >
           <FileCheck2 className="h-12 w-12 text-orange" aria-hidden="true" />
           <p className="mt-8 font-mono text-sm font-semibold text-white/70">NOM-035-STPS-2018</p>
           <div className="mt-6 grid gap-3">
             {points.map((point) => (
-              <span key={point} className="inline-flex items-start gap-3 text-lg font-semibold leading-7">
+              <span key={point} className="inline-flex items-start gap-3 text-base font-semibold leading-7 sm:text-lg">
                 <CheckCircle2 className="mt-1 h-5 w-5 text-orange" aria-hidden="true" />
                 {point}
               </span>

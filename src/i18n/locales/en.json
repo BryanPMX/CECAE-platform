@@ -8,21 +8,24 @@
     "events": "Events",
     "faq": "FAQ",
     "contact": "Contact",
-    "cta": "Request information"
+    "cta": "Request information",
+    "skip": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "hero": {
     "eyebrow": "Business Training Center",
     "tagline": "Training that drives your growth",
-    "title": "Professional training to strengthen your organization's wellbeing and development",
-    "subtitle": "At CECAE, we provide training solutions designed to strengthen organizational development by promoting psychosocial wellbeing, mental health, and professional competency growth within companies and institutions.",
-    "primary": "Schedule your training with us",
+    "title": "Professional training for healthier, stronger teams",
+    "subtitle": "At CECAE, we design training solutions that strengthen organizational development, psychosocial wellbeing, mental health, and professional competencies for companies and institutions.",
+    "primary": "Schedule your training",
     "secondary": "Schedule via WhatsApp",
     "scroll": "Explore"
   },
   "about": {
     "eyebrow": "About",
-    "title": "A professional ally for stronger organizational development.",
-    "body": "At Centro de Capacitación Empresarial (CECAE), we work with a commitment to supporting the integral development of organizations through high-quality training processes. Our work focuses on identifying each company's specific needs to design relevant interventions aimed at strengthening human capital and improving the workplace environment.\n\nWe promote a healthy, ethical, and sustainable organizational culture based on respect, effective communication, and psychological wellbeing.",
+    "title": "A professional ally for organizational development",
+    "body": "At Centro de Capacitación Empresarial (CECAE), we support the integral development of organizations through high-quality training processes. We identify each company's specific needs to design relevant interventions that strengthen human capital and improve the workplace environment.\n\nWe promote a healthy, ethical, and sustainable organizational culture based on respect, effective communication, and psychological wellbeing.",
     "stats": {
       "modalities": "Training modalities",
       "areas": "Professional areas",
@@ -58,8 +61,8 @@
   },
   "nom": {
     "eyebrow": "NOM-035-STPS-2018",
-    "title": "Diagnostics, intervention, and improvement strategies aligned with the regulation.",
-    "body": "NOM-035-STPS-2018 seeks to identify, analyze, and prevent psychosocial risk factors in workplaces. CECAE supports companies and institutions with evaluation and intervention in psychosocial risk factors, complying with current Mexican regulations through organizational diagnostics and improvement strategies.",
+    "title": "Diagnostics, intervention, and improvement aligned with the regulation",
+    "body": "NOM-035-STPS-2018 seeks to identify, analyze, and prevent psychosocial risk factors in workplaces. CECAE supports companies and institutions with evaluations, interventions, and improvement strategies aligned with current Mexican regulations.",
     "cta": "Schedule your organizational diagnostic",
     "points": ["Organizational diagnostic", "Relevant interventions", "Improvement strategies"]
   },
@@ -92,7 +95,7 @@
   "events": {
     "eyebrow": "Events",
     "title": "Upcoming events",
-    "intro": "Training sessions, webinars, and talks available for companies and institutions.",
+    "intro": "Training sessions, webinars, and talks for companies and institutions.",
     "emptyTitle": "No upcoming events",
     "emptyText": "Check back soon!",
     "emptyCta": "Contact us for more information",
@@ -109,7 +112,7 @@
       "virtual": "Virtual",
       "hibrida": "Hybrid"
     },
-    "detailStub": "The detail route is ready for V2. Once events are published, this space will show full information and registration."
+    "detailStub": "The detail route is ready for version V2. Once events are published, this space will show full information and registration options."
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -147,7 +150,7 @@
     "subtitle": "Share your details and we will prepare a WhatsApp message with your organization's information.",
     "form": {
       "name": "Full name",
-      "organization": "Organization / Company",
+      "organization": "Organization or company",
       "phone": "Phone",
       "email": "Email",
       "city": "City",
@@ -156,7 +159,7 @@
       "size": "Approximate organization size",
       "message": "Message",
       "submit": "Prepare WhatsApp message",
-      "success": "Your WhatsApp message was prepared.",
+      "success": "Your WhatsApp message is ready.",
       "turnstileMissing": "Cloudflare Turnstile will activate once the site key is configured.",
       "turnstileRequired": "Complete the security verification to continue.",
       "required": "This field is required.",
@@ -171,7 +174,7 @@
   },
   "privacy": {
     "title": "Privacy notice",
-    "intro": "This notice describes the processing of contact personal data collected through the CECAE website.",
+    "intro": "This notice describes how contact personal data collected through the CECAE website is processed.",
     "sections": [
       {
         "title": "Data collected",
@@ -194,6 +197,10 @@
   "footer": {
     "tagline": "Training that drives your growth",
     "location": "Ciudad Juarez, Chihuahua & Chihuahua, Chihuahua",
-    "privacy": "Privacy notice"
+    "privacy": "Privacy notice",
+    "navigation": "Navigation",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "summary": "Business training for NOM-035 compliance and talent development."
   }
 }

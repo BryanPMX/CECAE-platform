@@ -16,17 +16,17 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="bg-skySurface py-20 sm:py-24">
+    <section id="faq" className="bg-skySurface py-16 sm:py-20 lg:py-24">
       <div className="section-shell">
         <SectionHeading eyebrow={t('faq.eyebrow')} title={t('faq.title')} align="center" />
-        <div className="mx-auto mt-10 max-w-3xl rounded-lg border border-line bg-white">
+        <div className="mx-auto mt-10 max-w-3xl overflow-hidden rounded-lg border border-line bg-white shadow-soft">
           {items.map((item, index) => {
             const isOpen = openIndex === index;
             return (
               <div key={item.question} className="border-b border-line last:border-b-0">
                 <button
                   type="button"
-                  className="focus-ring flex w-full items-center justify-between gap-4 rounded-md px-5 py-5 text-left font-semibold text-navy"
+                  className="focus-ring flex w-full items-center justify-between gap-4 rounded-md px-5 py-5 text-left font-semibold leading-6 text-navy transition hover:bg-skySurface/70"
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
                   aria-expanded={isOpen}
                 >

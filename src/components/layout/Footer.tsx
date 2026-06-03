@@ -9,14 +9,16 @@ export function Footer() {
 
   return (
     <footer className="bg-navy text-white">
-      <div className="section-shell grid gap-10 py-12 lg:grid-cols-[1.6fr_1fr_1fr]">
+      <div className="section-shell grid gap-10 py-12 lg:grid-cols-[1.5fr_1fr_1fr] lg:py-14">
         <div className="space-y-6">
           <img
             src="/cecae-footer-logo-2048x512.png"
             alt="CECAE"
             className="h-14 w-auto rounded bg-white object-contain px-3 sm:h-16"
           />
-          <p className="max-w-xl text-base leading-7 text-white/82 sm:text-lg">{t('footer.tagline')}</p>
+          <p className="text-pretty max-w-xl text-base leading-7 text-white/82 sm:text-[1.0625rem]">
+            {t('footer.tagline')}
+          </p>
           <p className="flex items-center gap-2 text-sm text-white/70">
             <MapPin className="h-4 w-4 text-orange" aria-hidden="true" />
             {t('footer.location')}
@@ -30,7 +32,9 @@ export function Footer() {
         </div>
 
         <div className="grid gap-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">Navegación</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
+            {t('footer.navigation')}
+          </p>
           <nav className="grid gap-2 text-sm text-white/80">
             <Link to="/" className="focus-ring rounded-md px-3 py-2 transition hover:text-white">
               {t('nav.home')}
@@ -48,7 +52,9 @@ export function Footer() {
         </div>
 
         <div className="grid gap-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">Contacto</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
+            {t('footer.contact')}
+          </p>
           <a
             href={`tel:${config.phone}`}
             onClick={() => trackEvent('phone_click', { location: 'footer' })}
@@ -69,9 +75,9 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-6">
-        <div className="section-shell flex flex-col gap-4 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} CECAE. Todos los derechos reservados.</p>
-          <p>Formación empresarial para cumplir con NOM-035 y desarrollar talento.</p>
+        <div className="section-shell flex flex-col gap-4 text-sm leading-6 text-white/70 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} CECAE. {t('footer.rights')}</p>
+          <p>{t('footer.summary')}</p>
         </div>
       </div>
     </footer>

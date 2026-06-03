@@ -68,7 +68,7 @@ export function Navbar() {
             variant="ghost"
             className="h-11 w-11 px-0"
             onClick={() => setIsOpen((value) => !value)}
-            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={isOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             aria-expanded={isOpen}
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -128,7 +128,7 @@ function LanguageToggle({
     <div
       className="grid grid-cols-2 rounded-md border border-line bg-white p-1"
       role="group"
-      aria-label="Language"
+      aria-label="Language selector"
     >
       {(['es', 'en'] as const).map((language) => (
         <button

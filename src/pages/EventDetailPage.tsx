@@ -15,7 +15,7 @@ export function EventDetailPage() {
         description="Ruta preparada para los detalles de eventos CECAE en la versión V2."
         path={`/eventos/${id ?? ''}`}
       />
-      <section className="py-20 sm:py-24">
+      <section className="bg-surface py-16 sm:py-20 lg:py-24">
         <div className="section-shell max-w-3xl">
           <Link
             to="/eventos"
@@ -24,14 +24,16 @@ export function EventDetailPage() {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             {t('events.title')}
           </Link>
-          <div className="mt-8 rounded-lg border border-line bg-skySurface p-8">
+          <div className="mt-8 rounded-lg border border-line bg-white p-6 shadow-soft sm:p-8">
             <p className="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-orange">
               /eventos/{id}
             </p>
-            <h1 className="mt-4 font-display text-3xl font-bold text-navy">
+            <h1 className="text-balance mt-4 font-display text-3xl font-bold leading-tight text-navy sm:text-4xl">
               {t('events.title')}
             </h1>
-            <p className="mt-4 text-lg leading-8 text-midGray">{t('events.detailStub')}</p>
+            <p className="text-pretty mt-4 text-base leading-7 text-midGray sm:text-lg sm:leading-8">
+              {t('events.detailStub')}
+            </p>
           </div>
         </div>
       </section>

@@ -5,6 +5,7 @@ type SectionHeadingProps = {
   eyebrow: string;
   title: string;
   align?: 'left' | 'center';
+  level?: 1 | 2;
   inverse?: boolean;
   children?: React.ReactNode;
 };
@@ -13,9 +14,12 @@ export function SectionHeading({
   eyebrow,
   title,
   align = 'left',
+  level = 2,
   inverse = false,
   children,
 }: SectionHeadingProps) {
+  const HeadingTag = level === 1 ? 'h1' : 'h2';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -27,16 +31,16 @@ export function SectionHeading({
       <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-orange">
         {eyebrow}
       </p>
-      <h2
+      <HeadingTag
         className={cn(
-          'mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl',
+          'text-balance mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-[2.75rem]',
           inverse ? 'text-white' : 'text-navy',
         )}
       >
         {title}
-      </h2>
+      </HeadingTag>
       {children ? (
-        <div className={cn('mt-4 text-base leading-7 sm:text-lg sm:leading-8', inverse ? 'text-white/72' : 'text-midGray')}>
+        <div className={cn('text-pretty mt-4 text-base leading-7 sm:text-[1.0625rem] sm:leading-8', inverse ? 'text-white/72' : 'text-midGray')}>
           {children}
         </div>
       ) : null}

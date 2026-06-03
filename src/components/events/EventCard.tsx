@@ -19,7 +19,7 @@ export function EventCard({ event }: { event: CecaeEvent }) {
     <Link
       to={`/eventos/${event.id}`}
       onClick={() => trackEvent('event_card_click', { event_id: event.id })}
-      className="focus-ring group grid overflow-hidden rounded-lg border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
+      className="focus-ring group grid h-full overflow-hidden rounded-lg border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
     >
       {event.imageUrl ? (
         <img src={event.imageUrl} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
@@ -34,10 +34,10 @@ export function EventCard({ event }: { event: CecaeEvent }) {
           </span>
         </div>
         <div>
-          <h3 className="font-display text-xl font-bold text-navy group-hover:text-orange">
+          <h3 className="text-balance font-display text-xl font-bold leading-snug text-navy group-hover:text-orange">
             {event.title[language]}
           </h3>
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-midGray">
+          <p className="text-pretty mt-2 line-clamp-3 text-sm leading-6 text-midGray">
             {event.description[language]}
           </p>
         </div>

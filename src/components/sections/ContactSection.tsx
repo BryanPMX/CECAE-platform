@@ -95,7 +95,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contacto" className="bg-surface py-24 sm:py-28">
+    <section id="contacto" className="bg-surface py-16 sm:py-20 lg:py-24">
       <div className="section-shell grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -103,13 +103,13 @@ export function ContactSection() {
           viewport={{ once: true, margin: '-120px' }}
           transition={{ duration: 0.55 }}
         >
-          <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')}>
+          <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')} level={1}>
             <p>{t('contact.subtitle')}</p>
           </SectionHeading>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mt-8 grid gap-4 rounded-[1.75rem] border border-line bg-white p-6 shadow-soft"
+            className="mt-8 grid gap-4 rounded-lg border border-line bg-white p-5 shadow-soft sm:p-6"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label={t('contact.form.name')} error={errors.name?.message}>
@@ -188,7 +188,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.55, delay: 0.08 }}
-            className="rounded-[1.75rem] border border-line bg-skySurface p-6 shadow-soft"
+            className="rounded-lg border border-line bg-skySurface p-6 shadow-soft"
           >
             <h3 className="font-display text-2xl font-bold text-navy">{t('nav.contact')}</h3>
             <div className="mt-5 grid gap-3">
@@ -221,7 +221,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.55, delay: 0.12 }}
-            className="overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-soft"
+            className="overflow-hidden rounded-lg border border-line bg-white shadow-soft"
           >
             <div className="flex items-center gap-2 border-b border-line px-5 py-4 text-sm font-semibold text-navy">
               <MapPin className="h-4 w-4 text-orange" aria-hidden="true" />
@@ -283,11 +283,11 @@ function ContactLink({
       <span className="flex h-10 w-10 items-center justify-center rounded-md bg-navy text-white">
         <Icon className="h-5 w-5" aria-hidden="true" />
       </span>
-      <span>
+      <span className="min-w-0">
         <span className="block text-xs font-bold uppercase tracking-[0.16em] text-midGray">
           {label}
         </span>
-        <span className="font-semibold text-navy">{value}</span>
+        <span className="break-words font-semibold text-navy">{value}</span>
       </span>
     </a>
   );

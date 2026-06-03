@@ -8,21 +8,24 @@
     "events": "Eventos",
     "faq": "FAQ",
     "contact": "Contacto",
-    "cta": "Solicita información"
+    "cta": "Solicita información",
+    "skip": "Saltar al contenido",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
   },
   "hero": {
     "eyebrow": "Centro de Capacitación Empresarial",
     "tagline": "Formación que impulsa tu crecimiento",
-    "title": "Capacitaciones profesionales para fortalecer el bienestar y desarrollo de tu organización",
-    "subtitle": "En CECAE ofrecemos soluciones de capacitación diseñadas para fortalecer el desarrollo organizacional, promoviendo el bienestar psicosocial, la salud mental y el crecimiento de las competencias profesionales dentro de empresas e instituciones.",
-    "primary": "Agenda tu capacitación con nosotros",
+    "title": "Capacitación profesional para equipos más sanos y preparados",
+    "subtitle": "En CECAE diseñamos soluciones de capacitación para fortalecer el desarrollo organizacional, el bienestar psicosocial, la salud mental y las competencias profesionales de empresas e instituciones.",
+    "primary": "Agenda tu capacitación",
     "secondary": "Agenda por WhatsApp",
     "scroll": "Explorar"
   },
   "about": {
     "eyebrow": "Nosotros",
-    "title": "Un aliado profesional para fortalecer el desarrollo organizacional.",
-    "body": "En el Centro de Capacitación Empresarial (CECAE) trabajamos con el compromiso de impulsar el desarrollo integral de las organizaciones a través de procesos formativos de alta calidad. Nuestra labor se centra en identificar las necesidades específicas de cada empresa para diseñar intervenciones pertinentes, orientadas al fortalecimiento del capital humano y la mejora del entorno laboral.\n\nPromovemos una cultura organizacional saludable, ética y sostenible, basada en el respeto, la comunicación efectiva y el bienestar psicológico.",
+    "title": "Un aliado profesional para el desarrollo organizacional",
+    "body": "En el Centro de Capacitación Empresarial (CECAE) impulsamos el desarrollo integral de las organizaciones mediante procesos formativos de alta calidad. Identificamos las necesidades específicas de cada empresa para diseñar intervenciones pertinentes, orientadas al fortalecimiento del capital humano y a la mejora del entorno laboral.\n\nPromovemos una cultura organizacional saludable, ética y sostenible, basada en el respeto, la comunicación efectiva y el bienestar psicológico.",
     "stats": {
       "modalities": "Modalidades de capacitación",
       "areas": "Áreas profesionales",
@@ -35,31 +38,31 @@
     "cta": "Más información",
     "items": [
       {
-        "title": "Bienestar Psicosocial y Salud Mental",
+        "title": "Bienestar psicosocial y salud mental",
         "description": "Intervenciones orientadas a la prevención de riesgos psicosociales, manejo del estrés laboral y promoción de la salud mental en el entorno de trabajo."
       },
       {
         "title": "Análisis conforme a la NOM-035-STPS-2018",
-        "description": "Evaluación e intervención en factores de riesgo psicosocial, cumpliendo con la normativa vigente en México, mediante diagnósticos organizacionales y estrategias de mejora."
+        "description": "Evaluación e intervención de factores de riesgo psicosocial conforme a la normativa vigente en México, mediante diagnósticos organizacionales y estrategias de mejora."
       },
       {
-        "title": "Clima Organizacional",
+        "title": "Clima organizacional",
         "description": "Diagnóstico y fortalecimiento del ambiente laboral, favoreciendo relaciones interpersonales saludables y una cultura organizacional positiva."
       },
       {
-        "title": "Liderazgo y Gestión",
+        "title": "Liderazgo y gestión",
         "description": "Desarrollo de habilidades directivas que permitan una conducción efectiva de equipos de trabajo, toma de decisiones y manejo estratégico de recursos humanos."
       },
       {
-        "title": "Habilidades de Comunicación y Resolución de Conflictos",
+        "title": "Comunicación y resolución de conflictos",
         "description": "Capacitación enfocada en mejorar la comunicación interpersonal, la asertividad y la gestión adecuada de conflictos dentro de la organización."
       }
     ]
   },
   "nom": {
     "eyebrow": "NOM-035-STPS-2018",
-    "title": "Diagnóstico, intervención y estrategias de mejora para cumplir con la normativa.",
-    "body": "La NOM-035-STPS-2018 busca identificar, analizar y prevenir factores de riesgo psicosocial en los centros de trabajo. CECAE acompaña a empresas e instituciones con evaluación e intervención en factores de riesgo psicosocial, cumpliendo con la normativa vigente en México, mediante diagnósticos organizacionales y estrategias de mejora.",
+    "title": "Diagnóstico, intervención y mejora para cumplir con la normativa",
+    "body": "La NOM-035-STPS-2018 busca identificar, analizar y prevenir factores de riesgo psicosocial en los centros de trabajo. CECAE acompaña a empresas e instituciones con evaluaciones, intervenciones y estrategias de mejora alineadas con la normativa vigente en México.",
     "cta": "Agenda tu diagnóstico organizacional",
     "points": ["Diagnóstico organizacional", "Intervenciones pertinentes", "Estrategias de mejora"]
   },
@@ -92,7 +95,7 @@
   "events": {
     "eyebrow": "Eventos",
     "title": "Próximos eventos",
-    "intro": "Capacitaciones, webinars y pláticas disponibles para empresas e instituciones.",
+    "intro": "Capacitaciones, webinars y pláticas para empresas e instituciones.",
     "emptyTitle": "No hay eventos próximos",
     "emptyText": "¡Vuelve pronto!",
     "emptyCta": "Contáctanos para más información",
@@ -109,7 +112,7 @@
       "virtual": "Virtual",
       "hibrida": "Híbrida"
     },
-    "detailStub": "La ruta de detalle está preparada para V2. Cuando existan eventos publicados, este espacio mostrará información completa y registro."
+    "detailStub": "La ruta de detalle está preparada para la versión V2. Cuando existan eventos publicados, este espacio mostrará información completa y opciones de registro."
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -147,7 +150,7 @@
     "subtitle": "Comparte tus datos y prepararemos un mensaje de WhatsApp con la información de tu organización.",
     "form": {
       "name": "Nombre completo",
-      "organization": "Organización / Empresa",
+      "organization": "Organización o empresa",
       "phone": "Teléfono",
       "email": "Correo electrónico",
       "city": "Ciudad",
@@ -156,7 +159,7 @@
       "size": "Tamaño aproximado de la organización",
       "message": "Mensaje",
       "submit": "Preparar mensaje por WhatsApp",
-      "success": "Tu mensaje de WhatsApp fue preparado.",
+      "success": "Tu mensaje de WhatsApp está listo.",
       "turnstileMissing": "Cloudflare Turnstile se activará cuando se configure la llave del sitio.",
       "turnstileRequired": "Completa la verificación de seguridad para continuar.",
       "required": "Este campo es obligatorio.",
@@ -171,7 +174,7 @@
   },
   "privacy": {
     "title": "Aviso de privacidad",
-    "intro": "Este aviso describe el tratamiento de datos personales de contacto recopilados a través del sitio web de CECAE.",
+    "intro": "Este aviso describe el tratamiento de los datos personales de contacto recopilados a través del sitio web de CECAE.",
     "sections": [
       {
         "title": "Datos recabados",
@@ -194,6 +197,10 @@
   "footer": {
     "tagline": "Formación que impulsa tu crecimiento",
     "location": "Ciudad Juárez, Chihuahua & Chihuahua, Chihuahua",
-    "privacy": "Aviso de privacidad"
+    "privacy": "Aviso de privacidad",
+    "navigation": "Navegación",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados.",
+    "summary": "Formación empresarial para cumplir con la NOM-035 y desarrollar talento."
   }
 }

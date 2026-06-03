@@ -12,20 +12,20 @@ export function EventsPreviewSection() {
   const featured = events.slice(0, 3);
 
   return (
-    <section id="eventos" className="flow-section py-24 sm:py-28">
+    <section id="eventos" className="flow-section py-20 sm:py-24 lg:py-28">
       <div className="section-shell">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading eyebrow={t('events.eyebrow')} title={t('events.title')}>
             <p>{t('events.intro')}</p>
           </SectionHeading>
-          <LinkButton to="/eventos" variant="outline" className="md:mb-1">
+          <LinkButton to="/eventos" variant="outline" className="w-full sm:w-fit md:mb-1">
             {t('events.viewAll')}
           </LinkButton>
         </div>
 
         <div className="mt-10">
           {isLoading ? (
-            <div className="h-64 animate-pulse rounded-3xl bg-skySurface" />
+            <div className="h-64 animate-pulse rounded-lg bg-skySurface" />
           ) : featured.length > 0 ? (
             <motion.div
               initial="hidden"
