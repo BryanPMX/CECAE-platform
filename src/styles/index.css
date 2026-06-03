@@ -91,37 +91,88 @@ section[id] {
 .home-flow {
   position: relative;
   isolation: isolate;
-  background:
-    linear-gradient(180deg, rgba(245, 248, 251, 1) 0%, rgba(255, 255, 255, 0.98) 32%, rgba(235, 244, 250, 0.9) 68%, rgba(245, 248, 251, 1) 100%),
-    linear-gradient(135deg, rgba(26, 58, 107, 0.055) 0 18%, transparent 18% 50%, rgba(217, 114, 24, 0.055) 50% 64%, transparent 64% 100%);
+  background: #f5f8fb;
 }
 
 .home-flow::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(26, 58, 107, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 58, 107, 0.045) 1px, transparent 1px);
-  background-position: center top;
-  background-size: 4rem 4rem;
-  mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  content: none;
 }
 
 .flow-section {
   position: relative;
-  background: transparent;
+  isolation: isolate;
 }
 
-.flow-section + .flow-section::before {
+.flow-section::before,
+.flow-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.flow-section-light {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%),
+    linear-gradient(135deg, rgba(26, 58, 107, 0.03), transparent 50%, rgba(51, 51, 51, 0.035) 100%);
+}
+
+.flow-section-light::before {
+  background-image:
+    repeating-linear-gradient(
+      108deg,
+      transparent 0 7.5rem,
+      rgba(51, 51, 51, 0.075) 7.5rem 10.5rem,
+      transparent 10.5rem 18rem,
+      rgba(26, 58, 107, 0.045) 18rem 20.5rem,
+      transparent 20.5rem 30rem
+    );
+  background-position: center top;
+  background-size: 18rem 18rem;
+  opacity: 0.78;
+  mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.flow-section-light::after {
+  background-image:
+    linear-gradient(rgba(51, 51, 51, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 51, 51, 0.045) 1px, transparent 1px);
+  background-position: center top;
+  background-size: 4.75rem 4.75rem;
+  mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.flow-section-dark {
+  background:
+    linear-gradient(135deg, #1a3a6b 0%, #17315b 56%, #0f2443 100%);
+}
+
+.flow-section-dark::before {
+  background:
+    linear-gradient(115deg, rgba(43, 108, 176, 0.34) 0 26%, transparent 26% 58%, rgba(217, 114, 24, 0.2) 58% 70%, transparent 70% 100%);
+}
+
+.flow-section-dark::after {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.flow-section + .flow-section .section-shell::before {
   content: '';
   position: absolute;
   inset: 0 auto auto 50%;
   width: min(72rem, calc(100% - 2.5rem));
   height: 1px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, rgba(26, 58, 107, 0.14), rgba(217, 114, 24, 0.16), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), rgba(26, 58, 107, 0.2), rgba(217, 114, 24, 0.18), transparent);
+}
+
+.flow-section .section-shell {
+  position: relative;
 }
 
 @layer utilities {
