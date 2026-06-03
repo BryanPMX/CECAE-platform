@@ -39,7 +39,7 @@ export function HeroSection() {
           <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight sm:text-5xl lg:text-[4.8rem]">
+          <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight sm:text-4xl lg:text-[4.4rem]">
             {t('hero.title')}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-9 text-white/82">
