@@ -29,13 +29,13 @@ export function MethodologySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.45, delay: index * 0.1 }}
-              className="relative rounded-lg border border-white/14 bg-white/10 p-6 shadow-soft backdrop-blur-xl"
+              className="relative flex flex-col items-center rounded-lg border border-white/14 bg-white/10 p-6 text-center shadow-soft backdrop-blur-xl"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-md bg-orange font-display text-lg font-bold text-white">
                 {index + 1}
               </span>
               <h3 className="text-balance mt-5 font-display text-xl font-bold">{step.title}</h3>
-              <p className="text-pretty mt-3 text-sm leading-6 text-white/76">{step.description}</p>
+              <p className="text-pretty mt-3 text-left text-sm leading-6 text-white/76">{step.description}</p>
             </motion.article>
           ))}
         </div>

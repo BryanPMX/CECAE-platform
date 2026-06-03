@@ -13,7 +13,6 @@ type SectionHeadingProps = {
 export function SectionHeading({
   eyebrow,
   title,
-  align = 'left',
   level = 2,
   inverse = false,
   children,
@@ -26,7 +25,7 @@ export function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.55, ease: 'easeOut' }}
-      className={cn('max-w-3xl', align === 'center' && 'mx-auto text-center')}
+      className="mx-auto max-w-3xl text-center"
     >
       <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-orange">
         {eyebrow}
@@ -40,7 +39,7 @@ export function SectionHeading({
         {title}
       </HeadingTag>
       {children ? (
-        <div className={cn('text-pretty mt-4 text-base leading-7 sm:text-[1.0625rem] sm:leading-8', inverse ? 'text-white/72' : 'text-midGray')}>
+        <div className={cn('text-pretty mx-auto mt-4 max-w-[66ch] text-base leading-7 sm:text-[1.0625rem] sm:leading-8', inverse ? 'text-white/72' : 'text-midGray')}>
           {children}
         </div>
       ) : null}

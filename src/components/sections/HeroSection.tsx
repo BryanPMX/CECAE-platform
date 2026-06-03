@@ -19,12 +19,12 @@ export function HeroSection() {
       <motion.div style={{ y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
       <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent" />
-      <div className="section-shell grid min-h-[calc(100svh-5rem)] items-center gap-12 py-14 sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-10">
+      <div className="section-shell grid min-h-[calc(100svh-5rem)] items-center justify-items-center gap-12 py-14 text-center sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="max-w-[46rem] lg:max-w-[43rem]"
+          className="mx-auto max-w-[46rem] lg:max-w-[43rem]"
         >
           <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/86 backdrop-blur-sm">
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
@@ -33,13 +33,13 @@ export function HeroSection() {
           <p className="mt-7 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-orange sm:text-sm lg:mt-5">
             {t('hero.tagline')}
           </p>
-          <h1 className="text-balance mt-4 max-w-[15ch] font-display text-[2.65rem] font-extrabold leading-[1.06] sm:text-6xl lg:mt-3 lg:text-[clamp(3.1rem,4.1vw,4.65rem)]">
+          <h1 className="text-balance mx-auto mt-4 max-w-[15ch] font-display text-[2.65rem] font-extrabold leading-[1.06] sm:text-6xl lg:mt-3 lg:text-[clamp(3.1rem,4.1vw,4.65rem)]">
             {t('hero.title')}
           </h1>
-          <p className="text-pretty mt-6 max-w-2xl text-base leading-7 text-white/80 sm:text-lg sm:leading-8 lg:mt-4 lg:text-[1.0625rem]">
+          <p className="text-pretty mx-auto mt-6 max-w-2xl text-base leading-7 text-white/80 sm:text-lg sm:leading-8 lg:mt-4 lg:text-[1.0625rem]">
             {t('hero.subtitle')}
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-5">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row lg:mt-5">
             <Link
               to="/contacto#contacto"
               onClick={() => trackEvent('cta_click', { location: 'hero_primary' })}

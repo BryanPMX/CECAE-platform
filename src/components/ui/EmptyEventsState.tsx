@@ -12,7 +12,7 @@ export function EmptyEventsState() {
         <CalendarClock className="h-12 w-12 text-steel" aria-hidden="true" />
       </div>
       <h3 className="font-display text-2xl font-bold text-navy">{t('events.emptyTitle')}</h3>
-      <p className="mt-2 text-midGray">{t('events.emptyText')}</p>
+      <p className="text-pretty mx-auto mt-2 max-w-md text-midGray">{t('events.emptyText')}</p>
       <LinkButton to="/#contacto" variant="outline" className="mt-6">
         {t('events.emptyCta')}
       </LinkButton>

@@ -37,14 +37,14 @@ export function EventsPage() {
         path="/eventos"
       />
       <section className="page-hero">
-        <div className="section-shell">
+        <div className="section-shell text-center">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-orange">
             {t('events.eyebrow')}
           </p>
           <h1 className="text-balance mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">
             {t('events.title')}
           </h1>
-          <p className="text-pretty mt-4 max-w-2xl text-base leading-7 text-white/76 sm:text-lg sm:leading-8">
+          <p className="text-pretty mx-auto mt-4 max-w-2xl text-base leading-7 text-white/76 sm:text-lg sm:leading-8">
             {t('events.intro')}
           </p>
         </div>
@@ -52,7 +52,7 @@ export function EventsPage() {
 
       <section className="bg-surface py-12 sm:py-16 lg:py-20">
         <div className="section-shell">
-          <div className="grid gap-4 rounded-lg border border-line bg-white p-4 shadow-soft md:grid-cols-[1fr_220px_220px]">
+          <div className="grid gap-4 rounded-lg border border-line bg-white p-4 text-left shadow-soft md:grid-cols-[1fr_220px_220px]">
             <label className="relative grid gap-2 text-sm font-semibold text-navy">
               {t('events.filters.search')}
               <Search className="pointer-events-none absolute bottom-3 left-3 h-4 w-4 text-midGray" />

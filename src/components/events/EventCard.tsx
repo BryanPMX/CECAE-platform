@@ -25,7 +25,7 @@ export function EventCard({ event }: { event: CecaeEvent }) {
         <img src={event.imageUrl} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
       ) : null}
       <div className="grid gap-4 p-5">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
           <span className={cn('rounded-full px-3 py-1 text-xs font-bold', typeClasses[event.type])}>
             {t(`events.filters.${event.type}`)}
           </span>
@@ -34,28 +34,28 @@ export function EventCard({ event }: { event: CecaeEvent }) {
           </span>
         </div>
         <div>
-          <h3 className="text-balance font-display text-xl font-bold leading-snug text-navy group-hover:text-orange">
+          <h3 className="text-balance text-center font-display text-xl font-bold leading-snug text-navy group-hover:text-orange">
             {event.title[language]}
           </h3>
-          <p className="text-pretty mt-2 line-clamp-3 text-sm leading-6 text-midGray">
+          <p className="text-pretty mt-2 line-clamp-3 text-left text-sm leading-6 text-midGray">
             {event.description[language]}
           </p>
         </div>
-        <div className="grid gap-2 text-sm text-charcoal">
+        <div className="grid justify-items-start gap-2 text-left text-sm text-charcoal">
           <span className="inline-flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-orange" aria-hidden="true" />
+            <Calendar className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
             {new Intl.DateTimeFormat(language === 'es' ? 'es-MX' : 'en-US', {
               dateStyle: 'medium',
             }).format(new Date(event.date))}
           </span>
           <span className="inline-flex items-center gap-2">
-            <Clock className="h-4 w-4 text-orange" aria-hidden="true" />
+            <Clock className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
             {event.time}
             {event.duration ? ` · ${event.duration}` : ''}
           </span>
           {event.location ? (
             <span className="inline-flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-orange" aria-hidden="true" />
+              <MapPin className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
               {event.location}
             </span>
           ) : null}

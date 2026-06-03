@@ -96,7 +96,7 @@ export function ContactSection() {
 
   return (
     <section id="contacto" className="bg-surface py-16 sm:py-20 lg:py-24">
-      <div className="section-shell grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="section-shell grid justify-items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -109,7 +109,7 @@ export function ContactSection() {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mt-8 grid gap-4 rounded-lg border border-line bg-white p-5 shadow-soft sm:p-6"
+            className="mt-8 grid w-full gap-4 rounded-lg border border-line bg-white p-5 shadow-soft sm:p-6"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label={t('contact.form.name')} error={errors.name?.message}>
@@ -151,7 +151,7 @@ export function ContactSection() {
               <textarea {...register('message')} rows={5} className={cn(inputClasses, 'resize-y')} />
             </Field>
 
-            <div className="rounded-md border border-line bg-skySurface p-3">
+            <div className="flex justify-center rounded-md border border-line bg-skySurface p-3">
               {hasTurnstile ? (
                 <Turnstile
                   siteKey={config.turnstileSiteKey}
@@ -182,7 +182,7 @@ export function ContactSection() {
           </form>
         </motion.div>
 
-        <aside className="grid gap-5">
+        <aside className="grid w-full gap-5">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -190,7 +190,7 @@ export function ContactSection() {
             transition={{ duration: 0.55, delay: 0.08 }}
             className="rounded-lg border border-line bg-skySurface p-6 shadow-soft"
           >
-            <h3 className="font-display text-2xl font-bold text-navy">{t('nav.contact')}</h3>
+            <h3 className="text-center font-display text-2xl font-bold text-navy">{t('nav.contact')}</h3>
             <div className="mt-5 grid gap-3">
               <ContactLink
                 icon={Phone}
@@ -251,7 +251,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="grid gap-2 text-sm font-semibold text-charcoal">
+    <label className="grid min-w-0 gap-2 text-sm font-semibold text-charcoal">
       {label}
       {children}
       {error ? <span className="text-xs font-semibold text-orange">{error}</span> : null}
@@ -294,4 +294,4 @@ function ContactLink({
 }
 
 const inputClasses =
-  'focus-ring relative z-10 min-h-11 rounded-md border border-line bg-white px-3 py-2 text-base font-normal text-charcoal shadow-sm transition placeholder:text-midGray focus:border-orange';
+  'focus-ring relative z-10 min-h-11 w-full min-w-0 rounded-md border border-line bg-white px-3 py-2 text-left text-base font-normal text-charcoal shadow-sm transition placeholder:text-midGray focus:border-orange';

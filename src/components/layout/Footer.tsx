@@ -20,7 +20,7 @@ export function Footer() {
             {t('footer.tagline')}
           </p>
           <p className="flex items-center gap-2 text-sm text-white/70">
-            <MapPin className="h-4 w-4 text-orange" aria-hidden="true" />
+            <MapPin className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
             {t('footer.location')}
           </p>
           <Link
@@ -60,7 +60,7 @@ export function Footer() {
             onClick={() => trackEvent('phone_click', { location: 'footer' })}
             className="focus-ring inline-flex items-center gap-3 rounded-md py-2 text-sm text-white/82 transition hover:text-white"
           >
-            <Phone className="h-4 w-4 text-orange" aria-hidden="true" />
+            <Phone className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
             {displayContact.phone}
           </a>
           <a
@@ -68,7 +68,7 @@ export function Footer() {
             onClick={() => trackEvent('email_click', { location: 'footer' })}
             className="focus-ring inline-flex items-center gap-3 rounded-md py-2 text-sm text-white/82 transition hover:text-white"
           >
-            <Mail className="h-4 w-4 text-orange" aria-hidden="true" />
+            <Mail className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
             {displayContact.email}
           </a>
         </div>

@@ -35,7 +35,7 @@ export function ServicesSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.45, delay: index * 0.06 }}
-                  className="group flex min-h-[276px] flex-col rounded-lg border border-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
+                  className="group flex min-h-[276px] flex-col items-center rounded-lg border border-line bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-md bg-skySurface text-steel transition group-hover:bg-orange group-hover:text-white">
                     <Icon className="h-6 w-6" aria-hidden="true" />
@@ -43,7 +43,7 @@ export function ServicesSection() {
                   <h3 className="text-balance mt-5 font-display text-xl font-bold leading-snug text-navy">
                     {service.title}
                   </h3>
-                  <p className="text-pretty mt-3 flex-1 text-[0.95rem] leading-7 text-midGray sm:text-base">
+                  <p className="text-pretty mt-3 flex-1 text-left text-[0.95rem] leading-7 text-midGray sm:text-base">
                     {service.description}
                   </p>
                   <Link
@@ -51,7 +51,7 @@ export function ServicesSection() {
                     onClick={() =>
                       trackEvent('cta_click', { location: 'service_card', service: service.title })
                     }
-                    className="focus-ring mt-5 inline-flex w-fit rounded-md font-semibold text-orange hover:text-navy"
+                    className="focus-ring mx-auto mt-5 inline-flex w-fit rounded-md font-semibold text-orange hover:text-navy"
                   >
                     {t('services.cta')}
                   </Link>
