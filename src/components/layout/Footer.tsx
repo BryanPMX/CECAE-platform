@@ -43,11 +43,11 @@ export function Footer() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
               {t('footer.contact')}
             </p>
-            <div className="flex flex-col items-start gap-1.5">
+            <div className="flex flex-col items-center gap-1.5 lg:items-start">
               <a
                 href={`tel:${config.phone}`}
                 onClick={() => trackEvent('phone_click', { location: 'footer' })}
-                className="focus-ring inline-flex min-w-[15rem] items-center gap-3 rounded-md py-1.5 text-left text-sm text-white/82 transition hover:text-white"
+                className="focus-ring inline-flex min-w-[15rem] items-center justify-center gap-3 rounded-md py-1.5 text-center text-sm text-white/82 transition hover:text-white lg:justify-start lg:text-left"
               >
                 <Phone className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
                 {displayContact.phone}
@@ -55,7 +55,7 @@ export function Footer() {
               <a
                 href={`mailto:${config.email}`}
                 onClick={() => trackEvent('email_click', { location: 'footer' })}
-                className="focus-ring inline-flex min-w-[15rem] items-center gap-3 rounded-md py-1.5 text-left text-sm text-white/82 transition hover:text-white"
+                className="focus-ring inline-flex min-w-[15rem] items-center justify-center gap-3 rounded-md py-1.5 text-center text-sm text-white/82 transition hover:text-white lg:justify-start lg:text-left"
               >
                 <Mail className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
                 {displayContact.email}
@@ -77,7 +77,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-4">
-        <div className="section-shell flex flex-col gap-4 text-sm leading-6 text-white/70 sm:flex-row sm:items-center sm:justify-between">
+        <div className="section-shell flex flex-col gap-4 text-center text-sm leading-6 text-white/70 sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <p>© 2026 CECAE. Todos los derechos reservados.</p>
           <p>Formación empresarial para cumplir con la NOM-035 y desarrollar talento.</p>
         </div>
