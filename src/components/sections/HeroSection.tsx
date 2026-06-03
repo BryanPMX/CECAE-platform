@@ -42,7 +42,7 @@ export function HeroSection() {
           <h1 className="mt-4 font-display text-3xl font-extrabold leading-[1.05] sm:text-4xl md:text-[3.6rem] lg:text-[4rem] xl:text-[4.2rem]">
             {t('hero.title')}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-9 text-white/82">
+          <p className="mt-6 max-w-2xl text-base leading-8 sm:text-lg sm:leading-10 text-white/82">
             {t('hero.subtitle')}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
