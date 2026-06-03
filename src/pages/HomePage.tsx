@@ -15,11 +15,13 @@ export function HomePage() {
         description="Capacitaciones empresariales en Ciudad Juárez para bienestar psicosocial, NOM-035, liderazgo, comunicación y desarrollo organizacional."
       />
       <HeroSection />
-      <AboutSection />
-      <ServicesSection />
-      <NomSection />
-      <MethodologySection />
-      <EventsPreviewSection />
+      <div className="home-flow">
+        <AboutSection />
+        <ServicesSection />
+        <NomSection />
+        <MethodologySection />
+        <EventsPreviewSection />
+      </div>
     </PageShell>
   );
 }

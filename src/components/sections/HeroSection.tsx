@@ -8,7 +8,7 @@ import { trackEvent } from '@/lib/analytics';
 export function HeroSection() {
   const { t, i18n } = useTranslation();
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 700], [0, 95]);
+  const y = useTransform(scrollY, [0, 700], [0, 70]);
   const message =
     i18n.language === 'en'
       ? 'Hello CECAE, I would like to schedule professional training for my organization.'
@@ -17,9 +17,8 @@ export function HeroSection() {
   return (
     <section className="relative isolate min-h-[calc(100vh-5rem)] overflow-hidden bg-navy text-white">
       <motion.div style={{ y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
-      <div className="absolute left-10 top-24 h-56 w-56 rounded-full bg-white/5 blur-2xl" />
-      <div className="absolute right-12 bottom-24 h-72 w-72 rounded-full bg-orange/10 blur-3xl" />
       <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent" />
       <div className="section-shell grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:gap-10 lg:py-8 xl:py-10 lg:grid-cols-[1.08fr_0.92fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -31,15 +30,10 @@ export function HeroSection() {
             <Building2 className="h-4 w-4 text-orange" aria-hidden="true" />
             {t('hero.eyebrow')}
           </p>
-          <img
-            src="/cecae-footer-logo-1600x400.png"
-            alt="CECAE"
-            className="mt-8 h-auto w-full max-w-md rounded-3xl bg-white px-4 py-3 shadow-glow lg:mt-5 lg:max-w-[21rem]"
-          />
-          <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base lg:mt-4 lg:text-[0.95rem]">
+          <p className="mt-8 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-orange sm:text-base lg:mt-5 lg:text-[0.95rem]">
             {t('hero.tagline')}
           </p>
-          <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight sm:text-5xl lg:mt-3 lg:text-[clamp(2.5rem,3.1vw,3.5rem)]">
+          <h1 className="mt-4 max-w-[13ch] font-display text-4xl font-extrabold leading-tight sm:text-6xl lg:mt-3 lg:text-[clamp(3rem,4.3vw,4.8rem)]">
             {t('hero.title')}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8 lg:mt-4 lg:text-base lg:leading-7">

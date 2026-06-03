@@ -17,7 +17,7 @@ export function ServicesSection() {
   const services = t('services.items', { returnObjects: true }) as ServiceCopy[];
 
   return (
-    <section id="capacitaciones" className="bg-surface py-24 sm:py-28">
+    <section id="capacitaciones" className="flow-section py-24 sm:py-28">
       <div className="section-shell">
         <div className="section-spotlight border border-line bg-white/90 p-8 shadow-soft">
           <SectionHeading

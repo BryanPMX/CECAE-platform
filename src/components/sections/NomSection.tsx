@@ -10,7 +10,7 @@ export function NomSection() {
   const points = t('nom.points', { returnObjects: true }) as string[];
 
   return (
-    <section id="nom035" className="bg-surface py-24 sm:py-28">
+    <section id="nom035" className="flow-section py-24 sm:py-28">
       <div className="section-shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <motion.div
           initial={{ opacity: 0, x: -20 }}

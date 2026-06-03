@@ -14,7 +14,7 @@ export function AboutSection() {
   const paragraphs = t('about.body').split('\n\n');
 
   return (
-    <section id="nosotros" className="bg-surface py-24 sm:py-28">
+    <section id="nosotros" className="flow-section py-24 sm:py-28">
       <div className="section-shell grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
         <SectionHeading eyebrow={t('about.eyebrow')} title={t('about.title')} />
         <motion.div
