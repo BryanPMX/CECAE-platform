@@ -26,6 +26,7 @@ const config: Config = {
       boxShadow: {
         glow: '0 18px 55px rgba(26, 58, 107, 0.16)',
         orange: '0 16px 40px rgba(217, 114, 24, 0.25)',
+        soft: '0 18px 45px rgba(15, 36, 67, 0.08)',
       },
     },
   },

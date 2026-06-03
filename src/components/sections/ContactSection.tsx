@@ -234,7 +234,7 @@ export function ContactSection() {
               referrerPolicy="no-referrer-when-downgrade"
               className="h-[360px] w-full"
             />
-          </div>
+          </motion.div>
         </aside>
       </div>
     </section>
