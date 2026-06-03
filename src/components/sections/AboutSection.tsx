@@ -1,5 +1,5 @@
-import { animate, motion, useInView, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Building2, MapPinned, UsersRound } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -14,6 +14,11 @@ export function AboutSection() {
   const { t } = useTranslation();
   const paragraphs = t('about.body').split('\n\n');
   const aboutIllustrationAlt = `${t('about.title')} ${t('about.eyebrow')}`;
+  const statsRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: statsRef,
+    offset: ['start 92%', 'end 48%'],
+  });
 
   return (
     <section id="nosotros" className="flow-section flow-section-light py-20 sm:py-24 lg:py-28">
@@ -46,7 +51,7 @@ export function AboutSection() {
             </p>
           ))}
         </motion.div>
-        <div className="grid gap-4 sm:grid-cols-3 lg:col-span-2 lg:-mt-6">
+        <div ref={statsRef} className="grid gap-4 sm:grid-cols-3 lg:col-span-2 lg:-mt-6">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -59,7 +64,7 @@ export function AboutSection() {
                 className="flex flex-col items-center rounded-lg border border-line bg-white/95 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-orange/60 hover:shadow-soft"
               >
                 <Icon className="h-7 w-7 text-orange" aria-hidden="true" />
-                <RollingStat value={stat.value} delay={index * 0.08} />
+                <RollingStat value={stat.value} progress={scrollYProgress} index={index} />
                 <p className="mt-1 text-sm font-semibold text-midGray">{t(stat.label)}</p>
               </motion.div>
             );
@@ -70,39 +75,34 @@ export function AboutSection() {
   );
 }
 
-function RollingStat({ value, delay }: { value: number; delay: number }) {
-  const ref = useRef<HTMLParagraphElement | null>(null);
-  const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
+function RollingStat({
+  value,
+  progress,
+  index,
+}: {
+  value: number;
+  progress: ReturnType<typeof useScroll>['scrollYProgress'];
+  index: number;
+}) {
   const reduceMotion = useReducedMotion();
-  const [displayValue, setDisplayValue] = useState(0);
+  const start = index * 0.1;
+  const end = start + 0.38;
+  const scrolledValue = useTransform(progress, [start, end], [0, value], {
+    clamp: true,
+  });
+  const [displayValue, setDisplayValue] = useState(reduceMotion ? value : 0);
 
-  useEffect(() => {
-    if (!isInView) {
-      return;
-    }
-
+  useMotionValueEvent(scrolledValue, 'change', (latest) => {
     if (reduceMotion) {
-      setDisplayValue(value);
       return;
     }
 
-    const controls = animate(0, value, {
-      delay,
-      duration: 0.85,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (latest) => {
-        setDisplayValue(Math.round(latest));
-      },
-    });
-
-    return () => {
-      controls.stop();
-    };
-  }, [delay, isInView, reduceMotion, value]);
+    setDisplayValue(Math.round(latest));
+  });
 
   return (
-    <p ref={ref} className="mt-4 font-display text-3xl font-bold tabular-nums text-navy" aria-label={`${value}`}>
-      {displayValue}
+    <p className="mt-4 font-display text-3xl font-bold tabular-nums text-navy" aria-label={`${value}`}>
+      {reduceMotion ? value : displayValue}
     </p>
   );
 }
