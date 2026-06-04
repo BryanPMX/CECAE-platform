@@ -1,5 +1,5 @@
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Building2, MapPinned, UsersRound } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -81,6 +81,7 @@ export function AboutSection() {
                 <RollingStat
                   value={stat.value}
                   progress={scrollYProgress}
+                  shouldReduceMotion={shouldReduceMotion}
                   index={index}
                   total={stats.length}
                 />
@@ -97,39 +98,47 @@ export function AboutSection() {
 function RollingStat({
   value,
   progress,
+  shouldReduceMotion,
   index,
   total,
 }: {
   value: number;
   progress: ReturnType<typeof useScroll>['scrollYProgress'];
+  shouldReduceMotion: boolean | null;
   index: number;
   total: number;
 }) {
-  const reduceMotion = useReducedMotion();
   const stagger = total > 1 ? index / (total - 1) : 0;
-  const start = stagger * 0.18;
-  const end = Math.min(start + 0.62, 1);
+  const start = stagger * 0.08;
+  const end = Math.min(start + 0.26, 1);
   const scrolledValue = useTransform(progress, [start, end], [0, value], {
     clamp: true,
   });
   const smoothedValue = useSpring(scrolledValue, {
-    stiffness: 90,
-    damping: 24,
-    mass: 0.8,
+    stiffness: 520,
+    damping: 36,
+    mass: 0.35,
+    restDelta: 0.001,
   });
-  const [displayValue, setDisplayValue] = useState(reduceMotion ? value : 0);
+  const [displayValue, setDisplayValue] = useState(shouldReduceMotion ? value : 0);
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setDisplayValue(value);
+    }
+  }, [shouldReduceMotion, value]);
 
   useMotionValueEvent(smoothedValue, 'change', (latest) => {
-    if (reduceMotion) {
+    if (shouldReduceMotion) {
       return;
     }
 
-    setDisplayValue(Math.min(value, Math.max(0, Math.floor(latest + 0.15))));
+    setDisplayValue(Math.min(value, Math.max(0, Math.round(latest))));
   });
 
   return (
     <p className="mt-4 font-display text-3xl font-bold tabular-nums text-navy" aria-label={`${value}`}>
-      {reduceMotion ? value : displayValue}
+      {shouldReduceMotion ? value : displayValue}
     </p>
   );
 }
