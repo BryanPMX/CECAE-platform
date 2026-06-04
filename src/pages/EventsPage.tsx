@@ -1,15 +1,18 @@
+import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EventCard } from '@/components/events/EventCard';
 import { Seo } from '@/components/layout/Seo';
 import { EmptyEventsState } from '@/components/ui/EmptyEventsState';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 import { useEvents } from '@/hooks/useEvents';
 import { trackEvent } from '@/lib/analytics';
 import type { EventFilters, EventModality, EventType } from '@/services';
 
 export function EventsPage() {
   const { t } = useTranslation();
+  const shouldReduceMotion = useShouldReduceMotion();
   const [type, setType] = useState<EventType | ''>('');
   const [modality, setModality] = useState<EventModality | ''>('');
   const [search, setSearch] = useState('');
@@ -96,11 +99,34 @@ export function EventsPage() {
             {isLoading ? (
               <div className="h-64 animate-pulse rounded-lg bg-skySurface" />
             ) : hasEvents ? (
-              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                {events.map((event) => (
-                  <EventCard key={event.id} event={event} />
+              <motion.div
+                initial={shouldReduceMotion ? false : 'hidden'}
+                whileInView={shouldReduceMotion ? undefined : 'show'}
+                viewport={shouldReduceMotion ? undefined : { once: true }}
+                variants={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        hidden: {},
+                        show: { transition: { staggerChildren: 0.06 } },
+                      }
+                }
+                className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
+              >
+                {events.map((event, index) => (
+                  <motion.div
+                    key={event.id}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                    whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    viewport={shouldReduceMotion ? undefined : { once: true, margin: '-80px' }}
+                    transition={
+                      shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.04 }
+                    }
+                  >
+                    <EventCard event={event} />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               <EmptyEventsState />
             )}
