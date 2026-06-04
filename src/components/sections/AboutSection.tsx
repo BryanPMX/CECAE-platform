@@ -1,4 +1,4 @@
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Building2, MapPinned, UsersRound } from 'lucide-react';
@@ -19,7 +19,7 @@ export function AboutSection() {
   const statsRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: statsRef,
-    offset: ['start 92%', 'end 48%'],
+    offset: ['start 96%', 'end 8%'],
   });
 
   return (
@@ -78,7 +78,12 @@ export function AboutSection() {
                 className="flex flex-col items-center rounded-lg border border-line bg-white/95 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-orange/60 hover:shadow-soft"
               >
                 <Icon className="h-7 w-7 text-orange" aria-hidden="true" />
-                <RollingStat value={stat.value} progress={scrollYProgress} index={index} />
+                <RollingStat
+                  value={stat.value}
+                  progress={scrollYProgress}
+                  index={index}
+                  total={stats.length}
+                />
                 <p className="mt-1 text-sm font-semibold text-midGray">{t(stat.label)}</p>
               </motion.div>
             );
@@ -93,25 +98,33 @@ function RollingStat({
   value,
   progress,
   index,
+  total,
 }: {
   value: number;
   progress: ReturnType<typeof useScroll>['scrollYProgress'];
   index: number;
+  total: number;
 }) {
   const reduceMotion = useReducedMotion();
-  const start = index * 0.1;
-  const end = start + 0.38;
+  const stagger = total > 1 ? index / (total - 1) : 0;
+  const start = stagger * 0.18;
+  const end = Math.min(start + 0.62, 1);
   const scrolledValue = useTransform(progress, [start, end], [0, value], {
     clamp: true,
   });
+  const smoothedValue = useSpring(scrolledValue, {
+    stiffness: 90,
+    damping: 24,
+    mass: 0.8,
+  });
   const [displayValue, setDisplayValue] = useState(reduceMotion ? value : 0);
 
-  useMotionValueEvent(scrolledValue, 'change', (latest) => {
+  useMotionValueEvent(smoothedValue, 'change', (latest) => {
     if (reduceMotion) {
       return;
     }
 
-    setDisplayValue(Math.round(latest));
+    setDisplayValue(Math.min(value, Math.max(0, Math.floor(latest + 0.15))));
   });
 
   return (
