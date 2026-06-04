@@ -38,7 +38,7 @@ export function PageShell() {
         {t('nav.skip')}
       </a>
       <Navbar />
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="wait">
         <motion.main key={location.pathname} id="contenido" {...motionProps}>
           <Suspense fallback={<RouteTransitionFallback />}>
             <Outlet />
