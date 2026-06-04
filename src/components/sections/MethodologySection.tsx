@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useIsMobileViewport } from '@/hooks/useIsMobileViewport';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
@@ -11,6 +12,7 @@ type StepCopy = {
 export function MethodologySection() {
   const { t } = useTranslation();
   const shouldReduceMotion = useShouldReduceMotion();
+  const isMobileViewport = useIsMobileViewport();
   const steps = t('method.steps', { returnObjects: true }) as StepCopy[];
 
   return (
@@ -29,8 +31,18 @@ export function MethodologySection() {
               key={step.title}
               initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
               whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={shouldReduceMotion ? undefined : { once: true, margin: '-80px' }}
-              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.06 }}
+              viewport={
+                shouldReduceMotion
+                  ? undefined
+                  : isMobileViewport
+                    ? { once: true, amount: 0.6 }
+                    : { once: true, margin: '-80px' }
+              }
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.65, delay: isMobileViewport ? 0 : index * 0.1 }
+              }
               className="relative flex flex-col items-center rounded-lg border border-white/14 bg-white/10 p-6 text-center shadow-soft md:backdrop-blur-xl"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-md bg-orange font-display text-lg font-bold text-white">
