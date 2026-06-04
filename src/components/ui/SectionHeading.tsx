@@ -26,7 +26,7 @@ export function SectionHeading({
       initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
       whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={shouldReduceMotion ? undefined : { once: true, margin: '-80px' }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, ease: 'easeOut' }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7, ease: 'easeOut' }}
       className="mx-auto max-w-3xl text-center"
     >
       <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-orange">

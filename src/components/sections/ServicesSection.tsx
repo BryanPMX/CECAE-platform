@@ -36,7 +36,7 @@ export function ServicesSection() {
                   initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
                   whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={shouldReduceMotion ? undefined : { once: true, margin: '-80px' }}
-                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.04 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.08 }}
                   className="group flex min-h-[276px] w-full max-w-sm flex-col items-center rounded-lg border border-line bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow md:w-[calc(50%-0.625rem)] xl:w-[calc((100%-2.5rem)/3)]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-md bg-skySurface text-steel transition group-hover:bg-orange group-hover:text-white">

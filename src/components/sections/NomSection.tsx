@@ -18,7 +18,7 @@ export function NomSection() {
           initial={shouldReduceMotion ? false : { opacity: 0, x: -16 }}
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
           viewport={shouldReduceMotion ? undefined : { once: true }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7 }}
           className="flex flex-col items-center rounded-lg bg-navy p-7 text-center text-white shadow-glow sm:p-9 lg:p-10"
         >
           <FileCheck2 className="h-12 w-12 text-orange" aria-hidden="true" />

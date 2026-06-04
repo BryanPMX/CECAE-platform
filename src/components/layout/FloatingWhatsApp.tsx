@@ -19,7 +19,7 @@ export function FloatingWhatsApp() {
       onClick={() => trackEvent('whatsapp_click', { location: 'floating_button' })}
       className="focus-ring fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange text-white shadow-orange transition hover:-translate-y-1 hover:bg-[#C96513]"
     >
-      <span className="absolute h-full w-full animate-ping rounded-full bg-orange/35" />
+      <span className="animate-ping-slow absolute h-full w-full rounded-full bg-orange/35" />
       <MessageCircle className="relative h-7 w-7" aria-hidden="true" />
     </a>
   );

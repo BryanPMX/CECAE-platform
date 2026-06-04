@@ -38,7 +38,7 @@ export function EventsPreviewSection() {
                   ? undefined
                   : {
                       hidden: {},
-                      show: { transition: { staggerChildren: 0.06 } },
+                      show: { transition: { staggerChildren: 0.1 } },
                     }
               }
               className="grid gap-5 md:grid-cols-3"
@@ -49,7 +49,7 @@ export function EventsPreviewSection() {
                   initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
                   whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={shouldReduceMotion ? undefined : { once: true, margin: '-120px' }}
-                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.04 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.08 }}
                 >
                   <EventCard event={event} />
                 </motion.div>

@@ -30,7 +30,7 @@ export function HeroSection() {
         key={benefit.title}
         initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45, delay: 0.1 + index * 0.05, ease: 'easeOut' }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7, delay: 0.18 + index * 0.12, ease: 'easeOut' }}
         className={`rounded-2xl border border-white/12 bg-white/10 p-3 text-left shadow-soft md:backdrop-blur-xl ${className}`}
       >
         <div className="flex items-center gap-3">
@@ -55,7 +55,7 @@ export function HeroSection() {
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55, ease: 'easeOut' }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
           className="mx-auto w-full max-w-6xl"
         >
           <div className="mx-auto max-w-[60rem]">
@@ -82,7 +82,7 @@ export function HeroSection() {
             <motion.figure
               initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.08, ease: 'easeOut' }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.75, delay: 0.2, ease: 'easeOut' }}
               className="mx-auto w-full max-w-[24rem] sm:max-w-[28rem] lg:max-w-none"
             >
               <picture>
@@ -123,7 +123,7 @@ export function HeroSection() {
         className="focus-ring absolute bottom-5 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80 backdrop-blur md:inline-flex"
       >
         {t('hero.scroll')}
-        <ArrowDown className="h-4 w-4 animate-bounce" aria-hidden="true" />
+        <ArrowDown className="animate-bounce-slow h-4 w-4" aria-hidden="true" />
       </a>
     </section>
   );

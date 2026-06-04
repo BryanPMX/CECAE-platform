@@ -181,6 +181,14 @@ section[id] {
 }
 
 @layer utilities {
+  .animate-bounce-slow {
+    animation: bounce 2.2s infinite;
+  }
+
+  .animate-ping-slow {
+    animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
   .section-spotlight {
     @apply relative overflow-hidden rounded-lg bg-white/[0.92] shadow-soft;
   }

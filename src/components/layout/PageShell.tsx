@@ -27,7 +27,7 @@ export function PageShell() {
     : {
         ...routeMotion,
         transition: {
-          duration: 0.24,
+          duration: 0.38,
           ease: [0.22, 1, 0.36, 1],
         },
       };

@@ -29,7 +29,7 @@ export function AboutSection() {
           initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={shouldReduceMotion ? undefined : { once: true }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7 }}
           className="flex w-full max-w-2xl flex-col items-center gap-8 lg:-mt-8"
         >
           <SectionHeading eyebrow={t('about.eyebrow')} title={t('about.title')} />
@@ -56,7 +56,7 @@ export function AboutSection() {
           initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={shouldReduceMotion ? undefined : { once: true }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7 }}
           className="section-spotlight border border-line bg-white/[0.88] p-6 text-left sm:p-8"
         >
           {paragraphs.map((paragraph) => (
@@ -74,7 +74,7 @@ export function AboutSection() {
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
                 whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={shouldReduceMotion ? undefined : { once: true }}
-                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.05 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
                 className="flex flex-col items-center rounded-lg border border-line bg-white/95 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-orange/60 hover:shadow-soft"
               >
                 <Icon className="h-7 w-7 text-orange" aria-hidden="true" />
