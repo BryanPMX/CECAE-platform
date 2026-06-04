@@ -1,22 +1,23 @@
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Footer } from '@/components/layout/Footer';
 import { Navbar } from '@/components/layout/Navbar';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 import { useTranslation } from 'react-i18next';
 
 const routeMotion = {
-  initial: { opacity: 0, y: 18, filter: 'blur(10px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
-  exit: { opacity: 0, y: -12, filter: 'blur(8px)' },
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -8 },
 };
 
 export function PageShell() {
   const { t } = useTranslation();
   const location = useLocation();
-  const reduceMotion = useReducedMotion();
+  const shouldReduceMotion = useShouldReduceMotion();
 
-  const motionProps = reduceMotion
+  const motionProps = shouldReduceMotion
     ? {
         initial: { opacity: 1 },
         animate: { opacity: 1 },
@@ -26,7 +27,7 @@ export function PageShell() {
     : {
         ...routeMotion,
         transition: {
-          duration: 0.34,
+          duration: 0.24,
           ease: [0.22, 1, 0.36, 1],
         },
       };

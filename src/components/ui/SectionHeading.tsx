@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 type SectionHeadingProps = {
   eyebrow: string;
@@ -18,13 +19,14 @@ export function SectionHeading({
   children,
 }: SectionHeadingProps) {
   const HeadingTag = level === 1 ? 'h1' : 'h2';
+  const shouldReduceMotion = useShouldReduceMotion();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.55, ease: 'easeOut' }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={shouldReduceMotion ? undefined : { once: true, margin: '-80px' }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, ease: 'easeOut' }}
       className="mx-auto max-w-3xl text-center"
     >
       <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-orange">

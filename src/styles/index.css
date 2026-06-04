@@ -226,3 +226,20 @@ section[id] {
     linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
   background-size: 42px 42px;
 }
+
+@media (max-width: 767px) {
+  .flow-section-light::before,
+  .flow-section-light::after,
+  .flow-section-dark::after,
+  .section-spotlight::before,
+  .page-hero::after,
+  .grid-overlay {
+    opacity: 0;
+    background-image: none;
+  }
+
+  .flow-section + .flow-section .section-shell::before {
+    width: calc(100% - 2rem);
+    background: linear-gradient(90deg, transparent, rgba(26, 58, 107, 0.14), rgba(217, 114, 24, 0.14), transparent);
+  }
+}

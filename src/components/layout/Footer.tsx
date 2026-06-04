@@ -15,9 +15,13 @@ export function Footer() {
         <div className="flex flex-col items-center gap-5 lg:grid lg:grid-cols-[1.15fr_0.9fr_1fr] lg:items-start lg:gap-5">
           <div className="flex flex-col items-center gap-2.5 lg:order-1 lg:items-start">
             <img
-              src="/cecae-footer-logo-2048x512.png"
+              src="/cecae-footer-logo-1024x256.png"
               alt="CECAE"
+              width="1024"
+              height="256"
               className="h-12 w-auto rounded bg-white object-contain px-3 sm:h-14"
+              loading="lazy"
+              decoding="async"
             />
             <p className="text-pretty max-w-md text-sm leading-6 text-white/82 sm:text-base lg:max-w-xs">
               {t('footer.tagline')}

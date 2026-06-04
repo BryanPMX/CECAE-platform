@@ -1,13 +1,15 @@
 import { ArrowDown, Building2, ClipboardCheck, GraduationCap, ShieldCheck, TrendingUp } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 const benefitIcons = [GraduationCap, ShieldCheck, TrendingUp, ClipboardCheck];
 
 export function HeroSection() {
   const { t, i18n } = useTranslation();
+  const shouldReduceMotion = useShouldReduceMotion();
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 700], [0, 70]);
+  const y = useTransform(scrollY, [0, 700], [0, shouldReduceMotion ? 0 : 40]);
   const benefits = t('hero.benefits', { returnObjects: true }) as Array<{
     title: string;
     description: string;
@@ -26,10 +28,10 @@ export function HeroSection() {
     return (
       <motion.article
         key={benefit.title}
-        initial={{ opacity: 0, y: 20 }}
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, delay: 0.15 + index * 0.08, ease: 'easeOut' }}
-        className={`rounded-2xl bg-white/10 p-3 text-left shadow-soft backdrop-blur-xl ${className}`}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45, delay: 0.1 + index * 0.05, ease: 'easeOut' }}
+        className={`rounded-2xl border border-white/12 bg-white/10 p-3 text-left shadow-soft md:backdrop-blur-xl ${className}`}
       >
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-orange/16 text-orange">
@@ -46,14 +48,14 @@ export function HeroSection() {
 
   return (
     <section className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-white">
-      <motion.div style={{ y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
+      <motion.div style={shouldReduceMotion ? undefined : { y }} className="absolute inset-0 -z-10 bg-hero-gradient" />
       <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent" />
       <div className="section-shell grid min-h-[calc(100svh-5rem)] content-start justify-items-center gap-8 pb-16 pt-8 text-center sm:pt-12 lg:gap-6 lg:pb-14 lg:pt-5">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: 'easeOut' }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55, ease: 'easeOut' }}
           className="mx-auto w-full max-w-6xl"
         >
           <div className="mx-auto max-w-[60rem]">
@@ -78,17 +80,30 @@ export function HeroSection() {
             </div>
 
             <motion.figure
-              initial={{ opacity: 0, y: 18 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.08, ease: 'easeOut' }}
               className="mx-auto w-full max-w-[24rem] sm:max-w-[28rem] lg:max-w-none"
             >
-              <img
-                src={encodeURI('/"Inicio" Icon.png')}
-                alt={heroIllustrationAlt}
-                className="h-auto w-full rounded-[1.4rem] drop-shadow-[0_28px_55px_rgba(2,12,32,0.38)]"
-                loading="eager"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet="/hero-illustration-720.webp 720w, /hero-illustration-1200.webp 1200w"
+                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 70vw, 34rem"
+                />
+                <img
+                  src={encodeURI('/"Inicio" Icon.png')}
+                  srcSet={`${encodeURI('/"Inicio" Icon.png')} 1448w`}
+                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 70vw, 34rem"
+                  alt={heroIllustrationAlt}
+                  width="1448"
+                  height="1086"
+                  className="h-auto w-full rounded-[1.4rem] drop-shadow-[0_18px_34px_rgba(2,12,32,0.28)] lg:drop-shadow-[0_28px_55px_rgba(2,12,32,0.38)]"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
             </motion.figure>
 
             <div className="hidden gap-4 lg:grid">

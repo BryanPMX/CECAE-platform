@@ -7,11 +7,13 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { trackEvent } from '@/lib/analytics';
 import { navLinks } from '@/components/layout/navigation';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { i18n, t } = useTranslation();
   const location = useLocation();
+  const shouldReduceMotion = useShouldReduceMotion();
 
   useEffect(() => {
     setIsOpen(false);
@@ -22,14 +24,17 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-line/80 bg-white/95 md:bg-white/90 md:backdrop-blur-xl">
       <nav className="section-shell grid h-20 items-center grid-cols-[auto_1fr_auto] gap-4">
         <div className="flex items-center justify-start">
           <Link to="/" className="focus-ring shrink-0 rounded-md" aria-label="CECAE">
             <img
               src="/cecae-footer-logo-1024x256.png"
               alt="CECAE"
+              width="1024"
+              height="256"
               className="h-10 w-auto object-contain sm:h-12"
+              decoding="async"
             />
           </Link>
         </div>
@@ -82,10 +87,10 @@ export function Navbar() {
       <AnimatePresence>
         {isOpen ? (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
+            initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+            transition={shouldReduceMotion ? { duration: 0.12 } : { duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-t border-line bg-white lg:hidden"
           >
             <div className="section-shell grid gap-2 py-5">

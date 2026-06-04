@@ -22,7 +22,15 @@ export function EventCard({ event }: { event: CecaeEvent }) {
       className="focus-ring group grid h-full overflow-hidden rounded-lg border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
     >
       {event.imageUrl ? (
-        <img src={event.imageUrl} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
+        <img
+          src={event.imageUrl}
+          alt=""
+          width="16"
+          height="9"
+          className="aspect-[16/9] w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
       ) : null}
       <div className="grid gap-4 p-5">
         <div className="flex flex-wrap justify-center gap-2">

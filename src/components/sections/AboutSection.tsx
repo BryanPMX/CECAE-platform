@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Building2, MapPinned, UsersRound } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 const stats = [
   { value: 3, icon: UsersRound, label: 'about.stats.modalities' },
@@ -12,6 +13,7 @@ const stats = [
 
 export function AboutSection() {
   const { t } = useTranslation();
+  const shouldReduceMotion = useShouldReduceMotion();
   const paragraphs = t('about.body').split('\n\n');
   const aboutIllustrationAlt = `${t('about.title')} ${t('about.eyebrow')}`;
   const statsRef = useRef<HTMLDivElement | null>(null);
@@ -24,25 +26,37 @@ export function AboutSection() {
     <section id="nosotros" className="flow-section flow-section-light py-20 sm:py-24 lg:py-28">
       <div className="section-shell grid justify-items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={shouldReduceMotion ? undefined : { once: true }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
           className="flex w-full max-w-2xl flex-col items-center gap-8 lg:-mt-8"
         >
           <SectionHeading eyebrow={t('about.eyebrow')} title={t('about.title')} />
-          <img
-            src={encodeURI('/"Nosotros" illustration.png')}
-            alt={aboutIllustrationAlt}
-            className="h-auto w-full max-w-[22rem] object-contain opacity-72 saturate-95 contrast-105 sm:max-w-[24rem]"
-            loading="lazy"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet="/about-illustration-640.webp 640w, /about-illustration-1080.webp 1080w"
+              sizes="(max-width: 640px) 82vw, (max-width: 1024px) 44vw, 24rem"
+            />
+            <img
+              src={encodeURI('/"Nosotros" illustration.png')}
+              srcSet={`${encodeURI('/"Nosotros" illustration.png')} 1448w`}
+              sizes="(max-width: 640px) 82vw, (max-width: 1024px) 44vw, 24rem"
+              alt={aboutIllustrationAlt}
+              width="1448"
+              height="1086"
+              className="h-auto w-full max-w-[22rem] object-contain opacity-72 saturate-95 contrast-105 sm:max-w-[24rem]"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </motion.div>
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={shouldReduceMotion ? undefined : { once: true }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
           className="section-spotlight border border-line bg-white/[0.88] p-6 text-left sm:p-8"
         >
           {paragraphs.map((paragraph) => (
@@ -57,10 +71,10 @@ export function AboutSection() {
             return (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.08 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={shouldReduceMotion ? undefined : { once: true }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.05 }}
                 className="flex flex-col items-center rounded-lg border border-line bg-white/95 p-5 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-orange/60 hover:shadow-soft"
               >
                 <Icon className="h-7 w-7 text-orange" aria-hidden="true" />

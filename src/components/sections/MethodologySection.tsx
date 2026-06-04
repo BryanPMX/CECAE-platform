@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 type StepCopy = {
   title: string;
@@ -9,6 +10,7 @@ type StepCopy = {
 
 export function MethodologySection() {
   const { t } = useTranslation();
+  const shouldReduceMotion = useShouldReduceMotion();
   const steps = t('method.steps', { returnObjects: true }) as StepCopy[];
 
   return (
@@ -25,11 +27,11 @@ export function MethodologySection() {
           {steps.map((step, index) => (
             <motion.article
               key={step.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.45, delay: index * 0.1 }}
-              className="relative flex flex-col items-center rounded-lg border border-white/14 bg-white/10 p-6 text-center shadow-soft backdrop-blur-xl"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={shouldReduceMotion ? undefined : { once: true, margin: '-80px' }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.06 }}
+              className="relative flex flex-col items-center rounded-lg border border-white/14 bg-white/10 p-6 text-center shadow-soft md:backdrop-blur-xl"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-md bg-orange font-display text-lg font-bold text-white">
                 {index + 1}

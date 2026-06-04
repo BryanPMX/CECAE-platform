@@ -5,9 +5,11 @@ import { EmptyEventsState } from '@/components/ui/EmptyEventsState';
 import { LinkButton } from '@/components/ui/LinkButton';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useEvents } from '@/hooks/useEvents';
+import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 export function EventsPreviewSection() {
   const { t } = useTranslation();
+  const shouldReduceMotion = useShouldReduceMotion();
   const { events, isLoading } = useEvents();
   const featured = events.slice(0, 3);
 
@@ -28,22 +30,26 @@ export function EventsPreviewSection() {
             <div className="h-64 animate-pulse rounded-lg bg-skySurface" />
           ) : featured.length > 0 ? (
             <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={{
-                hidden: {},
-                show: { transition: { staggerChildren: 0.08 } },
-              }}
+              initial={shouldReduceMotion ? false : 'hidden'}
+              whileInView={shouldReduceMotion ? undefined : 'show'}
+              viewport={shouldReduceMotion ? undefined : { once: true }}
+              variants={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      hidden: {},
+                      show: { transition: { staggerChildren: 0.06 } },
+                    }
+              }
               className="grid gap-5 md:grid-cols-3"
             >
               {featured.map((event, index) => (
                 <motion.div
                   key={event.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-120px' }}
-                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                  whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={shouldReduceMotion ? undefined : { once: true, margin: '-120px' }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35, delay: index * 0.04 }}
                 >
                   <EventCard event={event} />
                 </motion.div>
