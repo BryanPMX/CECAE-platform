@@ -2,8 +2,8 @@ import { lazy, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { FloatingWhatsApp } from '@/components/layout/FloatingWhatsApp';
 import { PageShell } from '@/components/layout/PageShell';
+import { HomePage } from '@/pages/HomePage';
 
-const HomePage = lazy(() => import('@/pages/HomePage').then((module) => ({ default: module.HomePage })));
 const EventsPage = lazy(() =>
   import('@/pages/EventsPage').then((module) => ({ default: module.EventsPage })),
 );
