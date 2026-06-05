@@ -31,10 +31,20 @@ internal/
   security/                 # Password hashing, JWT, refresh-token utilities
   database/                 # PostgreSQL connection and migration helpers
   logger/                   # Structured JSON logger construction
+  dependencies/             # Build-tagged dependency baseline anchor
 migrations/                 # Versioned PostgreSQL schema migrations
 deploy/                     # Dockerfile, compose stack, env examples
 docs/                       # Backend architecture and operations notes
 ```
+
+## Implementation Status
+
+- Milestone 1 is complete: the backend ownership boundaries and tracked project
+  directories are in place.
+- Milestone 2 is complete: the repository has a root Go module, a pinned
+  dependency lockfile, and a build-tagged dependency anchor.
+- Runtime backend packages are not implemented yet; `cmd/api` and the main
+  internal packages remain intentionally empty until Milestone 3 starts.
 
 ## Boundary Rules
 
@@ -102,10 +112,31 @@ Admin responses may additionally include:
 - `updatedAt`
 - `deletedAt`
 
+## Dependency Baseline
+
+The Go module is rooted at `github.com/BryanPMX/CECAE-platform` and starts with
+these backend dependencies:
+
+- `github.com/go-chi/chi/v5` for the HTTP router and middleware chain.
+- `github.com/go-chi/cors` for explicit frontend/API CORS policy.
+- `github.com/jackc/pgx/v5` for PostgreSQL pooling and queries.
+- `github.com/golang-migrate/migrate/v4` for versioned database migrations.
+- `github.com/caarlos0/env/v11` and `github.com/joho/godotenv` for typed
+  configuration loading across local and deployed environments.
+- `github.com/go-playground/validator/v10` for request DTO validation.
+- `github.com/golang-jwt/jwt/v5` and `golang.org/x/crypto` for access tokens,
+  refresh-token helpers, and password hashing.
+- `github.com/google/uuid` for stable entity identifiers.
+- `github.com/stretchr/testify` for focused unit and integration test
+  assertions.
+
+The build-tagged package in `internal/dependencies` anchors this baseline until
+the implementation packages import each dependency directly.
+
 ## Planned Milestones
 
-1. Architecture and tracked project structure.
-2. Go module and dependency baseline.
+1. Architecture and tracked project structure. Complete.
+2. Go module and dependency baseline. Complete.
 3. Configuration loading and validation.
 4. Logger, database connection, and graceful API bootstrap.
 5. Domain models, DTOs, validation, and centralized errors.
