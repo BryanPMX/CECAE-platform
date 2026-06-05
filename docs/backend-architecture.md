@@ -55,6 +55,9 @@ docs/                       # Backend architecture and operations notes
 - Milestone 6 is complete: the initial PostgreSQL migration creates
   `admin_users`, `admin_sessions`, and `events` with lifecycle constraints,
   public-query indexes, update timestamp triggers, and a migration runner helper.
+- Milestone 7 is complete: event use cases now sit behind an application
+  service and repository port, with a PostgreSQL adapter responsible for event
+  queries, inserts, updates, and soft deletes.
 
 ## Boundary Rules
 
@@ -171,7 +174,7 @@ limits, token TTL ordering, and supported app/log modes.
 4. Logger, database connection, and graceful API bootstrap. Complete.
 5. Domain models, DTOs, validation, and centralized errors. Complete.
 6. PostgreSQL migrations. Complete.
-7. Event repository and service layer.
+7. Event repository and service layer. Complete.
 8. Auth security, admin sessions, and middleware.
 9. Public and admin HTTP handlers.
 10. Docker, Portainer compose stack, and deployment docs.
