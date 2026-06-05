@@ -20,6 +20,13 @@ func TestRunMigrationsReportsInvalidSource(t *testing.T) {
 	require.Contains(t, err.Error(), "create migration runner")
 }
 
+func TestMigrationDatabaseURLUsesPGX5Driver(t *testing.T) {
+	url, err := migrationDatabaseURL("postgres://cecae:secret@postgres:5432/cecae?sslmode=disable")
+
+	require.NoError(t, err)
+	require.Equal(t, "pgx5://cecae:secret@postgres:5432/cecae?sslmode=disable", url)
+}
+
 func TestInitialMigrationDefinesRequiredTables(t *testing.T) {
 	sql := readMigration(t, "000001_initial_schema.up.sql")
 

@@ -3,3 +3,5 @@ dist/
 *.tsbuildinfo
 .DS_Store
 public/.DS_Store
+.env
+deploy/.env

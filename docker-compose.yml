@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    env_file:
+      - deploy/.env
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - cecae_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  migrate:
+    image: cecae-api:${CECAE_API_TAG:-local}
+    pull_policy: never
+    env_file:
+      - deploy/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["/app/migrate"]
+    restart: "no"
+
+  api:
+    build:
+      context: .
+    image: cecae-api:${CECAE_API_TAG:-local}
+    pull_policy: build
+    env_file:
+      - deploy/.env
+    ports:
+      - "${API_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  admin-bootstrap:
+    image: cecae-api:${CECAE_API_TAG:-local}
+    pull_policy: never
+    profiles:
+      - bootstrap
+    env_file:
+      - deploy/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    command: ["/app/admin"]
+    restart: "no"
+
+volumes:
+  cecae_postgres_data:

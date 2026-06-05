@@ -3,6 +3,7 @@ package database
 import (
 	"errors"
 	"fmt"
+	"net/url"
 
 	"github.com/BryanPMX/CECAE-platform/internal/config"
 	"github.com/golang-migrate/migrate/v4"
@@ -12,7 +13,12 @@ import (
 
 // RunMigrations applies all pending PostgreSQL migrations from the configured source.
 func RunMigrations(database config.DatabaseConfig) error {
-	migrator, err := migrate.New(database.MigrationsPath, database.URL)
+	migrationURL, err := migrationDatabaseURL(database.URL)
+	if err != nil {
+		return err
+	}
+
+	migrator, err := migrate.New(database.MigrationsPath, migrationURL)
 	if err != nil {
 		return fmt.Errorf("create migration runner: %w", err)
 	}
@@ -23,4 +29,21 @@ func RunMigrations(database config.DatabaseConfig) error {
 	}
 
 	return nil
+}
+
+func migrationDatabaseURL(value string) (string, error) {
+	parsed, err := url.Parse(value)
+	if err != nil {
+		return "", fmt.Errorf("parse migration database URL: %w", err)
+	}
+
+	switch parsed.Scheme {
+	case "postgres", "postgresql":
+		parsed.Scheme = "pgx5"
+	case "pgx5":
+	default:
+		return "", fmt.Errorf("migration database URL must use postgres, postgresql, or pgx5 scheme")
+	}
+
+	return parsed.String(), nil
 }

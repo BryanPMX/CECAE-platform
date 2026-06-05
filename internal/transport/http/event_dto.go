@@ -39,7 +39,7 @@ type EventResponse struct {
 	RegistrationURL *string               `json:"registrationUrl,omitempty"`
 	ImageURL        *string               `json:"imageUrl,omitempty"`
 	Tags            []string              `json:"tags,omitempty"`
-	IsFeatured      bool                  `json:"isFeatured,omitempty"`
+	IsFeatured      bool                  `json:"isFeatured"`
 }
 
 // AdminEventResponse includes lifecycle metadata for authenticated admin views.

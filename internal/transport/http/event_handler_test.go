@@ -35,7 +35,8 @@ func TestEventHandlerListsPublicEvents(t *testing.T) {
 			"type":"training",
 			"modality":"presencial",
 			"date":"2026-07-08",
-			"time":"09:30"
+			"time":"09:30",
+			"isFeatured":false
 		}
 	]`, recorder.Body.String())
 }
