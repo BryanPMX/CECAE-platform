@@ -13,6 +13,7 @@ const (
 	ErrorCodeValidation   ErrorCode = "validation_error"
 	ErrorCodeUnauthorized ErrorCode = "unauthorized"
 	ErrorCodeForbidden    ErrorCode = "forbidden"
+	ErrorCodeRateLimited  ErrorCode = "rate_limited"
 	ErrorCodeNotFound     ErrorCode = "not_found"
 	ErrorCodeConflict     ErrorCode = "conflict"
 	ErrorCodeInternal     ErrorCode = "internal_error"
@@ -76,6 +77,11 @@ func Unauthorized(message string) *Error {
 // Forbidden reports an authenticated caller that cannot perform an action.
 func Forbidden(message string) *Error {
 	return newError(ErrorCodeForbidden, message)
+}
+
+// RateLimited reports a client that exceeded request limits.
+func RateLimited(message string) *Error {
+	return newError(ErrorCodeRateLimited, message)
 }
 
 // NotFound reports a missing resource.

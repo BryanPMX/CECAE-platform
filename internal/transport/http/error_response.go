@@ -49,6 +49,8 @@ func StatusCodeForError(err error) int {
 		return http.StatusUnauthorized
 	case application.ErrorCodeForbidden:
 		return http.StatusForbidden
+	case application.ErrorCodeRateLimited:
+		return http.StatusTooManyRequests
 	case application.ErrorCodeNotFound:
 		return http.StatusNotFound
 	case application.ErrorCodeConflict:

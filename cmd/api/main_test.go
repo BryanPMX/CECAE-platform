@@ -14,7 +14,7 @@ func TestHealthzReturnsOKWhenDatabasePings(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	request := httptest.NewRequest(http.MethodGet, "/healthz", nil)
 
-	buildRouter(fakePinger{}).ServeHTTP(recorder, request)
+	buildRouter(routerDependencies{Pinger: fakePinger{}}).ServeHTTP(recorder, request)
 
 	require.Equal(t, http.StatusOK, recorder.Code)
 	require.JSONEq(t, `{"status":"ok"}`, recorder.Body.String())
@@ -24,7 +24,7 @@ func TestHealthzReturnsUnavailableWhenDatabasePingFails(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	request := httptest.NewRequest(http.MethodGet, "/healthz", nil)
 
-	buildRouter(fakePinger{err: errors.New("database down")}).ServeHTTP(recorder, request)
+	buildRouter(routerDependencies{Pinger: fakePinger{err: errors.New("database down")}}).ServeHTTP(recorder, request)
 
 	require.Equal(t, http.StatusServiceUnavailable, recorder.Code)
 	require.JSONEq(t, `{"status":"unavailable"}`, recorder.Body.String())

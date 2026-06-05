@@ -11,10 +11,16 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/BryanPMX/CECAE-platform/internal/application"
 	"github.com/BryanPMX/CECAE-platform/internal/config"
 	"github.com/BryanPMX/CECAE-platform/internal/database"
 	"github.com/BryanPMX/CECAE-platform/internal/logger"
+	"github.com/BryanPMX/CECAE-platform/internal/middleware"
+	"github.com/BryanPMX/CECAE-platform/internal/repository"
+	"github.com/BryanPMX/CECAE-platform/internal/security"
+	httptransport "github.com/BryanPMX/CECAE-platform/internal/transport/http"
 	"github.com/go-chi/chi/v5"
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -41,9 +47,30 @@ func run() int {
 	}
 	defer pool.Close()
 
+	validator, err := httptransport.NewValidator()
+	if err != nil {
+		log.Error("validator initialization failed", slog.Any("error", err))
+		return 1
+	}
+
+	adminRepository := repository.NewPostgresAdminRepository(pool)
+	tokenManager := security.NewTokenManager(cfg.Auth)
+	authService := application.NewAuthService(
+		adminRepository,
+		security.NewPasswordHasher(),
+		tokenIssuerAdapter{manager: tokenManager},
+		security.NewRefreshTokenManager(cfg.Auth),
+	)
+
 	server := &http.Server{
-		Addr:         cfg.Address(),
-		Handler:      buildRouter(pool),
+		Addr: cfg.Address(),
+		Handler: buildRouter(routerDependencies{
+			Pinger:    pool,
+			CORS:      cfg.CORS,
+			Logger:    log,
+			Validator: validator,
+			Auth:      authService,
+		}),
 		ReadTimeout:  cfg.HTTP.ReadTimeout,
 		WriteTimeout: cfg.HTTP.WriteTimeout,
 		IdleTimeout:  cfg.HTTP.IdleTimeout,
@@ -82,20 +109,47 @@ type healthPinger interface {
 	Ping(context.Context) error
 }
 
-func buildRouter(pool healthPinger) http.Handler {
+type routerDependencies struct {
+	Pinger    healthPinger
+	CORS      config.CORSConfig
+	Logger    *slog.Logger
+	Validator *httptransport.Validator
+	Auth      httptransport.AuthService
+}
+
+func buildRouter(deps routerDependencies) http.Handler {
 	router := chi.NewRouter()
+	log := deps.Logger
+	if log == nil {
+		log = fallbackLogger()
+	}
+
+	router.Use(middleware.Recoverer(log))
+	router.Use(middleware.RequestLogger(log))
+	if len(deps.CORS.AllowedOrigins) > 0 {
+		router.Use(middleware.CORS(deps.CORS))
+	}
 
 	router.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		ctx, cancel := context.WithTimeout(r.Context(), time.Second)
 		defer cancel()
 
-		if err := pool.Ping(ctx); err != nil {
+		if err := deps.Pinger.Ping(ctx); err != nil {
 			writeHealth(w, http.StatusServiceUnavailable, "unavailable")
 			return
 		}
 
 		writeHealth(w, http.StatusOK, "ok")
 	})
+
+	if deps.Auth != nil && deps.Validator != nil {
+		authHandler := httptransport.NewAuthHandler(deps.Auth, deps.Validator)
+		loginLimiter := middleware.NewLoginRateLimiter(5, 5*time.Minute)
+
+		router.With(loginLimiter.Middleware).Post("/api/admin/auth/login", authHandler.Login)
+		router.Post("/api/admin/auth/refresh", authHandler.Refresh)
+		router.Post("/api/admin/auth/logout", authHandler.Logout)
+	}
 
 	return router
 }
@@ -110,4 +164,28 @@ func fallbackLogger() *slog.Logger {
 	return slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{
 		Level: slog.LevelInfo,
 	}))
+}
+
+type tokenIssuerAdapter struct {
+	manager security.TokenManager
+}
+
+func (a tokenIssuerAdapter) IssueAccessToken(adminUserID uuid.UUID, now time.Time) (application.IssuedToken, error) {
+	token, err := a.manager.IssueAccessToken(adminUserID, now)
+	return application.IssuedToken{
+		Value:     token.Value,
+		ExpiresAt: token.ExpiresAt,
+	}, err
+}
+
+func (a tokenIssuerAdapter) VerifyAccessToken(value string) (application.AccessClaims, error) {
+	claims, err := a.manager.VerifyAccessToken(value)
+	return application.AccessClaims{
+		AdminUserID: claims.AdminUserID,
+		ExpiresAt:   claims.ExpiresAt,
+	}, err
+}
+
+func (a tokenIssuerAdapter) RefreshTokenTTL() time.Duration {
+	return a.manager.RefreshTokenTTL()
 }

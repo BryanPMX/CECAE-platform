@@ -1,6 +1,10 @@
 package httptransport
 
-import "time"
+import (
+	"time"
+
+	"github.com/BryanPMX/CECAE-platform/internal/application"
+)
 
 // LoginRequest is used by POST /api/admin/auth/login.
 type LoginRequest struct {
@@ -24,4 +28,14 @@ type AuthTokensResponse struct {
 	AccessTokenExpiresAt  time.Time `json:"accessTokenExpiresAt"`
 	RefreshToken          string    `json:"refreshToken"`
 	RefreshTokenExpiresAt time.Time `json:"refreshTokenExpiresAt"`
+}
+
+// NewAuthTokensResponse maps service tokens to the admin API contract.
+func NewAuthTokensResponse(tokens application.AuthTokens) AuthTokensResponse {
+	return AuthTokensResponse{
+		AccessToken:           tokens.AccessToken,
+		AccessTokenExpiresAt:  tokens.AccessTokenExpiresAt,
+		RefreshToken:          tokens.RefreshToken,
+		RefreshTokenExpiresAt: tokens.RefreshTokenExpiresAt,
+	}
 }
