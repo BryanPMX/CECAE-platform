@@ -49,6 +49,9 @@ docs/                       # Backend architecture and operations notes
 - Milestone 4 is complete: `cmd/api` now loads config, initializes structured
   JSON logging, opens and verifies the PostgreSQL pool, serves `/healthz`, and
   shuts down gracefully on process signals.
+- Milestone 5 is complete: domain event/admin/session entities, API request and
+  response DTOs, validator-backed request validation, and centralized
+  application-to-HTTP error mapping are in place.
 
 ## Boundary Rules
 
@@ -163,7 +166,7 @@ limits, token TTL ordering, and supported app/log modes.
 2. Go module and dependency baseline. Complete.
 3. Configuration loading and validation. Complete.
 4. Logger, database connection, and graceful API bootstrap. Complete.
-5. Domain models, DTOs, validation, and centralized errors.
+5. Domain models, DTOs, validation, and centralized errors. Complete.
 6. PostgreSQL migrations.
 7. Event repository and service layer.
 8. Auth security, admin sessions, and middleware.
