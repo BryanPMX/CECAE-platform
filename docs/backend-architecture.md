@@ -52,6 +52,9 @@ docs/                       # Backend architecture and operations notes
 - Milestone 5 is complete: domain event/admin/session entities, API request and
   response DTOs, validator-backed request validation, and centralized
   application-to-HTTP error mapping are in place.
+- Milestone 6 is complete: the initial PostgreSQL migration creates
+  `admin_users`, `admin_sessions`, and `events` with lifecycle constraints,
+  public-query indexes, update timestamp triggers, and a migration runner helper.
 
 ## Boundary Rules
 
@@ -167,7 +170,7 @@ limits, token TTL ordering, and supported app/log modes.
 3. Configuration loading and validation. Complete.
 4. Logger, database connection, and graceful API bootstrap. Complete.
 5. Domain models, DTOs, validation, and centralized errors. Complete.
-6. PostgreSQL migrations.
+6. PostgreSQL migrations. Complete.
 7. Event repository and service layer.
 8. Auth security, admin sessions, and middleware.
 9. Public and admin HTTP handlers.
