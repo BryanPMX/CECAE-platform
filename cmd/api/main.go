@@ -54,6 +54,7 @@ func run() int {
 	}
 
 	adminRepository := repository.NewPostgresAdminRepository(pool)
+	eventRepository := repository.NewPostgresEventRepository(pool)
 	tokenManager := security.NewTokenManager(cfg.Auth)
 	authService := application.NewAuthService(
 		adminRepository,
@@ -61,6 +62,7 @@ func run() int {
 		tokenIssuerAdapter{manager: tokenManager},
 		security.NewRefreshTokenManager(cfg.Auth),
 	)
+	eventService := application.NewEventService(eventRepository)
 
 	server := &http.Server{
 		Addr: cfg.Address(),
@@ -70,6 +72,7 @@ func run() int {
 			Logger:    log,
 			Validator: validator,
 			Auth:      authService,
+			Events:    eventService,
 		}),
 		ReadTimeout:  cfg.HTTP.ReadTimeout,
 		WriteTimeout: cfg.HTTP.WriteTimeout,
@@ -115,6 +118,7 @@ type routerDependencies struct {
 	Logger    *slog.Logger
 	Validator *httptransport.Validator
 	Auth      httptransport.AuthService
+	Events    httptransport.EventService
 }
 
 func buildRouter(deps routerDependencies) http.Handler {
@@ -149,6 +153,26 @@ func buildRouter(deps routerDependencies) http.Handler {
 		router.With(loginLimiter.Middleware).Post("/api/admin/auth/login", authHandler.Login)
 		router.Post("/api/admin/auth/refresh", authHandler.Refresh)
 		router.Post("/api/admin/auth/logout", authHandler.Logout)
+	}
+
+	if deps.Events != nil && deps.Validator != nil {
+		eventHandler := httptransport.NewEventHandler(deps.Events, deps.Validator)
+
+		router.Get("/api/events", eventHandler.ListPublic)
+		router.Get("/api/events/featured", eventHandler.ListFeatured)
+		router.Get("/api/events/{id}", eventHandler.GetPublic)
+
+		if deps.Auth != nil {
+			router.Group(func(admin chi.Router) {
+				admin.Use(middleware.RequireAdmin(deps.Auth))
+				admin.Get("/api/admin/events", eventHandler.ListAdmin)
+				admin.Get("/api/admin/events/{id}", eventHandler.GetAdmin)
+				admin.Post("/api/admin/events", eventHandler.CreateAdmin)
+				admin.Put("/api/admin/events/{id}", eventHandler.UpdateAdmin)
+				admin.Patch("/api/admin/events/{id}", eventHandler.PatchAdmin)
+				admin.Delete("/api/admin/events/{id}", eventHandler.DeleteAdmin)
+			})
+		}
 	}
 
 	return router

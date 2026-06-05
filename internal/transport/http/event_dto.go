@@ -2,9 +2,12 @@
 package httptransport
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/BryanPMX/CECAE-platform/internal/application"
 	"github.com/BryanPMX/CECAE-platform/internal/domain"
+	"github.com/google/uuid"
 )
 
 const eventDateLayout = "2006-01-02"
@@ -119,6 +122,15 @@ func NewEventResponse(event domain.Event) EventResponse {
 	}
 }
 
+// NewEventResponses maps domain events to the public API contract.
+func NewEventResponses(events []domain.Event) []EventResponse {
+	responses := make([]EventResponse, 0, len(events))
+	for _, event := range events {
+		responses = append(responses, NewEventResponse(event))
+	}
+	return responses
+}
+
 // NewAdminEventResponse maps a domain event to the admin API contract.
 func NewAdminEventResponse(event domain.Event) AdminEventResponse {
 	return AdminEventResponse{
@@ -128,4 +140,117 @@ func NewAdminEventResponse(event domain.Event) AdminEventResponse {
 		UpdatedAt:     event.UpdatedAt,
 		DeletedAt:     event.DeletedAt,
 	}
+}
+
+// NewAdminEventResponses maps domain events to the admin API contract.
+func NewAdminEventResponses(events []domain.Event) []AdminEventResponse {
+	responses := make([]AdminEventResponse, 0, len(events))
+	for _, event := range events {
+		responses = append(responses, NewAdminEventResponse(event))
+	}
+	return responses
+}
+
+// ToDomainEvent maps a create/update request into the domain model.
+func (r CreateEventRequest) ToDomainEvent(id uuid.UUID) (domain.Event, error) {
+	date, err := parseEventDate(r.Date)
+	if err != nil {
+		return domain.Event{}, err
+	}
+
+	return domain.Event{
+		ID: id,
+		Title: domain.LocalizedText{
+			ES: r.Title.ES,
+			EN: r.Title.EN,
+		},
+		Description: domain.LocalizedText{
+			ES: r.Description.ES,
+			EN: r.Description.EN,
+		},
+		Type:            domain.EventType(r.Type),
+		Modality:        domain.EventModality(r.Modality),
+		Date:            date,
+		Time:            r.Time,
+		Duration:        r.Duration,
+		Location:        r.Location,
+		Capacity:        r.Capacity,
+		RegistrationURL: r.RegistrationURL,
+		ImageURL:        r.ImageURL,
+		Tags:            r.Tags,
+		IsFeatured:      r.IsFeatured,
+		Status:          domain.EventStatus(r.Status),
+	}, nil
+}
+
+// ApplyTo overlays a partial event request onto an existing domain event.
+func (r PatchEventRequest) ApplyTo(event domain.Event) (domain.Event, error) {
+	if r.Title != nil {
+		if r.Title.ES != nil {
+			event.Title.ES = *r.Title.ES
+		}
+		if r.Title.EN != nil {
+			event.Title.EN = *r.Title.EN
+		}
+	}
+	if r.Description != nil {
+		if r.Description.ES != nil {
+			event.Description.ES = *r.Description.ES
+		}
+		if r.Description.EN != nil {
+			event.Description.EN = *r.Description.EN
+		}
+	}
+	if r.Type != nil {
+		event.Type = domain.EventType(*r.Type)
+	}
+	if r.Modality != nil {
+		event.Modality = domain.EventModality(*r.Modality)
+	}
+	if r.Date != nil {
+		date, err := parseEventDate(*r.Date)
+		if err != nil {
+			return domain.Event{}, err
+		}
+		event.Date = date
+	}
+	if r.Time != nil {
+		event.Time = *r.Time
+	}
+	if r.Duration != nil {
+		event.Duration = r.Duration
+	}
+	if r.Location != nil {
+		event.Location = r.Location
+	}
+	if r.Capacity != nil {
+		event.Capacity = r.Capacity
+	}
+	if r.RegistrationURL != nil {
+		event.RegistrationURL = r.RegistrationURL
+	}
+	if r.ImageURL != nil {
+		event.ImageURL = r.ImageURL
+	}
+	if r.Tags != nil {
+		event.Tags = r.Tags
+	}
+	if r.IsFeatured != nil {
+		event.IsFeatured = *r.IsFeatured
+	}
+	if r.Status != nil {
+		event.Status = domain.EventStatus(*r.Status)
+	}
+
+	return event, nil
+}
+
+func parseEventDate(value string) (time.Time, error) {
+	date, err := time.Parse(eventDateLayout, value)
+	if err != nil {
+		return time.Time{}, application.ValidationError([]application.FieldViolation{
+			{Field: "date", Message: fmt.Sprintf("must match format %s", eventDateLayout)},
+		})
+	}
+	return date, nil
 }
