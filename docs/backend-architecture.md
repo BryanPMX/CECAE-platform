@@ -43,8 +43,11 @@ docs/                       # Backend architecture and operations notes
   directories are in place.
 - Milestone 2 is complete: the repository has a root Go module, a pinned
   dependency lockfile, and a build-tagged dependency anchor.
-- Runtime backend packages are not implemented yet; `cmd/api` and the main
-  internal packages remain intentionally empty until Milestone 3 starts.
+- Milestone 3 is complete: `internal/config` loads `.env` files, parses typed
+  environment settings, and validates development, test, and production
+  startup rules.
+- `cmd/api` remains intentionally empty until Milestone 4 wires logger,
+  database, and graceful startup behavior together.
 
 ## Boundary Rules
 
@@ -133,11 +136,31 @@ these backend dependencies:
 The build-tagged package in `internal/dependencies` anchors this baseline until
 the implementation packages import each dependency directly.
 
+## Configuration Surface
+
+Configuration is loaded by `internal/config.Load`, which reads `.env` when
+present and then parses process environment variables into typed settings.
+`deploy/.env.example` documents the local/deployment values.
+
+- `APP_ENV` accepts `development`, `test`, or `production`.
+- `APP_NAME` and `APP_LOG_LEVEL` identify the process and logger verbosity.
+- `HTTP_HOST`, `HTTP_PORT`, and HTTP timeout variables define the API listener.
+- `DATABASE_URL`, pool limits, connection lifetime, and migration path configure
+  PostgreSQL access.
+- `AUTH_ACCESS_TOKEN_SECRET`, `AUTH_REFRESH_TOKEN_SECRET`, and token TTLs
+  configure admin token security.
+- `CORS_ALLOWED_ORIGINS` and `CORS_ALLOW_CREDENTIALS` configure browser access
+  from the frontend/admin clients.
+
+Production validation rejects default development token secrets and wildcard
+CORS origins. All environments validate ports, durations, PostgreSQL URLs, pool
+limits, token TTL ordering, and supported app/log modes.
+
 ## Planned Milestones
 
 1. Architecture and tracked project structure. Complete.
 2. Go module and dependency baseline. Complete.
-3. Configuration loading and validation.
+3. Configuration loading and validation. Complete.
 4. Logger, database connection, and graceful API bootstrap.
 5. Domain models, DTOs, validation, and centralized errors.
 6. PostgreSQL migrations.
