@@ -46,8 +46,9 @@ docs/                       # Backend architecture and operations notes
 - Milestone 3 is complete: `internal/config` loads `.env` files, parses typed
   environment settings, and validates development, test, and production
   startup rules.
-- `cmd/api` remains intentionally empty until Milestone 4 wires logger,
-  database, and graceful startup behavior together.
+- Milestone 4 is complete: `cmd/api` now loads config, initializes structured
+  JSON logging, opens and verifies the PostgreSQL pool, serves `/healthz`, and
+  shuts down gracefully on process signals.
 
 ## Boundary Rules
 
@@ -161,7 +162,7 @@ limits, token TTL ordering, and supported app/log modes.
 1. Architecture and tracked project structure. Complete.
 2. Go module and dependency baseline. Complete.
 3. Configuration loading and validation. Complete.
-4. Logger, database connection, and graceful API bootstrap.
+4. Logger, database connection, and graceful API bootstrap. Complete.
 5. Domain models, DTOs, validation, and centralized errors.
 6. PostgreSQL migrations.
 7. Event repository and service layer.
