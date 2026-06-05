@@ -25,6 +25,16 @@ func TestHealthzReturnsOKWhenDatabasePings(t *testing.T) {
 	require.JSONEq(t, `{"status":"ok"}`, recorder.Body.String())
 }
 
+func TestRootReturnsAPIStatus(t *testing.T) {
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/", nil)
+
+	buildRouter(routerDependencies{Pinger: fakePinger{}}).ServeHTTP(recorder, request)
+
+	require.Equal(t, http.StatusOK, recorder.Code)
+	require.JSONEq(t, `{"service":"cecae-api","status":"ok","health":"/healthz","api":"/api"}`, recorder.Body.String())
+}
+
 func TestHealthzReturnsUnavailableWhenDatabasePingFails(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	request := httptest.NewRequest(http.MethodGet, "/healthz", nil)

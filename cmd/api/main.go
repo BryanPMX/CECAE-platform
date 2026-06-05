@@ -134,6 +134,10 @@ func buildRouter(deps routerDependencies) http.Handler {
 		router.Use(middleware.CORS(deps.CORS))
 	}
 
+	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		writeRoot(w)
+	})
+
 	router.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		ctx, cancel := context.WithTimeout(r.Context(), time.Second)
 		defer cancel()
@@ -176,6 +180,17 @@ func buildRouter(deps routerDependencies) http.Handler {
 	}
 
 	return router
+}
+
+func writeRoot(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(map[string]string{
+		"service": "cecae-api",
+		"status":  "ok",
+		"health":  "/healthz",
+		"api":     "/api",
+	})
 }
 
 func writeHealth(w http.ResponseWriter, statusCode int, status string) {
