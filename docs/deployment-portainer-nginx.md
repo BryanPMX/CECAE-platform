@@ -25,7 +25,13 @@ change: PostgreSQL stays private to the CECAE backend network.
 
 ## 1. Build And Publish The API Image
 
-From your development machine or CI:
+Preferred path: let GitHub Actions publish the image. See:
+
+```text
+docs/github-actions-image-publish.md
+```
+
+Manual fallback from your development machine:
 
 ```bash
 docker build -t brpmx/cecae-api:latest .

@@ -46,6 +46,9 @@ The root endpoint returns API metadata. `/healthz` verifies database reachabilit
 Use [docs/deployment-portainer-nginx.md](/Users/bryanpmx/Documents/Projects/CECAE-platform/docs/deployment-portainer-nginx.md)
 for Portainer and Nginx Proxy Manager setup.
 
+Use [docs/github-actions-image-publish.md](/Users/bryanpmx/Documents/Projects/CECAE-platform/docs/github-actions-image-publish.md)
+for automated Docker Hub image publishing from GitHub Actions.
+
 Use [docs/api-examples.md](/Users/bryanpmx/Documents/Projects/CECAE-platform/docs/api-examples.md)
 for curl examples.
 
