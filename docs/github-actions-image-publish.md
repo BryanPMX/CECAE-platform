@@ -17,10 +17,13 @@ Tags:
 - `sha-<commit>` for every workflow run.
 - `vX.Y.Z`, `X.Y.Z`, and `X.Y` when pushing semver tags like `v1.2.3`.
 
-Platforms:
+Platform:
 
-- `linux/amd64` for the Ubuntu server.
-- `linux/arm64` for Apple Silicon/local compatibility.
+- `linux/amd64` for the Ubuntu server and Portainer deployment.
+
+The workflow intentionally does not publish `linux/arm64` so the normal
+production image publish stays fast. For local Apple Silicon testing, build
+locally with Docker Desktop instead of relying on the published image.
 
 ## GitHub Secrets
 
