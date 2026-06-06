@@ -46,3 +46,25 @@ func TestEventArgsPreserveColumnOrder(t *testing.T) {
 	require.Equal(t, true, args[15])
 	require.Equal(t, "draft", args[16])
 }
+
+func TestEventArgsNormalizeNilTagsToEmptyArray(t *testing.T) {
+	event := domain.Event{
+		ID: uuid.New(),
+		Title: domain.LocalizedText{
+			ES: "Curso NOM",
+			EN: "Curso NOM",
+		},
+		Description: domain.LocalizedText{
+			ES: "Descripcion",
+			EN: "Descripcion",
+		},
+		Type:     domain.EventTypeTraining,
+		Modality: domain.EventModalityInPerson,
+		Time:     "09:30",
+		Status:   domain.EventStatusDraft,
+	}
+
+	args := eventArgs(event)
+
+	require.Equal(t, []string{}, args[14])
+}

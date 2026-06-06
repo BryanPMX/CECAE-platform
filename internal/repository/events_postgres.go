@@ -234,6 +234,11 @@ func scanEvent(row eventRow) (domain.Event, error) {
 }
 
 func eventArgs(event domain.Event) []any {
+	tags := event.Tags
+	if tags == nil {
+		tags = []string{}
+	}
+
 	return []any{
 		event.ID,
 		event.Title.ES,
@@ -249,7 +254,7 @@ func eventArgs(event domain.Event) []any {
 		event.Capacity,
 		event.RegistrationURL,
 		event.ImageURL,
-		event.Tags,
+		tags,
 		event.IsFeatured,
 		string(event.Status),
 	}

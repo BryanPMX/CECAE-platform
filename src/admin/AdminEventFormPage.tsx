@@ -306,7 +306,7 @@ function payloadFromForm(form: EventFormState): EventPayload {
     capacity: form.capacity ? Number(form.capacity) : undefined,
     registrationUrl: optionalUrl(form.registrationUrl),
     imageUrl: optionalUrl(form.imageUrl),
-    tags: tags.length ? tags : undefined,
+    tags,
     isFeatured: form.isFeatured,
     status: form.status,
   };
