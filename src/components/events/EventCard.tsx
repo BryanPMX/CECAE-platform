@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import type { CecaeEvent } from '@/services';
 import { cn } from '@/lib/utils';
 import { trackEvent } from '@/lib/analytics';
+import { EventImage } from './EventImage';
 
 const typeClasses = {
   training: 'bg-steel text-white',
@@ -21,17 +22,7 @@ export function EventCard({ event }: { event: CecaeEvent }) {
       onClick={() => trackEvent('event_card_click', { event_id: event.id })}
       className="focus-ring group grid h-full overflow-hidden rounded-lg border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
     >
-      {event.imageUrl ? (
-        <img
-          src={event.imageUrl}
-          alt=""
-          width="16"
-          height="9"
-          className="aspect-[16/9] w-full object-cover"
-          loading="lazy"
-          decoding="async"
-        />
-      ) : null}
+      <EventImage src={event.imageUrl} title={event.title[language]} />
       <div className="grid gap-4 p-5">
         <div className="flex flex-wrap justify-center gap-2">
           <span className={cn('rounded-full px-3 py-1 text-xs font-bold', typeClasses[event.type])}>

@@ -2,6 +2,7 @@ import { ArrowLeft, Calendar, Clock, ExternalLink, MapPin, Users } from 'lucide-
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { EventImage } from '@/components/events/EventImage';
 import { Seo } from '@/components/layout/Seo';
 import { eventsService, type CecaeEvent } from '@/services';
 
@@ -61,9 +62,7 @@ export function EventDetailPage() {
             </div>
           ) : (
             <article className="mt-8 overflow-hidden rounded-lg border border-line bg-white text-left shadow-soft">
-              {event.imageUrl ? (
-                <img src={event.imageUrl} alt="" className="aspect-[16/9] w-full object-cover" />
-              ) : null}
+              <EventImage src={event.imageUrl} title={event.title[language]} variant="detail" eager />
               <div className="p-6 sm:p-8">
                 <div className="flex flex-wrap gap-2">
                   <span className="rounded-full bg-orange px-3 py-1 text-xs font-bold text-white">
