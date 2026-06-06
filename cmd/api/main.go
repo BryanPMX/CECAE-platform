@@ -142,17 +142,19 @@ func buildRouter(deps routerDependencies) http.Handler {
 		writeRoot(w)
 	})
 
-	router.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
+	healthHandler := func(w http.ResponseWriter, r *http.Request) {
 		ctx, cancel := context.WithTimeout(r.Context(), time.Second)
 		defer cancel()
 
 		if err := deps.Pinger.Ping(ctx); err != nil {
-			writeHealth(w, http.StatusServiceUnavailable, "unavailable")
+			writeHealthForRequest(w, r, http.StatusServiceUnavailable, "unavailable")
 			return
 		}
 
-		writeHealth(w, http.StatusOK, "ok")
-	})
+		writeHealthForRequest(w, r, http.StatusOK, "ok")
+	}
+	router.Get("/healthz", healthHandler)
+	router.Head("/healthz", healthHandler)
 
 	if deps.Auth != nil && deps.Validator != nil {
 		authHandler := httptransport.NewAuthHandler(deps.Auth, deps.Validator)
@@ -195,6 +197,15 @@ func writeRoot(w http.ResponseWriter) {
 		"health":  "/healthz",
 		"api":     "/api",
 	})
+}
+
+func writeHealthForRequest(w http.ResponseWriter, r *http.Request, statusCode int, status string) {
+	if r.Method == http.MethodHead {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(statusCode)
+		return
+	}
+	writeHealth(w, statusCode, status)
 }
 
 func writeHealth(w http.ResponseWriter, statusCode int, status string) {

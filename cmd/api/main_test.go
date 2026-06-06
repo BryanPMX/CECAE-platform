@@ -25,6 +25,16 @@ func TestHealthzReturnsOKWhenDatabasePings(t *testing.T) {
 	require.JSONEq(t, `{"status":"ok"}`, recorder.Body.String())
 }
 
+func TestHealthzHeadReturnsOKWhenDatabasePings(t *testing.T) {
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodHead, "/healthz", nil)
+
+	buildRouter(routerDependencies{Pinger: fakePinger{}}).ServeHTTP(recorder, request)
+
+	require.Equal(t, http.StatusOK, recorder.Code)
+	require.Empty(t, recorder.Body.String())
+}
+
 func TestRootReturnsAPIStatus(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	request := httptest.NewRequest(http.MethodGet, "/", nil)
