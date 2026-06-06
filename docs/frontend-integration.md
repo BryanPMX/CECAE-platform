@@ -26,17 +26,29 @@ Only published, non-deleted events are returned publicly.
 
 ## Admin Portal
 
-The admin portal is not built yet. The backend is ready for:
+The admin portal is available at:
+
+- `/admin/login`
+- `/admin`
+- `/admin/eventos`
+- `/admin/eventos/nuevo`
+- `/admin/eventos/:id/editar`
+
+It uses these backend endpoints:
 
 - `POST /api/admin/auth/login`
 - `POST /api/admin/auth/refresh`
 - `POST /api/admin/auth/logout`
-- Protected admin event CRUD endpoints.
+- `GET /api/admin/events`
+- `GET /api/admin/events/:id`
+- `POST /api/admin/events`
+- `PUT /api/admin/events/:id`
+- `DELETE /api/admin/events/:id`
 
-For the first admin portal version, prefer storing the access token in memory
-and the refresh token in a secure storage strategy chosen during frontend
-implementation. If cookies are preferred, the backend will need a small auth
-transport change to issue refresh tokens as secure HTTP-only cookies.
+The frontend stores the access token in React state and stores the refresh token
+in local storage for reload recovery. If HTTP-only cookies are preferred later,
+the backend will need a small auth transport change to issue refresh tokens as
+secure cookies.
 
 ## Event Response Shape
 

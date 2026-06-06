@@ -16,11 +16,11 @@ Implemented backend pieces:
 - CORS, request logging, request IDs, recovery, security headers, and login rate limiting.
 - Docker image, local Compose stack, and Portainer production stack.
 - One-shot migration and admin bootstrap commands.
+- API-backed frontend `EventsService` adapter.
+- React admin portal for event login, dashboard, listing, create, edit, and delete workflows.
 
 Not included yet:
 
-- React admin portal UI.
-- API-backed frontend `EventsService` adapter.
 - Automated container integration test runner.
 
 ## Local Container Smoke Test
@@ -53,4 +53,4 @@ Use [docs/api-examples.md](/Users/bryanpmx/Documents/Projects/CECAE-platform/doc
 for curl examples.
 
 Use [docs/frontend-integration.md](/Users/bryanpmx/Documents/Projects/CECAE-platform/docs/frontend-integration.md)
-for the next React integration milestone.
+for frontend API configuration and admin portal notes.
