@@ -8,9 +8,7 @@ import { useAdminApi } from './useAdminApi';
 
 type EventFormState = {
   titleEs: string;
-  titleEn: string;
   descriptionEs: string;
-  descriptionEn: string;
   type: EventType;
   modality: EventModality;
   date: string;
@@ -27,9 +25,7 @@ type EventFormState = {
 
 const emptyForm: EventFormState = {
   titleEs: '',
-  titleEn: '',
   descriptionEs: '',
-  descriptionEn: '',
   type: 'training',
   modality: 'presencial',
   date: '',
@@ -76,7 +72,7 @@ export function AdminEventFormPage() {
 
   const title = isEditing ? 'Editar evento' : 'Crear evento';
   const canSubmit = useMemo(
-    () => form.titleEs && form.titleEn && form.descriptionEs && form.descriptionEn && form.date && form.time,
+    () => form.titleEs && form.descriptionEs && form.date && form.time,
     [form],
   );
 
@@ -123,12 +119,10 @@ export function AdminEventFormPage() {
       ) : (
         <form onSubmit={handleSubmit} className="grid gap-6">
           <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
-            <h2 className="font-display text-xl font-bold text-navy">Contenido bilingüe</h2>
-            <div className="mt-5 grid gap-5 lg:grid-cols-2">
-              <TextField label="Título en español" value={form.titleEs} onChange={(value) => update('titleEs', value)} required />
-              <TextField label="Título en inglés" value={form.titleEn} onChange={(value) => update('titleEn', value)} required />
-              <TextArea label="Descripción en español" value={form.descriptionEs} onChange={(value) => update('descriptionEs', value)} required />
-              <TextArea label="Descripción en inglés" value={form.descriptionEn} onChange={(value) => update('descriptionEn', value)} required />
+            <h2 className="font-display text-xl font-bold text-navy">Contenido del evento</h2>
+            <div className="mt-5 grid gap-5">
+              <TextField label="Título" value={form.titleEs} onChange={(value) => update('titleEs', value)} required />
+              <TextArea label="Descripción" value={form.descriptionEs} onChange={(value) => update('descriptionEs', value)} required />
             </div>
           </section>
 
@@ -272,9 +266,7 @@ function SelectField({
 function formFromEvent(event: AdminEvent): EventFormState {
   return {
     titleEs: event.title.es,
-    titleEn: event.title.en,
     descriptionEs: event.description.es,
-    descriptionEn: event.description.en,
     type: event.type,
     modality: event.modality,
     date: event.date,
@@ -299,11 +291,11 @@ function payloadFromForm(form: EventFormState): EventPayload {
   return {
     title: {
       es: form.titleEs.trim(),
-      en: form.titleEn.trim(),
+      en: form.titleEs.trim(),
     },
     description: {
       es: form.descriptionEs.trim(),
-      en: form.descriptionEn.trim(),
+      en: form.descriptionEs.trim(),
     },
     type: form.type,
     modality: form.modality,
