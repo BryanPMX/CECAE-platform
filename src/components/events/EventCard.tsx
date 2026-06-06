@@ -22,7 +22,12 @@ export function EventCard({ event }: { event: CecaeEvent }) {
       onClick={() => trackEvent('event_card_click', { event_id: event.id })}
       className="focus-ring group grid h-full overflow-hidden rounded-lg border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-orange hover:shadow-glow"
     >
-      <EventImage src={event.imageUrl} title={event.title[language]} />
+      <EventImage
+        src={event.imageUrl}
+        title={event.title[language]}
+        className="aspect-[4/3]"
+        fitStrategy="cover"
+      />
       <div className="grid gap-4 p-5">
         <div className="flex flex-wrap justify-center gap-2">
           <span className={cn('rounded-full px-3 py-1 text-xs font-bold', typeClasses[event.type])}>
