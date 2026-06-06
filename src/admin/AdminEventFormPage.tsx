@@ -300,12 +300,12 @@ function payloadFromForm(form: EventFormState): EventPayload {
     type: form.type,
     modality: form.modality,
     date: form.date,
-    time: form.time,
+    time: form.time.slice(0, 5),
     duration: optionalString(form.duration),
     location: optionalString(form.location),
     capacity: form.capacity ? Number(form.capacity) : undefined,
-    registrationUrl: optionalString(form.registrationUrl),
-    imageUrl: optionalString(form.imageUrl),
+    registrationUrl: optionalUrl(form.registrationUrl),
+    imageUrl: optionalUrl(form.imageUrl),
     tags: tags.length ? tags : undefined,
     isFeatured: form.isFeatured,
     status: form.status,
@@ -315,4 +315,11 @@ function payloadFromForm(form: EventFormState): EventPayload {
 function optionalString(value: string) {
   const trimmed = value.trim();
   return trimmed ? trimmed : undefined;
+}
+
+function optionalUrl(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
 }

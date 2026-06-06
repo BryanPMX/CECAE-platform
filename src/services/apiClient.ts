@@ -64,10 +64,27 @@ function errorMessageFromPayload(payload: unknown) {
     if (typeof error === 'string' && error.trim()) return error;
     if (typeof error === 'object' && error !== null && 'message' in error) {
       const message = (error as { message?: unknown }).message;
-      if (typeof message === 'string' && message.trim()) return message;
+      const fields = fieldMessages(error);
+      if (typeof message === 'string' && message.trim()) {
+        return fields.length ? `${message}: ${fields.join(', ')}` : message;
+      }
     }
   }
 
   if (typeof payload === 'string' && payload.trim()) return payload;
   return 'No fue posible completar la solicitud.';
+}
+
+function fieldMessages(error: object) {
+  if (!('fields' in error) || !Array.isArray(error.fields)) return [];
+
+  return error.fields
+    .map((field) => {
+      if (typeof field !== 'object' || field === null) return null;
+      const name = 'field' in field && typeof field.field === 'string' ? field.field : '';
+      const message = 'message' in field && typeof field.message === 'string' ? field.message : '';
+      if (!name && !message) return null;
+      return [name, message].filter(Boolean).join(' ');
+    })
+    .filter((message): message is string => Boolean(message));
 }
