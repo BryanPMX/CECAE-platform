@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { LockKeyhole, LogIn } from 'lucide-react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Seo } from '@/components/layout/Seo';
-import { ApiError } from '@/services/apiClient';
+import { adminErrorMessage } from './adminErrors';
 import { useAdminSession } from './useAdminSession';
 
 export function AdminLoginPage() {
@@ -28,7 +28,11 @@ export function AdminLoginPage() {
       await login(email, password);
       navigate(from, { replace: true });
     } catch (loginError) {
-      setError(loginError instanceof ApiError ? loginError.message : 'No fue posible iniciar sesión.');
+      setError(
+        adminErrorMessage(loginError, 'No fue posible iniciar sesión.', {
+          unauthorized: 'Correo o contraseña incorrectos.',
+        }),
+      );
     } finally {
       setIsSubmitting(false);
     }

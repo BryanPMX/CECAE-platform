@@ -1,9 +1,11 @@
-import { Edit, Plus, Search, Trash2 } from 'lucide-react';
+import { AlertTriangle, Edit, Plus, Search, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { adminEventsApi } from '@/services/admin.api';
 import type { AdminEvent, EventStatus } from '@/services';
+import { ApiError } from '@/services/apiClient';
 import { cn } from '@/lib/utils';
+import { adminErrorMessage } from './adminErrors';
 import { useAdminApi } from './useAdminApi';
 
 const statusLabels: Record<EventStatus, string> = {
@@ -18,20 +20,32 @@ const statusClasses: Record<EventStatus, string> = {
   archived: 'bg-slate-100 text-slate-700',
 };
 
+type AdminNotice = {
+  type: 'error' | 'success';
+  message: string;
+};
+
 export function AdminEventsPage() {
   const adminRequest = useAdminApi();
   const [events, setEvents] = useState<AdminEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<AdminNotice | null>(null);
+  const [pendingDeleteEvent, setPendingDeleteEvent] = useState<AdminEvent | null>(null);
+  const [deletingEventId, setDeletingEventId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<EventStatus | ''>('');
 
   const loadEvents = () => {
     setIsLoading(true);
-    setError(null);
+    setNotice(null);
     adminRequest((token) => adminEventsApi.list(token))
       .then(setEvents)
-      .catch(() => setError('No fue posible cargar los eventos.'))
+      .catch((loadError) =>
+        setNotice({
+          type: 'error',
+          message: adminErrorMessage(loadError, 'No fue posible cargar los eventos.'),
+        }),
+      )
       .finally(() => setIsLoading(false));
   };
 
@@ -55,15 +69,37 @@ export function AdminEventsPage() {
     });
   }, [events, search, status]);
 
-  const deleteEvent = async (event: AdminEvent) => {
-    const confirmed = window.confirm(`Eliminar "${event.title.es}"? Esta acción hará un borrado lógico.`);
-    if (!confirmed) return;
+  const confirmDeleteEvent = async () => {
+    if (!pendingDeleteEvent) return;
+
+    const event = pendingDeleteEvent;
+    setDeletingEventId(event.id);
+    setNotice(null);
 
     try {
       await adminRequest((token) => adminEventsApi.remove(token, event.id));
       setEvents((items) => items.filter((item) => item.id !== event.id));
-    } catch {
-      setError('No fue posible eliminar el evento.');
+      setNotice({
+        type: 'success',
+        message: `El evento "${event.title.es}" se eliminó del sitio público y del panel administrativo.`,
+      });
+    } catch (deleteError) {
+      if (deleteError instanceof ApiError && deleteError.status === 404) {
+        setEvents((items) => items.filter((item) => item.id !== event.id));
+        setNotice({
+          type: 'success',
+          message: `El evento "${event.title.es}" ya había sido eliminado. Actualizamos la lista administrativa.`,
+        });
+        return;
+      }
+
+      setNotice({
+        type: 'error',
+        message: adminErrorMessage(deleteError, 'No fue posible eliminar el evento.'),
+      });
+    } finally {
+      setDeletingEventId(null);
+      setPendingDeleteEvent(null);
     }
   };
 
@@ -108,7 +144,7 @@ export function AdminEventsPage() {
         </label>
       </section>
 
-      {error ? <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
+      {notice ? <AdminNoticeMessage notice={notice} onRetry={notice.type === 'error' ? loadEvents : undefined} /> : null}
 
       <section className="overflow-hidden rounded-lg border border-line bg-white shadow-sm">
         <div className="overflow-x-auto">
@@ -157,7 +193,8 @@ export function AdminEventsPage() {
                         </Link>
                         <button
                           type="button"
-                          onClick={() => void deleteEvent(event)}
+                          onClick={() => setPendingDeleteEvent(event)}
+                          disabled={Boolean(deletingEventId)}
                           className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md border border-line text-red-700 hover:border-red-300 hover:bg-red-50"
                           aria-label={`Eliminar ${event.title.es}`}
                           title="Eliminar"
@@ -177,6 +214,103 @@ export function AdminEventsPage() {
               )}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      {pendingDeleteEvent ? (
+        <DeleteEventDialog
+          event={pendingDeleteEvent}
+          isDeleting={deletingEventId === pendingDeleteEvent.id}
+          onCancel={() => {
+            if (!deletingEventId) setPendingDeleteEvent(null);
+          }}
+          onConfirm={() => void confirmDeleteEvent()}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function AdminNoticeMessage({
+  notice,
+  onRetry,
+}: {
+  notice: AdminNotice;
+  onRetry?: () => void;
+}) {
+  return (
+    <div
+      className={cn(
+        'flex flex-col gap-3 rounded-md border px-3 py-2 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between',
+        notice.type === 'error' ? 'border-red-200 bg-red-50 text-red-700' : 'border-green-200 bg-green-50 text-green-800',
+      )}
+      role={notice.type === 'error' ? 'alert' : 'status'}
+    >
+      <span>{notice.message}</span>
+      {onRetry ? (
+        <button
+          type="button"
+          onClick={onRetry}
+          className="focus-ring w-fit rounded-md border border-current px-3 py-1 text-xs font-bold"
+        >
+          Actualizar lista
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function DeleteEventDialog({
+  event,
+  isDeleting,
+  onCancel,
+  onConfirm,
+}: {
+  event: AdminEvent;
+  isDeleting: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center bg-darkNavy/55 px-4 py-8">
+      <section
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-event-title"
+        className="w-full max-w-lg rounded-lg border border-line bg-white p-5 shadow-soft"
+      >
+        <div className="flex gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-red-50 text-red-700">
+            <AlertTriangle className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="delete-event-title" className="font-display text-xl font-bold text-navy">
+              Eliminar evento
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-midGray">
+              Esta acción quitará "{event.title.es}" del sitio público y marcará el evento como eliminado en el
+              panel administrativo.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={isDeleting}
+            className="focus-ring inline-flex min-h-10 items-center justify-center rounded-md border border-line px-4 text-sm font-semibold text-navy hover:border-orange hover:text-orange disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={isDeleting}
+            className="focus-ring inline-flex min-h-10 items-center justify-center rounded-md bg-red-700 px-4 text-sm font-semibold text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isDeleting ? 'Eliminando...' : 'Eliminar evento'}
+          </button>
         </div>
       </section>
     </div>

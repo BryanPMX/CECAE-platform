@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { adminEventsApi } from '@/services/admin.api';
 import type { AdminEvent } from '@/services';
+import { adminErrorMessage } from './adminErrors';
 import { useAdminApi } from './useAdminApi';
 
 export function AdminDashboardPage() {
@@ -19,8 +20,8 @@ export function AdminDashboardPage() {
       .then((items) => {
         if (isMounted) setEvents(items);
       })
-      .catch(() => {
-        if (isMounted) setError('No fue posible cargar el resumen.');
+      .catch((loadError) => {
+        if (isMounted) setError(adminErrorMessage(loadError, 'No fue posible cargar el resumen.'));
       })
       .finally(() => {
         if (isMounted) setIsLoading(false);

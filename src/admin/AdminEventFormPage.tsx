@@ -1,9 +1,10 @@
 import { ArrowLeft, Save } from 'lucide-react';
 import { FormEvent, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { EventImage } from '@/components/events/EventImage';
 import { adminEventsApi } from '@/services/admin.api';
 import type { AdminEvent, EventModality, EventPayload, EventStatus, EventType } from '@/services';
-import { ApiError } from '@/services/apiClient';
+import { adminErrorMessage } from './adminErrors';
 import { useAdminApi } from './useAdminApi';
 
 type EventFormState = {
@@ -58,8 +59,8 @@ export function AdminEventFormPage() {
       .then((event) => {
         if (isMounted) setForm(formFromEvent(event));
       })
-      .catch(() => {
-        if (isMounted) setError('No fue posible cargar el evento.');
+      .catch((loadError) => {
+        if (isMounted) setError(adminErrorMessage(loadError, 'No fue posible cargar el evento.'));
       })
       .finally(() => {
         if (isMounted) setIsLoading(false);
@@ -94,7 +95,7 @@ export function AdminEventFormPage() {
       }
       navigate('/admin/eventos');
     } catch (submitError) {
-      setError(submitError instanceof ApiError ? submitError.message : 'No fue posible guardar el evento.');
+      setError(adminErrorMessage(submitError, 'No fue posible guardar el evento.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -151,7 +152,6 @@ export function AdminEventFormPage() {
               <TextField label="Capacidad" type="number" min="1" value={form.capacity} onChange={(value) => update('capacity', value)} />
               <TextField label="Etiquetas" value={form.tags} onChange={(value) => update('tags', value)} placeholder="NOM-035, Seguridad" />
               <TextField label="URL de registro" type="url" value={form.registrationUrl} onChange={(value) => update('registrationUrl', value)} />
-              <TextField label="URL de imagen" type="url" value={form.imageUrl} onChange={(value) => update('imageUrl', value)} />
               <label className="flex min-h-11 items-center gap-3 rounded-md border border-line bg-skySurface px-3 py-2 text-sm font-semibold text-navy">
                 <input
                   type="checkbox"
@@ -161,6 +161,36 @@ export function AdminEventFormPage() {
                 />
                 Destacar en el sitio público
               </label>
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+              <div>
+                <h2 className="font-display text-xl font-bold text-navy">Imagen del evento</h2>
+                <p className="mt-2 text-sm leading-6 text-midGray">
+                  Recomendado: 1600 x 900 px en formato 16:9. También funcionan 1200 x 675 px y 800 x 450 px.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold text-navy">
+                  <span className="rounded-full bg-orange px-3 py-1 text-white">Ideal 1600 x 900</span>
+                  <span className="rounded-full bg-skySurface px-3 py-1">Grande 1200 x 675</span>
+                  <span className="rounded-full bg-skySurface px-3 py-1">Mínimo 800 x 450</span>
+                </div>
+                <div className="mt-5">
+                  <ImageUrlField value={form.imageUrl} onChange={(value) => update('imageUrl', value)} />
+                </div>
+                <p className="mt-3 text-xs leading-5 text-midGray">
+                  Si la imagen es muy vertical u horizontal, se mostrará completa dentro del marco para evitar cortes fuertes en la tarjeta.
+                </p>
+              </div>
+
+              <div className="grid gap-3">
+                <ImagePreview label="Tarjeta pública" size="16:9 / 360 x 203 px" src={form.imageUrl} title={form.titleEs} />
+                <div className="grid grid-cols-2 gap-3">
+                  <ImagePreview label="Móvil" size="16:9 / 320 x 180 px" src={form.imageUrl} title={form.titleEs} compact />
+                  <ImagePreview label="Detalle" size="16:9 / 768 x 432 px" src={form.imageUrl} title={form.titleEs} compact />
+                </div>
+              </div>
             </div>
           </section>
 
@@ -260,6 +290,45 @@ function SelectField({
         {children}
       </select>
     </label>
+  );
+}
+
+function ImageUrlField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  return (
+    <label className="grid gap-2 text-sm font-semibold text-navy">
+      URL de imagen
+      <input
+        type="url"
+        value={value}
+        placeholder="https://..."
+        onChange={(event) => onChange(event.target.value)}
+        className="focus-ring min-h-11 rounded-md border border-line bg-white px-3 py-2 text-charcoal shadow-sm"
+      />
+    </label>
+  );
+}
+
+function ImagePreview({
+  label,
+  size,
+  src,
+  title,
+  compact = false,
+}: {
+  label: string;
+  size: string;
+  src: string;
+  title: string;
+  compact?: boolean;
+}) {
+  return (
+    <div className="overflow-hidden rounded-md border border-line bg-white">
+      <EventImage src={optionalUrl(src)} title={title || 'evento'} className={compact ? 'text-[10px]' : undefined} />
+      <div className="border-t border-line px-3 py-2">
+        <p className="text-xs font-bold text-navy">{label}</p>
+        <p className="mt-0.5 text-[11px] font-semibold text-midGray">{size}</p>
+      </div>
+    </div>
   );
 }
 

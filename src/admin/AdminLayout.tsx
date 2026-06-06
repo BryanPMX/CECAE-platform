@@ -1,4 +1,4 @@
-import { CalendarDays, LayoutDashboard, LogOut, Plus, ShieldCheck } from 'lucide-react';
+import { CalendarDays, LayoutDashboard, LogOut, ShieldCheck } from 'lucide-react';
 import { NavLink, Outlet, Link } from 'react-router-dom';
 import { useAdminSession } from './useAdminSession';
 import { cn } from '@/lib/utils';
@@ -48,14 +48,7 @@ export function AdminLayout() {
             ))}
           </nav>
 
-          <div className="flex justify-end gap-2">
-            <Link
-              to="/admin/eventos/nuevo"
-              className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md bg-orange px-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#C96513]"
-            >
-              <Plus className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Nuevo</span>
-            </Link>
+          <div className="flex justify-end">
             <button
               type="button"
               onClick={() => void logout()}

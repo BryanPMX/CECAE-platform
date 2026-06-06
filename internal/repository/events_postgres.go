@@ -85,6 +85,7 @@ func (r *PostgresEventRepository) ListAdmin(ctx context.Context) ([]domain.Event
 	query := fmt.Sprintf(`
         SELECT %s
         FROM events
+        WHERE deleted_at IS NULL
         ORDER BY created_at DESC`, eventSelectColumns)
 
 	return r.queryEvents(ctx, query)
@@ -94,7 +95,8 @@ func (r *PostgresEventRepository) GetAdminByID(ctx context.Context, id uuid.UUID
 	query := fmt.Sprintf(`
         SELECT %s
         FROM events
-        WHERE id = $1`, eventSelectColumns)
+        WHERE id = $1
+          AND deleted_at IS NULL`, eventSelectColumns)
 
 	return r.queryEvent(ctx, query, id)
 }
