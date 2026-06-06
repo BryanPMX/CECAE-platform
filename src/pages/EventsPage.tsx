@@ -24,7 +24,7 @@ export function EventsPage() {
     }),
     [modality, search, type],
   );
-  const { events, isLoading } = useEvents(filters);
+  const { events, isLoading, error } = useEvents(filters);
   const hasEvents = events.length > 0;
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export function EventsPage() {
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                disabled={!hasEvents}
+                disabled={isLoading}
                 className="focus-ring min-h-11 rounded-md border border-line bg-white px-9 py-2 text-charcoal shadow-sm disabled:opacity-60"
               />
             </label>
@@ -70,7 +70,7 @@ export function EventsPage() {
               <select
                 value={type}
                 onChange={(event) => setType(event.target.value as EventType | '')}
-                disabled={!hasEvents}
+                disabled={isLoading}
                 className="focus-ring min-h-11 rounded-md border border-line bg-white px-3 py-2 text-charcoal shadow-sm disabled:opacity-60"
               >
                 <option value="">{t('events.filters.all')}</option>
@@ -84,7 +84,7 @@ export function EventsPage() {
               <select
                 value={modality}
                 onChange={(event) => setModality(event.target.value as EventModality | '')}
-                disabled={!hasEvents}
+                disabled={isLoading}
                 className="focus-ring min-h-11 rounded-md border border-line bg-white px-3 py-2 text-charcoal shadow-sm disabled:opacity-60"
               >
                 <option value="">{t('events.filters.all')}</option>
@@ -98,6 +98,10 @@ export function EventsPage() {
           <div className="mt-10">
             {isLoading ? (
               <div className="h-64 animate-pulse rounded-lg bg-skySurface" />
+            ) : error ? (
+              <p className="rounded-md border border-line bg-white px-4 py-6 text-center font-semibold text-midGray shadow-sm">
+                {error}
+              </p>
             ) : hasEvents ? (
               <motion.div
                 initial={shouldReduceMotion ? false : 'hidden'}

@@ -4,14 +4,13 @@ import { EventCard } from '@/components/events/EventCard';
 import { EmptyEventsState } from '@/components/ui/EmptyEventsState';
 import { LinkButton } from '@/components/ui/LinkButton';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { useEvents } from '@/hooks/useEvents';
+import { useFeaturedEvents } from '@/hooks/useEvents';
 import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 export function EventsPreviewSection() {
   const { t } = useTranslation();
   const shouldReduceMotion = useShouldReduceMotion();
-  const { events, isLoading } = useEvents();
-  const featured = events.slice(0, 3);
+  const { events: featured, isLoading, error } = useFeaturedEvents(3);
 
   return (
     <section id="eventos" className="flow-section flow-section-light py-20 sm:py-24 lg:py-28">
@@ -28,6 +27,10 @@ export function EventsPreviewSection() {
         <div className="mt-10">
           {isLoading ? (
             <div className="h-64 animate-pulse rounded-lg bg-skySurface" />
+          ) : error ? (
+            <p className="rounded-md border border-line bg-white px-4 py-6 text-center font-semibold text-midGray shadow-sm">
+              {error}
+            </p>
           ) : featured.length > 0 ? (
             <motion.div
               initial={shouldReduceMotion ? false : 'hidden'}

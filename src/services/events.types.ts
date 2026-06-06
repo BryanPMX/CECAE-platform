@@ -23,6 +23,19 @@ export interface CecaeEvent {
   isFeatured?: boolean;
 }
 
+export type EventStatus = 'draft' | 'published' | 'archived';
+
+export interface AdminEvent extends CecaeEvent {
+  status: EventStatus;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string;
+}
+
+export type EventPayload = Omit<CecaeEvent, 'id'> & {
+  status: EventStatus;
+};
+
 export interface EventFilters {
   type?: CecaeEvent['type'];
   modality?: CecaeEvent['modality'];

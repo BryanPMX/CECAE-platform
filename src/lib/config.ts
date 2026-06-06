@@ -1,5 +1,6 @@
 export const config = {
   siteUrl: import.meta.env.VITE_PUBLIC_SITE_URL ?? 'https://cecae.org',
+  apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? '',
   turnstileSiteKey: import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '',
   googleMapsEmbedUrl:
     import.meta.env.VITE_GOOGLE_MAPS_EMBED_URL ??
