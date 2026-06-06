@@ -119,7 +119,7 @@ export function AdminEventFormPage() {
       ) : (
         <form onSubmit={handleSubmit} className="grid gap-6">
           <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
-            <h2 className="font-display text-xl font-bold text-navy">Contenido del evento</h2>
+            <h2 className="font-display text-xl font-bold text-navy">Contenido</h2>
             <div className="mt-5 grid gap-5">
               <TextField label="Título" value={form.titleEs} onChange={(value) => update('titleEs', value)} required />
               <TextArea label="Descripción" value={form.descriptionEs} onChange={(value) => update('descriptionEs', value)} required />
