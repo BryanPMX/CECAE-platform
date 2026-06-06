@@ -43,6 +43,32 @@ func TestRequireAdminRejectsMissingBearerToken(t *testing.T) {
 	require.JSONEq(t, `{"error":{"code":"unauthorized","message":"authorization bearer token required"}}`, recorder.Body.String())
 }
 
+func TestRequestIDSetsResponseHeaderAndContext(t *testing.T) {
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/test", nil)
+	request.Header.Set("X-Request-ID", "request-123")
+
+	RequestID()(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, "request-123", RequestIDFromContext(r.Context()))
+		w.WriteHeader(http.StatusNoContent)
+	})).ServeHTTP(recorder, request)
+
+	require.Equal(t, "request-123", recorder.Header().Get("X-Request-ID"))
+}
+
+func TestSecurityHeadersSetProductionHeaders(t *testing.T) {
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/test", nil)
+
+	SecurityHeaders(true)(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})).ServeHTTP(recorder, request)
+
+	require.Equal(t, "nosniff", recorder.Header().Get("X-Content-Type-Options"))
+	require.Equal(t, "DENY", recorder.Header().Get("X-Frame-Options"))
+	require.Contains(t, recorder.Header().Get("Strict-Transport-Security"), "max-age=31536000")
+}
+
 type fakeAuthenticator struct {
 	admin domain.AdminUser
 	err   error

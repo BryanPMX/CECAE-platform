@@ -14,7 +14,10 @@ func Recoverer(log *slog.Logger) func(http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			defer func() {
 				if value := recover(); value != nil {
-					log.Error("panic recovered", slog.Any("panic", value))
+					log.Error("panic recovered",
+						slog.String("request_id", RequestIDFromContext(r.Context())),
+						slog.Any("panic", value),
+					)
 					httptransport.WriteError(w, application.Internal(nil))
 				}
 			}()

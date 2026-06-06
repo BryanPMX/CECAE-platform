@@ -20,6 +20,10 @@ Compose through Portainer.
 cmd/
   api/
     main.go                 # API process entrypoint and graceful shutdown
+  admin/
+    main.go                 # One-shot admin bootstrap command
+  migrate/
+    main.go                 # One-shot migration command
 internal/
   config/                   # Environment loading, validation, typed settings
   domain/                   # Core entities, value objects, domain errors
@@ -58,6 +62,12 @@ docs/                       # Backend architecture and operations notes
 - Milestone 7 is complete: event use cases now sit behind an application
   service and repository port, with a PostgreSQL adapter responsible for event
   queries, inserts, updates, and soft deletes.
+- Milestone 8 is complete: admin auth, sessions, password hashing, JWT access
+  tokens, refresh-token hashing, and auth middleware are in place.
+- Milestone 9 is complete: public and protected admin event HTTP handlers are
+  wired into the API.
+- Milestone 10 is complete: Docker, Portainer stack, migration/admin one-shot
+  commands, security headers, request IDs, and deployment docs are in place.
 
 ## Boundary Rules
 
@@ -73,6 +83,7 @@ docs/                       # Backend architecture and operations notes
 
 Public:
 
+- `GET /`
 - `GET /healthz`
 - `GET /api/events`
 - `GET /api/events/featured`
@@ -175,6 +186,6 @@ limits, token TTL ordering, and supported app/log modes.
 5. Domain models, DTOs, validation, and centralized errors. Complete.
 6. PostgreSQL migrations. Complete.
 7. Event repository and service layer. Complete.
-8. Auth security, admin sessions, and middleware.
-9. Public and admin HTTP handlers.
-10. Docker, Portainer compose stack, and deployment docs.
+8. Auth security, admin sessions, and middleware. Complete.
+9. Public and admin HTTP handlers. Complete.
+10. Docker, Portainer compose stack, and deployment docs. Complete.

@@ -67,12 +67,13 @@ func run() int {
 	server := &http.Server{
 		Addr: cfg.Address(),
 		Handler: buildRouter(routerDependencies{
-			Pinger:    pool,
-			CORS:      cfg.CORS,
-			Logger:    log,
-			Validator: validator,
-			Auth:      authService,
-			Events:    eventService,
+			Pinger:     pool,
+			CORS:       cfg.CORS,
+			Logger:     log,
+			Validator:  validator,
+			Auth:       authService,
+			Events:     eventService,
+			Production: cfg.IsProduction(),
 		}),
 		ReadTimeout:  cfg.HTTP.ReadTimeout,
 		WriteTimeout: cfg.HTTP.WriteTimeout,
@@ -113,12 +114,13 @@ type healthPinger interface {
 }
 
 type routerDependencies struct {
-	Pinger    healthPinger
-	CORS      config.CORSConfig
-	Logger    *slog.Logger
-	Validator *httptransport.Validator
-	Auth      httptransport.AuthService
-	Events    httptransport.EventService
+	Pinger     healthPinger
+	CORS       config.CORSConfig
+	Logger     *slog.Logger
+	Validator  *httptransport.Validator
+	Auth       httptransport.AuthService
+	Events     httptransport.EventService
+	Production bool
 }
 
 func buildRouter(deps routerDependencies) http.Handler {
@@ -128,6 +130,8 @@ func buildRouter(deps routerDependencies) http.Handler {
 		log = fallbackLogger()
 	}
 
+	router.Use(middleware.RequestID())
+	router.Use(middleware.SecurityHeaders(deps.Production))
 	router.Use(middleware.Recoverer(log))
 	router.Use(middleware.RequestLogger(log))
 	if len(deps.CORS.AllowedOrigins) > 0 {

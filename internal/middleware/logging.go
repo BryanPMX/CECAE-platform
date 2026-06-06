@@ -16,6 +16,7 @@ func RequestLogger(log *slog.Logger) func(http.Handler) http.Handler {
 			next.ServeHTTP(recorder, r)
 
 			log.Info("http request completed",
+				slog.String("request_id", RequestIDFromContext(r.Context())),
 				slog.String("method", r.Method),
 				slog.String("path", r.URL.Path),
 				slog.Int("status", recorder.statusCode),
