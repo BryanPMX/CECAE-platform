@@ -8,11 +8,11 @@ export function AdminSessionProvider({ children }: { children: ReactNode }) {
 
   const storeTokens = useCallback((tokens: LoginResponse) => {
     setAccessToken(tokens.accessToken);
-    window.localStorage.setItem(refreshTokenStorageKey, tokens.refreshToken);
+    writeRefreshToken(tokens.refreshToken);
   }, []);
 
   const refreshSession = useCallback(async () => {
-    const refreshToken = window.localStorage.getItem(refreshTokenStorageKey);
+    const refreshToken = readRefreshToken();
     if (!refreshToken) {
       setAccessToken(null);
       return null;
@@ -24,7 +24,7 @@ export function AdminSessionProvider({ children }: { children: ReactNode }) {
       return tokens.accessToken;
     } catch {
       setAccessToken(null);
-      window.localStorage.removeItem(refreshTokenStorageKey);
+      clearRefreshToken();
       return null;
     }
   }, [storeTokens]);
@@ -42,9 +42,9 @@ export function AdminSessionProvider({ children }: { children: ReactNode }) {
   );
 
   const logout = useCallback(async () => {
-    const refreshToken = window.localStorage.getItem(refreshTokenStorageKey);
+    const refreshToken = readRefreshToken();
     setAccessToken(null);
-    window.localStorage.removeItem(refreshTokenStorageKey);
+    clearRefreshToken();
 
     if (refreshToken) {
       try {
@@ -68,4 +68,28 @@ export function AdminSessionProvider({ children }: { children: ReactNode }) {
   );
 
   return <AdminSessionContext.Provider value={value}>{children}</AdminSessionContext.Provider>;
+}
+
+function readRefreshToken() {
+  try {
+    return window.localStorage.getItem(refreshTokenStorageKey);
+  } catch {
+    return null;
+  }
+}
+
+function writeRefreshToken(refreshToken: string) {
+  try {
+    window.localStorage.setItem(refreshTokenStorageKey, refreshToken);
+  } catch {
+    // Access tokens remain in memory, so login can still complete if storage is blocked.
+  }
+}
+
+function clearRefreshToken() {
+  try {
+    window.localStorage.removeItem(refreshTokenStorageKey);
+  } catch {
+    // Storage may be unavailable in hardened browser modes.
+  }
 }
