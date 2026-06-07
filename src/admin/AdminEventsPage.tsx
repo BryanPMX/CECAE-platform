@@ -2,11 +2,23 @@ import { AlertTriangle, Edit, Plus, Search, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { adminEventsApi } from '@/services/admin.api';
-import type { AdminEvent, EventStatus } from '@/services';
+import type { AdminEvent, EventModality, EventStatus, EventType } from '@/services';
 import { ApiError } from '@/services/apiClient';
 import { cn } from '@/lib/utils';
 import { adminErrorMessage } from './adminErrors';
 import { useAdminApi } from './useAdminApi';
+
+const eventTypeLabels: Record<EventType, string> = {
+  training: 'Capacitación',
+  webinar: 'Webinar',
+  talk: 'Plática',
+};
+
+const eventModalityLabels: Record<EventModality, string> = {
+  presencial: 'Presencial',
+  virtual: 'Virtual',
+  hibrida: 'Híbrida',
+};
 
 const statusLabels: Record<EventStatus, string> = {
   draft: 'Borrador',
@@ -173,8 +185,8 @@ export function AdminEventsPage() {
                       <p className="font-semibold text-navy">{event.title.es}</p>
                       <p className="mt-1 line-clamp-2 max-w-md text-midGray">{event.description.es}</p>
                     </td>
-                    <td className="px-4 py-4 text-charcoal">{event.date}<br />{event.time}</td>
-                    <td className="px-4 py-4 text-charcoal">{event.type}<br />{event.modality}</td>
+                    <td className="px-4 py-4 text-charcoal">{formatEventDate(event.date)}<br />{event.time}</td>
+                    <td className="px-4 py-4 text-charcoal">{eventTypeLabels[event.type]}<br />{eventModalityLabels[event.modality]}</td>
                     <td className="px-4 py-4">
                       <span className={cn('inline-flex rounded-full px-3 py-1 text-xs font-bold', statusClasses[event.status])}>
                         {statusLabels[event.status]}
@@ -229,6 +241,17 @@ export function AdminEventsPage() {
       ) : null}
     </div>
   );
+}
+
+function formatEventDate(value: string) {
+  const parts = value.split('-');
+
+  if (parts.length === 3) {
+    const [year, month, day] = parts;
+    return `${day}/${month}/${year}`;
+  }
+
+  return value;
 }
 
 function AdminNoticeMessage({

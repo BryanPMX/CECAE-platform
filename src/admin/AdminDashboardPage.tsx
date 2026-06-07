@@ -6,6 +6,12 @@ import type { AdminEvent } from '@/services';
 import { adminErrorMessage } from './adminErrors';
 import { useAdminApi } from './useAdminApi';
 
+const statusLabels: Record<AdminEvent['status'], string> = {
+  draft: 'Borrador',
+  published: 'Publicado',
+  archived: 'Archivado',
+};
+
 export function AdminDashboardPage() {
   const adminRequest = useAdminApi();
   const [events, setEvents] = useState<AdminEvent[]>([]);
@@ -75,7 +81,7 @@ export function AdminDashboardPage() {
 
       <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-display text-xl font-bold text-navy">Próximos cambios</h2>
+          <h2 className="font-display text-xl font-bold text-navy">Proximos Eventos</h2>
           <Link to="/admin/eventos" className="focus-ring rounded-md px-3 py-2 text-sm font-semibold text-orange hover:text-navy">
             Ver todos
           </Link>
@@ -91,7 +97,7 @@ export function AdminDashboardPage() {
                 className="focus-ring grid gap-1 rounded-md border border-line px-4 py-3 transition hover:border-orange hover:bg-skySurface"
               >
                 <span className="font-semibold text-navy">{event.title.es}</span>
-                <span className="text-sm text-midGray">{event.date} · {event.status}</span>
+                <span className="text-sm text-midGray">{formatEventDate(event.date)} · {statusLabels[event.status]}</span>
               </Link>
             ))
           ) : (
@@ -101,4 +107,15 @@ export function AdminDashboardPage() {
       </section>
     </div>
   );
+}
+
+function formatEventDate(value: string) {
+  const parts = value.split('-');
+
+  if (parts.length === 3) {
+    const [year, month, day] = parts;
+    return `${day}/${month}/${year}`;
+  }
+
+  return value;
 }
