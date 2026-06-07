@@ -14,7 +14,7 @@ export function AdminLayout() {
   return (
     <div className="min-h-screen bg-surface text-charcoal">
       <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 px-4 sm:px-6 lg:px-8">
+        <div className="grid h-16 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:px-6 lg:px-8">
           <Link to="/admin" className="focus-ring inline-flex items-center gap-3 rounded-md">
             <img
               src="/cecae-footer-logo-1024x256.png"
@@ -23,7 +23,7 @@ export function AdminLayout() {
               height="256"
               className="h-9 w-auto object-contain"
             />
-            <span className="hidden items-center gap-2 rounded-md bg-skySurface px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-navy sm:inline-flex">
+            <span className="hidden items-center gap-2 rounded-md bg-skySurface px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-navy md:inline-flex">
               <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
               Admin
             </span>
