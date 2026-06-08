@@ -66,3 +66,42 @@ export function useFeaturedEvents(limit = 3) {
 
   return { events, isLoading, error };
 }
+
+export function useHomepagePreviewEvents(limit = 3) {
+  const [events, setEvents] = useState<CecaeEvent[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setIsLoading(true);
+    setError(null);
+
+    eventsService
+      .getFeaturedEvents(limit)
+      .then(async (featuredEvents) => {
+        if (featuredEvents.length > 0) return featuredEvents.slice(0, limit);
+
+        const publicEvents = await eventsService.getEvents();
+        return publicEvents.slice(0, limit);
+      })
+      .then((items) => {
+        if (isMounted) setEvents(items);
+      })
+      .catch(() => {
+        if (isMounted) {
+          setEvents([]);
+          setError('No fue posible cargar los eventos.');
+        }
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [limit]);
+
+  return { events, isLoading, error };
+}
