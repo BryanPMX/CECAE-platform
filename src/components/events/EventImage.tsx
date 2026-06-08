@@ -42,7 +42,7 @@ export function EventImage({
     isDetail && naturalRatio
       ? Math.min(detailAspectRatioLimits.max, Math.max(detailAspectRatioLimits.min, naturalRatio))
       : null;
-  const showImageBackdrop = hasUsableImage && state === 'loaded' && (isDetail || fitStrategy === 'cover');
+  const showImageBackdrop = hasUsableImage && state === 'loaded';
   const canToggleFit = isDetail && fitStrategy === 'adaptive' && state === 'loaded';
   const shellStyle: CSSProperties | undefined = detailAspectRatio
     ? { aspectRatio: `${detailAspectRatio} / 1` }

@@ -28,7 +28,9 @@ Only published, non-deleted events are returned publicly.
 
 The public event listing at `/eventos` uses `src/hooks/useEvents.ts` and the
 API-backed `EventsService` adapter. Listing cards keep a consistent public grid
-by rendering event images as cropped 16:9 media.
+while using the shared adaptive event image component: normal landscape images
+fill the card, and very vertical or very wide uploads are shown complete with a
+blurred backdrop generated from the same image.
 
 The event detail route at `/eventos/:id` renders the media and event content as
 two separate panels: a smart image panel first, then the event details panel
@@ -77,10 +79,10 @@ PNG, or WebP, enforces the configured size limit, stores it under
 The admin form writes the returned `url` into the existing `imageUrl` event
 field. Admins can still paste an external image URL when they prefer.
 
-The admin event form recommends 16:9 images for best listing-card consistency,
-but the public detail page is resilient when uploaded images do not follow that
-guideline. Admin image previews label the listing/card contexts separately from
-the adaptive detail context.
+The admin event form recommends 16:9 images for the most predictable crop, but
+the public listing and detail pages are resilient when uploaded images do not
+follow that guideline. Admin image previews label the listing/card and detail
+contexts as adaptive image surfaces.
 
 The frontend stores the access token in React state and stores the refresh token
 in local storage for reload recovery. If HTTP-only cookies are preferred later,

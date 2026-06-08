@@ -26,7 +26,6 @@ export function EventCard({ event }: { event: CecaeEvent }) {
         src={event.imageUrl}
         title={event.title[language]}
         className="aspect-[4/3]"
-        fitStrategy="cover"
       />
       <div className="grid gap-4 p-5">
         <div className="flex flex-wrap justify-center gap-2">
