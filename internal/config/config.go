@@ -29,6 +29,7 @@ type Config struct {
 	Database DatabaseConfig `envPrefix:"DATABASE_"`
 	Auth     AuthConfig     `envPrefix:"AUTH_"`
 	CORS     CORSConfig     `envPrefix:"CORS_"`
+	Uploads  UploadsConfig  `envPrefix:"UPLOADS_"`
 }
 
 // AppConfig contains process-level settings.
@@ -69,6 +70,13 @@ type AuthConfig struct {
 type CORSConfig struct {
 	AllowedOrigins   []string `env:"ALLOWED_ORIGINS" envDefault:"http://localhost:5173"`
 	AllowCredentials bool     `env:"ALLOW_CREDENTIALS" envDefault:"true"`
+}
+
+// UploadsConfig contains local uploaded-image storage settings.
+type UploadsConfig struct {
+	Directory     string `env:"DIR" envDefault:"var/uploads"`
+	PublicBaseURL string `env:"PUBLIC_BASE_URL"`
+	MaxImageBytes int64  `env:"MAX_IMAGE_BYTES" envDefault:"5242880"`
 }
 
 // LoadOptions customizes configuration loading. It is mainly useful for tests.
@@ -135,6 +143,7 @@ func (c Config) Validate() error {
 	validateDatabase(c.Database, &problems)
 	validateAuth(c.Auth, c.IsProduction(), &problems)
 	validateCORS(c.CORS, c.IsProduction(), &problems)
+	validateUploads(c.Uploads, &problems)
 
 	if len(problems) > 0 {
 		return ValidationError{Problems: problems}
@@ -257,6 +266,26 @@ func validateCORS(cors CORSConfig, production bool, problems *[]string) {
 			} else if parsed.Scheme != "http" && parsed.Scheme != "https" {
 				*problems = append(*problems, "CORS_ALLOWED_ORIGINS entries must use http or https")
 			}
+		}
+	}
+}
+
+func validateUploads(uploads UploadsConfig, problems *[]string) {
+	if strings.TrimSpace(uploads.Directory) == "" {
+		*problems = append(*problems, "UPLOADS_DIR must not be empty")
+	}
+	if uploads.MaxImageBytes < 1 {
+		*problems = append(*problems, "UPLOADS_MAX_IMAGE_BYTES must be positive")
+	}
+	if uploads.MaxImageBytes > 20*1024*1024 {
+		*problems = append(*problems, "UPLOADS_MAX_IMAGE_BYTES must be at most 20971520")
+	}
+	if strings.TrimSpace(uploads.PublicBaseURL) != "" {
+		parsed, err := url.Parse(uploads.PublicBaseURL)
+		if err != nil || parsed.Scheme == "" || parsed.Host == "" {
+			*problems = append(*problems, "UPLOADS_PUBLIC_BASE_URL must be an absolute URL")
+		} else if parsed.Scheme != "http" && parsed.Scheme != "https" {
+			*problems = append(*problems, "UPLOADS_PUBLIC_BASE_URL must use http or https")
 		}
 	}
 }

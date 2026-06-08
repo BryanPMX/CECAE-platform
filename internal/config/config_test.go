@@ -25,6 +25,9 @@ func TestLoadWithOptionsUsesDevelopmentDefaults(t *testing.T) {
 	require.Equal(t, 720*time.Hour, cfg.Auth.RefreshTokenTTL)
 	require.Equal(t, []string{"http://localhost:5173"}, cfg.CORS.AllowedOrigins)
 	require.True(t, cfg.CORS.AllowCredentials)
+	require.Equal(t, "var/uploads", cfg.Uploads.Directory)
+	require.Empty(t, cfg.Uploads.PublicBaseURL)
+	require.Equal(t, int64(5242880), cfg.Uploads.MaxImageBytes)
 	require.False(t, cfg.IsProduction())
 }
 
@@ -40,6 +43,19 @@ func TestLoadWithOptionsAcceptsProductionConfiguration(t *testing.T) {
 
 	require.True(t, cfg.IsProduction())
 	require.Equal(t, []string{"https://cecae.mx", "https://admin.cecae.mx"}, cfg.CORS.AllowedOrigins)
+}
+
+func TestLoadWithOptionsAcceptsUploadConfiguration(t *testing.T) {
+	cfg, err := LoadWithOptions(LoadOptions{Environment: map[string]string{
+		"UPLOADS_DIR":             "/app/uploads",
+		"UPLOADS_PUBLIC_BASE_URL": "https://api.cecae.mx",
+		"UPLOADS_MAX_IMAGE_BYTES": "1048576",
+	}})
+	require.NoError(t, err)
+
+	require.Equal(t, "/app/uploads", cfg.Uploads.Directory)
+	require.Equal(t, "https://api.cecae.mx", cfg.Uploads.PublicBaseURL)
+	require.Equal(t, int64(1048576), cfg.Uploads.MaxImageBytes)
 }
 
 func TestLoadWithOptionsRejectsProductionDefaults(t *testing.T) {
@@ -120,6 +136,17 @@ func TestLoadWithOptionsRejectsInvalidCORSOrigins(t *testing.T) {
 	requireConfigError(t, err, "CORS_ALLOWED_ORIGINS must not use * in production")
 	requireConfigError(t, err, "CORS_ALLOWED_ORIGINS entries must use http or https")
 	requireConfigError(t, err, "CORS_ALLOWED_ORIGINS entries must be absolute URLs or *")
+}
+
+func TestLoadWithOptionsRejectsInvalidUploadSettings(t *testing.T) {
+	_, err := LoadWithOptions(LoadOptions{Environment: map[string]string{
+		"UPLOADS_DIR":             " ",
+		"UPLOADS_PUBLIC_BASE_URL": "ftp://api.cecae.mx",
+		"UPLOADS_MAX_IMAGE_BYTES": "0",
+	}})
+	requireConfigError(t, err, "UPLOADS_DIR must not be empty")
+	requireConfigError(t, err, "UPLOADS_PUBLIC_BASE_URL must use http or https")
+	requireConfigError(t, err, "UPLOADS_MAX_IMAGE_BYTES must be positive")
 }
 
 func TestLoadWithOptionsReadsEnvFile(t *testing.T) {

@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -18,6 +19,7 @@ import (
 	"github.com/BryanPMX/CECAE-platform/internal/middleware"
 	"github.com/BryanPMX/CECAE-platform/internal/repository"
 	"github.com/BryanPMX/CECAE-platform/internal/security"
+	"github.com/BryanPMX/CECAE-platform/internal/storage"
 	httptransport "github.com/BryanPMX/CECAE-platform/internal/transport/http"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
@@ -63,6 +65,8 @@ func run() int {
 		security.NewRefreshTokenManager(cfg.Auth),
 	)
 	eventService := application.NewEventService(eventRepository)
+	imageStorage := storage.NewLocalImageStorage(cfg.Uploads.Directory)
+	imageUploadService := application.NewImageUploadService(imageStorage, cfg.Uploads.MaxImageBytes)
 
 	server := &http.Server{
 		Addr: cfg.Address(),
@@ -73,6 +77,8 @@ func run() int {
 			Validator:  validator,
 			Auth:       authService,
 			Events:     eventService,
+			Images:     imageUploadService,
+			Uploads:    cfg.Uploads,
 			Production: cfg.IsProduction(),
 		}),
 		ReadTimeout:  cfg.HTTP.ReadTimeout,
@@ -120,6 +126,8 @@ type routerDependencies struct {
 	Validator  *httptransport.Validator
 	Auth       httptransport.AuthService
 	Events     httptransport.EventService
+	Images     httptransport.ImageUploadService
+	Uploads    config.UploadsConfig
 	Production bool
 }
 
@@ -155,6 +163,9 @@ func buildRouter(deps routerDependencies) http.Handler {
 	}
 	router.Get("/healthz", healthHandler)
 	router.Head("/healthz", healthHandler)
+	if deps.Uploads.Directory != "" {
+		router.Handle("/uploads/*", uploadedFilesHandler(deps.Uploads.Directory))
+	}
 
 	if deps.Auth != nil && deps.Validator != nil {
 		authHandler := httptransport.NewAuthHandler(deps.Auth, deps.Validator)
@@ -181,11 +192,31 @@ func buildRouter(deps routerDependencies) http.Handler {
 				admin.Put("/api/admin/events/{id}", eventHandler.UpdateAdmin)
 				admin.Patch("/api/admin/events/{id}", eventHandler.PatchAdmin)
 				admin.Delete("/api/admin/events/{id}", eventHandler.DeleteAdmin)
+				if deps.Images != nil {
+					imageUploadHandler := httptransport.NewImageUploadHandler(
+						deps.Images,
+						deps.Uploads.MaxImageBytes,
+						deps.Uploads.PublicBaseURL,
+					)
+					admin.Post("/api/admin/events/images", imageUploadHandler.UploadEventImage)
+				}
 			})
 		}
 	}
 
 	return router
+}
+
+func uploadedFilesHandler(rootDir string) http.Handler {
+	fileServer := http.StripPrefix("/uploads", http.FileServer(http.Dir(rootDir)))
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, "/") {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+		fileServer.ServeHTTP(w, r)
+	})
 }
 
 func writeRoot(w http.ResponseWriter) {
