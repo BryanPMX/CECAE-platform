@@ -8,8 +8,8 @@ type EventImageState = 'idle' | 'loaded' | 'error';
 type EventImageFitStrategy = 'adaptive' | 'cover';
 
 const imageShellClasses: Record<EventImageVariant, string> = {
-  card: 'aspect-[16/9]',
-  detail: 'aspect-[16/9]',
+  card: 'aspect-[16/9] w-full',
+  detail: 'mx-auto aspect-[16/9] w-full',
 };
 
 export function EventImage({
@@ -33,7 +33,14 @@ export function EventImage({
   const hasUsableImage = Boolean(src) && state !== 'error';
   const adaptiveAspectRatio = fitStrategy === 'adaptive' && naturalRatio ? naturalRatio : null;
   const shellStyle: CSSProperties | undefined = adaptiveAspectRatio
-    ? { aspectRatio: `${adaptiveAspectRatio} / 1` }
+    ? {
+        aspectRatio: `${adaptiveAspectRatio} / 1`,
+        ...(variant === 'detail'
+          ? {
+              maxWidth: detailMaxWidthForRatio(adaptiveAspectRatio),
+            }
+          : {}),
+      }
     : undefined;
 
   const handleLoadedImage = useCallback((image: HTMLImageElement) => {
@@ -57,7 +64,7 @@ export function EventImage({
   return (
     <div
       className={cn(
-        'relative isolate w-full overflow-hidden bg-white',
+        'relative isolate overflow-hidden bg-white',
         imageShellClasses[variant],
         className,
       )}
@@ -104,4 +111,11 @@ export function EventImage({
       )}
     </div>
   );
+}
+
+function detailMaxWidthForRatio(ratio: number) {
+  if (ratio < 0.85) return 'min(100%, 22rem)';
+  if (ratio < 1.2) return 'min(100%, 34rem)';
+  if (ratio > 2.1) return 'min(100%, 56rem)';
+  return 'min(100%, 46rem)';
 }

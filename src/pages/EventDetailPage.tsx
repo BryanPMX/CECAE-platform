@@ -64,9 +64,13 @@ export function EventDetailPage() {
               </div>
             ) : (
               <article className="mt-8 grid gap-5 text-left">
-                <div className="overflow-hidden rounded-lg border border-line bg-white shadow-soft">
-                  <EventImage src={event.imageUrl} title={event.title[language]} variant="detail" eager />
-                </div>
+                <EventImage
+                  src={event.imageUrl}
+                  title={event.title[language]}
+                  variant="detail"
+                  className="rounded-lg border border-line shadow-soft"
+                  eager
+                />
                 <EventDetailsPanel event={event} language={language} />
               </article>
             )}

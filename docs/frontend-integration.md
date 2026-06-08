@@ -36,9 +36,9 @@ blurred or generated background.
 The event detail route at `/eventos/:id` renders the media and event content as
 two separate panels: a smart image panel first, then the event details panel
 below it. The detail image component reads the uploaded image's natural ratio,
-adopts that ratio for the media panel, and renders only the image. This avoids
-flat color or blur dead space while still showing the full image for
-nonstandard ratios.
+adopts that ratio for the media panel, caps the visual size to a comfortable
+desktop range, and renders only the image. This avoids flat color or blur dead
+space while still showing the full image for nonstandard ratios.
 
 ## Admin Portal
 
