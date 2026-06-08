@@ -18,6 +18,7 @@ Implemented backend pieces:
 - Docker image, local Compose stack, and Portainer production stack.
 - One-shot migration and admin bootstrap commands.
 - API-backed frontend `EventsService` adapter.
+- Public event listing and detail pages with responsive image handling.
 - React admin portal for event login, dashboard, listing, create, edit, and delete workflows.
 
 Not included yet:

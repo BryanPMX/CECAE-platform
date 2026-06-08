@@ -24,6 +24,21 @@ The public frontend should call:
 
 Only published, non-deleted events are returned publicly.
 
+## Public Event UI
+
+The public event listing at `/eventos` uses `src/hooks/useEvents.ts` and the
+API-backed `EventsService` adapter. Listing cards keep a consistent public grid
+by rendering event images as cropped 16:9 media.
+
+The event detail route at `/eventos/:id` renders the media and event content as
+two separate panels: a smart image panel first, then the event details panel
+below it. The detail image component reads the uploaded image's natural ratio,
+clamps the panel to a usable responsive range, and uses a blurred copy of the
+same image as the backdrop when the uploaded asset is very vertical or very
+wide. This avoids flat blue dead space while still showing the full image by
+default for nonstandard ratios. A small icon-only control lets users toggle
+between the full image and a filled/cropped view.
+
 ## Admin Portal
 
 The admin portal is available at:
@@ -61,6 +76,11 @@ PNG, or WebP, enforces the configured size limit, stores it under
 
 The admin form writes the returned `url` into the existing `imageUrl` event
 field. Admins can still paste an external image URL when they prefer.
+
+The admin event form recommends 16:9 images for best listing-card consistency,
+but the public detail page is resilient when uploaded images do not follow that
+guideline. Admin image previews label the listing/card contexts separately from
+the adaptive detail context.
 
 The frontend stores the access token in React state and stores the refresh token
 in local storage for reload recovery. If HTTP-only cookies are preferred later,

@@ -128,7 +128,7 @@
       "virtual": "Virtual",
       "hibrida": "Hybrid"
     },
-    "detailStub": "The detail route is ready for version V2. Once events are published, this space will show full information and registration options."
+    "detailStub": "The detail page shows the event image, full information, and registration options when available."
   },
   "faq": {
     "eyebrow": "FAQ",

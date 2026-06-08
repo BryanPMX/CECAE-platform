@@ -128,7 +128,7 @@
       "virtual": "Virtual",
       "hibrida": "Híbrida"
     },
-    "detailStub": "La ruta de detalle está preparada para la versión V2. Cuando existan eventos publicados, este espacio mostrará información completa y opciones de registro."
+    "detailStub": "La página de detalle muestra la imagen del evento, la información completa y las opciones de registro cuando están disponibles."
   },
   "faq": {
     "eyebrow": "FAQ",

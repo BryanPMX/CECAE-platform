@@ -265,7 +265,7 @@ export function AdminEventFormPage() {
                   {imageError ? <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{imageError}</p> : null}
                 </div>
                 <p className="mt-3 text-xs leading-5 text-midGray">
-                  Si la imagen es muy vertical u horizontal, se mostrará completa dentro del marco para evitar cortes fuertes en la tarjeta.
+                  Si la imagen es muy vertical u horizontal, las tarjetas mantienen un recorte consistente y el detalle la muestra completa con fondo generado desde la misma imagen.
                 </p>
               </div>
 
@@ -273,7 +273,7 @@ export function AdminEventFormPage() {
                 <ImagePreview label="Escritorio" size="Tarjeta pública 16:9" src={localImagePreview ?? form.imageUrl} title={form.titleEs} />
                 <div className="grid grid-cols-2 gap-3">
                   <ImagePreview label="Móvil" size="Listado 16:9" src={localImagePreview ?? form.imageUrl} title={form.titleEs} compact />
-                  <ImagePreview label="Detalle" size="Página 16:9" src={localImagePreview ?? form.imageUrl} title={form.titleEs} compact />
+                  <ImagePreview label="Detalle" size="Marco adaptable" src={localImagePreview ?? form.imageUrl} title={form.titleEs} compact />
                 </div>
               </div>
             </div>
