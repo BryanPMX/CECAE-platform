@@ -4,13 +4,13 @@ import { EventCard } from '@/components/events/EventCard';
 import { EmptyEventsState } from '@/components/ui/EmptyEventsState';
 import { LinkButton } from '@/components/ui/LinkButton';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { useFeaturedEvents } from '@/hooks/useEvents';
+import { useHomepagePreviewEvents } from '@/hooks/useEvents';
 import { useShouldReduceMotion } from '@/hooks/useShouldReduceMotion';
 
 export function EventsPreviewSection() {
   const { t } = useTranslation();
   const shouldReduceMotion = useShouldReduceMotion();
-  const { events: featured, isLoading, error } = useFeaturedEvents(3);
+  const { events: previewEvents, isLoading, error } = useHomepagePreviewEvents(3);
 
   return (
     <section id="eventos" className="flow-section flow-section-light py-20 sm:py-24 lg:py-28">
@@ -31,7 +31,7 @@ export function EventsPreviewSection() {
             <p className="rounded-md border border-line bg-white px-4 py-6 text-center font-semibold text-midGray shadow-sm">
               {error}
             </p>
-          ) : featured.length > 0 ? (
+          ) : previewEvents.length > 0 ? (
             <motion.div
               initial={shouldReduceMotion ? false : 'hidden'}
               whileInView={shouldReduceMotion ? undefined : 'show'}
@@ -46,7 +46,7 @@ export function EventsPreviewSection() {
               }
               className="grid gap-5 md:grid-cols-3"
             >
-              {featured.map((event, index) => (
+              {previewEvents.map((event, index) => (
                 <motion.div
                   key={event.id}
                   initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
