@@ -75,7 +75,7 @@ export function EventDetailPage() {
                 <h1 className="text-balance mt-4 font-display text-3xl font-bold leading-tight text-navy sm:text-4xl">
                   {event.title[language]}
                 </h1>
-                <p className="text-pretty mt-4 text-base leading-7 text-midGray sm:text-lg sm:leading-8">
+                <p className="text-pretty mt-4 whitespace-pre-wrap break-words text-base leading-7 text-midGray sm:text-lg sm:leading-8">
                   {event.description[language]}
                 </p>
                 <dl className="mt-6 grid gap-3 text-sm text-charcoal sm:grid-cols-2">

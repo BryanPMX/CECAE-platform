@@ -451,8 +451,8 @@ function payloadFromForm(form: EventFormState): EventPayload {
       en: form.titleEs.trim(),
     },
     description: {
-      es: form.descriptionEs.trim(),
-      en: form.descriptionEs.trim(),
+      es: form.descriptionEs,
+      en: form.descriptionEs,
     },
     type: form.type,
     modality: form.modality,

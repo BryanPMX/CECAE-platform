@@ -41,7 +41,7 @@ export function EventCard({ event }: { event: CecaeEvent }) {
           <h3 className="text-balance text-center font-display text-xl font-bold leading-snug text-navy group-hover:text-orange">
             {event.title[language]}
           </h3>
-          <p className="text-pretty mt-2 line-clamp-3 text-left text-sm leading-6 text-midGray">
+          <p className="text-pretty mt-2 line-clamp-3 whitespace-pre-wrap break-words text-left text-sm leading-6 text-midGray">
             {event.description[language]}
           </p>
         </div>
