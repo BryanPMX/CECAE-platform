@@ -11,6 +11,7 @@ Implemented backend pieces:
 - PostgreSQL connection pooling and versioned migrations.
 - Public event endpoints for published, non-deleted events.
 - Protected admin event CRUD endpoints.
+- Authenticated admin event image uploads with local persistent storage.
 - Admin login, JWT access tokens, opaque refresh sessions, and logout.
 - Password hashing with bcrypt.
 - CORS, request logging, request IDs, recovery, security headers, and login rate limiting.

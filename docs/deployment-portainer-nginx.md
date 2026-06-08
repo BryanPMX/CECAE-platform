@@ -89,6 +89,10 @@ AUTH_REFRESH_TOKEN_TTL=720h
 CORS_ALLOWED_ORIGINS=https://cecae.org,https://www.cecae.org,https://admin.cecae.org
 CORS_ALLOW_CREDENTIALS=true
 
+UPLOADS_DIR=/app/var/uploads
+UPLOADS_PUBLIC_BASE_URL=https://api.cecae.org
+UPLOADS_MAX_IMAGE_BYTES=5242880
+
 ADMIN_EMAIL=admin@cecae.org
 ADMIN_PASSWORD=replace-with-a-strong-initial-admin-password
 ```
@@ -186,10 +190,13 @@ Expected:
 - Do not publish the database port on the host.
 - Keep `POSTGRES_PASSWORD`, token secrets, and admin password out of git.
 - Use a versioned image tag for controlled rollbacks.
-- Back up the `cecae_postgres_data` volume before upgrades.
+- Back up the `cecae_postgres_data` and `cecae_uploads` volumes before
+  upgrades.
 - Re-run `migrate` on every deployment; it is safe when there are no pending
   migrations.
 - Keep `CORS_ALLOWED_ORIGINS` limited to the public site and admin portal.
+- Keep `UPLOADS_PUBLIC_BASE_URL` set to the public API origin so uploaded event
+  image URLs remain stable behind Nginx Proxy Manager.
 
 ## 8. Backup Sketch
 

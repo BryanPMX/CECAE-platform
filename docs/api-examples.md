@@ -41,6 +41,17 @@ Save the returned access token:
 export ACCESS_TOKEN=replace-with-access-token
 ```
 
+## Upload Event Image
+
+```bash
+curl -sS -X POST "$API_BASE_URL/api/admin/events/images" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -F "image=@/path/to/event-image.jpg"
+```
+
+Use the returned `url` as the event `imageUrl`. The API accepts JPG, PNG, and
+WebP images up to `UPLOADS_MAX_IMAGE_BYTES`.
+
 ## Create Event
 
 ```bash
@@ -54,6 +65,7 @@ curl -sS -X POST "$API_BASE_URL/api/admin/events" \
     "modality": "virtual",
     "date": "2026-07-08",
     "time": "09:30",
+    "imageUrl": "https://api.cecae.org/uploads/events/event-image.jpg",
     "tags": ["nom", "seguridad"],
     "isFeatured": true,
     "status": "published"

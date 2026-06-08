@@ -39,11 +39,28 @@ It uses these backend endpoints:
 - `POST /api/admin/auth/login`
 - `POST /api/admin/auth/refresh`
 - `POST /api/admin/auth/logout`
+- `POST /api/admin/events/images`
 - `GET /api/admin/events`
 - `GET /api/admin/events/:id`
 - `POST /api/admin/events`
 - `PUT /api/admin/events/:id`
 - `DELETE /api/admin/events/:id`
+
+`POST /api/admin/events/images` accepts a multipart `image` file and requires
+the same bearer token as event CRUD. The API validates the uploaded file as JPG,
+PNG, or WebP, enforces the configured size limit, stores it under
+`/uploads/events/...`, and returns:
+
+```json
+{
+  "url": "https://api.cecae.org/uploads/events/uuid.jpg",
+  "contentType": "image/jpeg",
+  "sizeBytes": 123456
+}
+```
+
+The admin form writes the returned `url` into the existing `imageUrl` event
+field. Admins can still paste an external image URL when they prefer.
 
 The frontend stores the access token in React state and stores the refresh token
 in local storage for reload recovery. If HTTP-only cookies are preferred later,

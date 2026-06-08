@@ -11,6 +11,7 @@ Compose through Portainer.
 - Secure admin authentication with access and refresh tokens.
 - Public read-only event endpoints for published, non-deleted events.
 - Protected admin CRUD endpoints for all event states.
+- Protected admin event image uploads backed by local uploaded-file storage.
 - Soft deletes for events.
 - Frontend-compatible event response contract.
 
@@ -29,6 +30,7 @@ internal/
   domain/                   # Core entities, value objects, domain errors
   application/              # Auth and event use cases / service layer
   repository/               # Persistence interfaces and PostgreSQL adapters
+  storage/                  # Local uploaded-file storage adapters
   transport/
     http/                   # Router, handlers, DTOs, response mapping
   middleware/               # Auth, CORS, logging, recovery, rate limiting
@@ -68,12 +70,17 @@ docs/                       # Backend architecture and operations notes
   wired into the API.
 - Milestone 10 is complete: Docker, Portainer stack, migration/admin one-shot
   commands, security headers, request IDs, and deployment docs are in place.
+- Admin event image uploads are complete: authenticated multipart uploads are
+  validated in the application layer, written through a storage adapter, served
+  from `/uploads/events/...`, and persisted in events through the existing
+  `imageUrl` field.
 
 ## Boundary Rules
 
 - HTTP handlers translate requests and responses only.
 - Application services own business workflows.
 - Repositories hide PostgreSQL details behind interfaces.
+- Storage adapters hide uploaded-file persistence behind application ports.
 - Domain types do not depend on transport or database packages.
 - Security primitives are isolated from handlers and repositories.
 - Configuration is loaded once at startup and passed through dependency
@@ -96,6 +103,7 @@ Admin:
 - `POST /api/admin/auth/logout`
 - `GET /api/admin/events`
 - `GET /api/admin/events/:id`
+- `POST /api/admin/events/images`
 - `POST /api/admin/events`
 - `PUT /api/admin/events/:id`
 - `PATCH /api/admin/events/:id`
@@ -172,10 +180,15 @@ present and then parses process environment variables into typed settings.
   configure admin token security.
 - `CORS_ALLOWED_ORIGINS` and `CORS_ALLOW_CREDENTIALS` configure browser access
   from the frontend/admin clients.
+- `UPLOADS_DIR`, `UPLOADS_PUBLIC_BASE_URL`, and `UPLOADS_MAX_IMAGE_BYTES`
+  configure local event image uploads. Set `UPLOADS_PUBLIC_BASE_URL` to the
+  externally reachable API origin in production so saved image URLs remain
+  stable behind a reverse proxy.
 
 Production validation rejects default development token secrets and wildcard
 CORS origins. All environments validate ports, durations, PostgreSQL URLs, pool
-limits, token TTL ordering, and supported app/log modes.
+limits, token TTL ordering, upload limits, upload URL scheme, and supported
+app/log modes.
 
 ## Planned Milestones
 

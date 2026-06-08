@@ -34,6 +34,8 @@ services:
       - deploy/.env
     ports:
       - "${API_PORT:-8080}:8080"
+    volumes:
+      - cecae_uploads:/app/var/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -64,3 +66,4 @@ services:
 
 volumes:
   cecae_postgres_data:
+  cecae_uploads:
