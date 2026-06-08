@@ -1,5 +1,5 @@
-import { ArrowLeft, Save } from 'lucide-react';
-import { FormEvent, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { ArrowLeft, LinkIcon, Loader2, Save, Upload, X } from 'lucide-react';
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { EventImage } from '@/components/events/EventImage';
 import { adminEventsApi } from '@/services/admin.api';
@@ -41,6 +41,9 @@ const emptyForm: EventFormState = {
   status: 'draft',
 };
 
+const acceptedImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+const maxClientImageBytes = 5 * 1024 * 1024;
+
 export function AdminEventFormPage() {
   const { id } = useParams();
   const isEditing = Boolean(id);
@@ -49,7 +52,10 @@ export function AdminEventFormPage() {
   const [form, setForm] = useState<EventFormState>(emptyForm);
   const [isLoading, setIsLoading] = useState(isEditing);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [localImagePreview, setLocalImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -71,14 +77,62 @@ export function AdminEventFormPage() {
     };
   }, [adminRequest, id]);
 
+  useEffect(() => {
+    return () => {
+      if (localImagePreview) URL.revokeObjectURL(localImagePreview);
+    };
+  }, [localImagePreview]);
+
   const title = isEditing ? 'Editar evento' : 'Crear evento';
   const canSubmit = useMemo(
-    () => form.titleEs && form.descriptionEs && form.date && form.time,
-    [form],
+    () => form.titleEs && form.descriptionEs && form.date && form.time && !isUploadingImage,
+    [form, isUploadingImage],
   );
 
   const update = <K extends keyof EventFormState>(key: K, value: EventFormState[K]) => {
     setForm((current) => ({ ...current, [key]: value }));
+  };
+
+  const handleImageUrlChange = (value: string) => {
+    setImageError(null);
+    setLocalImagePreview(null);
+    update('imageUrl', value);
+  };
+
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+
+    setImageError(null);
+    if (!acceptedImageTypes.includes(file.type)) {
+      setImageError('Sube una imagen JPG, PNG o WebP.');
+      return;
+    }
+    if (file.size > maxClientImageBytes) {
+      setImageError(`La imagen debe pesar máximo ${formatBytes(maxClientImageBytes)}.`);
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    setLocalImagePreview(previewUrl);
+    setIsUploadingImage(true);
+
+    try {
+      const uploaded = await adminRequest((token) => adminEventsApi.uploadImage(token, file));
+      update('imageUrl', uploaded.url);
+      setLocalImagePreview(null);
+    } catch (uploadError) {
+      setImageError(adminErrorMessage(uploadError, 'No fue posible subir la imagen.'));
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
+  const clearImage = () => {
+    setImageError(null);
+    setLocalImagePreview(null);
+    update('imageUrl', '');
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -165,7 +219,7 @@ export function AdminEventFormPage() {
           </section>
 
           <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
-            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
               <div>
                 <h2 className="font-display text-xl font-bold text-navy">Imagen del evento</h2>
                 <p className="mt-2 text-sm leading-6 text-midGray">
@@ -176,8 +230,39 @@ export function AdminEventFormPage() {
                   <span className="rounded-full bg-skySurface px-3 py-1">Grande 1200 x 675</span>
                   <span className="rounded-full bg-skySurface px-3 py-1">Mínimo 800 x 450</span>
                 </div>
-                <div className="mt-5">
-                  <ImageUrlField value={form.imageUrl} onChange={(value) => update('imageUrl', value)} />
+
+                <div className="mt-5 grid gap-3 rounded-md border border-line bg-skySurface p-3">
+                  <ImageUrlField value={form.imageUrl} onChange={handleImageUrlChange} />
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <label className="focus-ring inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-charcoal">
+                      {isUploadingImage ? (
+                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                      ) : (
+                        <Upload className="h-4 w-4" aria-hidden="true" />
+                      )}
+                      {isUploadingImage ? 'Subiendo...' : 'Subir imagen'}
+                      <input
+                        type="file"
+                        accept={acceptedImageTypes.join(',')}
+                        onChange={handleImageUpload}
+                        disabled={isUploadingImage}
+                        className="sr-only"
+                      />
+                    </label>
+                    {form.imageUrl || localImagePreview ? (
+                      <button
+                        type="button"
+                        onClick={clearImage}
+                        disabled={isUploadingImage}
+                        className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line bg-white px-4 py-2 text-sm font-semibold text-navy shadow-sm hover:border-orange hover:text-orange disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        <X className="h-4 w-4" aria-hidden="true" />
+                        Quitar imagen
+                      </button>
+                    ) : null}
+                    <p className="text-xs font-semibold text-midGray">JPG, PNG o WebP. Máximo {formatBytes(maxClientImageBytes)}.</p>
+                  </div>
+                  {imageError ? <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{imageError}</p> : null}
                 </div>
                 <p className="mt-3 text-xs leading-5 text-midGray">
                   Si la imagen es muy vertical u horizontal, se mostrará completa dentro del marco para evitar cortes fuertes en la tarjeta.
@@ -185,10 +270,10 @@ export function AdminEventFormPage() {
               </div>
 
               <div className="grid gap-3">
-                <ImagePreview label="Tarjeta pública" size="16:9 / 360 x 203 px" src={form.imageUrl} title={form.titleEs} />
+                <ImagePreview label="Escritorio" size="Tarjeta pública 16:9" src={localImagePreview ?? form.imageUrl} title={form.titleEs} />
                 <div className="grid grid-cols-2 gap-3">
-                  <ImagePreview label="Móvil" size="16:9 / 320 x 180 px" src={form.imageUrl} title={form.titleEs} compact />
-                  <ImagePreview label="Detalle" size="16:9 / 768 x 432 px" src={form.imageUrl} title={form.titleEs} compact />
+                  <ImagePreview label="Móvil" size="Listado 16:9" src={localImagePreview ?? form.imageUrl} title={form.titleEs} compact />
+                  <ImagePreview label="Detalle" size="Página 16:9" src={localImagePreview ?? form.imageUrl} title={form.titleEs} compact />
                 </div>
               </div>
             </div>
@@ -297,13 +382,16 @@ function ImageUrlField({ value, onChange }: { value: string; onChange: (value: s
   return (
     <label className="grid gap-2 text-sm font-semibold text-navy">
       URL de imagen
-      <input
-        type="url"
-        value={value}
-        placeholder="https://..."
-        onChange={(event) => onChange(event.target.value)}
-        className="focus-ring min-h-11 rounded-md border border-line bg-white px-3 py-2 text-charcoal shadow-sm"
-      />
+      <span className="relative">
+        <LinkIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-midGray" aria-hidden="true" />
+        <input
+          type="url"
+          value={value}
+          placeholder="https://..."
+          onChange={(event) => onChange(event.target.value)}
+          className="focus-ring min-h-11 w-full rounded-md border border-line bg-white py-2 pl-10 pr-3 text-charcoal shadow-sm"
+        />
+      </span>
     </label>
   );
 }
@@ -391,4 +479,8 @@ function optionalUrl(value: string) {
   if (!trimmed) return undefined;
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
   return `https://${trimmed}`;
+}
+
+function formatBytes(bytes: number) {
+  return `${Math.round(bytes / 1024 / 1024)} MB`;
 }

@@ -8,6 +8,12 @@ export type LoginResponse = {
   refreshTokenExpiresAt: string;
 };
 
+export type ImageUploadResponse = {
+  url: string;
+  contentType: string;
+  sizeBytes: number;
+};
+
 export const adminAuthApi = {
   login: (email: string, password: string) =>
     apiRequest<LoginResponse>('/api/admin/auth/login', {
@@ -52,4 +58,14 @@ export const adminEventsApi = {
       method: 'DELETE',
       accessToken,
     }),
+  uploadImage: (accessToken: string, image: File) => {
+    const body = new FormData();
+    body.append('image', image);
+
+    return apiRequest<ImageUploadResponse>('/api/admin/events/images', {
+      method: 'POST',
+      accessToken,
+      body,
+    });
+  },
 };
