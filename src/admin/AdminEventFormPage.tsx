@@ -265,7 +265,7 @@ export function AdminEventFormPage() {
                   {imageError ? <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{imageError}</p> : null}
                 </div>
                 <p className="mt-3 text-xs leading-5 text-midGray">
-                  Si la imagen es muy vertical u horizontal, las tarjetas y el detalle la muestran completa con fondo generado desde la misma imagen.
+                  Si la imagen es cuadrada, vertical u horizontal, las tarjetas y el detalle ajustan el marco para mostrar solo la imagen completa.
                 </p>
               </div>
 

@@ -28,18 +28,17 @@ Only published, non-deleted events are returned publicly.
 
 The public event listing at `/eventos` uses `src/hooks/useEvents.ts` and the
 API-backed `EventsService` adapter. Listing cards keep a consistent public grid
-while using the shared adaptive event image component: normal landscape images
-fill the card, and very vertical or very wide uploads are shown complete with a
-blurred backdrop generated from the same image.
+while using the shared adaptive event image component: once an image loads, the
+media frame adopts the uploaded image's natural aspect ratio and renders only
+that image. Square, vertical, and panoramic uploads are shown complete without a
+blurred or generated background.
 
 The event detail route at `/eventos/:id` renders the media and event content as
 two separate panels: a smart image panel first, then the event details panel
 below it. The detail image component reads the uploaded image's natural ratio,
-clamps the panel to a usable responsive range, and uses a blurred copy of the
-same image as the backdrop when the uploaded asset is very vertical or very
-wide. This avoids flat blue dead space while still showing the full image by
-default for nonstandard ratios. A small icon-only control lets users toggle
-between the full image and a filled/cropped view.
+adopts that ratio for the media panel, and renders only the image. This avoids
+flat color or blur dead space while still showing the full image for
+nonstandard ratios.
 
 ## Admin Portal
 
@@ -79,10 +78,10 @@ PNG, or WebP, enforces the configured size limit, stores it under
 The admin form writes the returned `url` into the existing `imageUrl` event
 field. Admins can still paste an external image URL when they prefer.
 
-The admin event form recommends 16:9 images for the most predictable crop, but
-the public listing and detail pages are resilient when uploaded images do not
-follow that guideline. Admin image previews label the listing/card and detail
-contexts as adaptive image surfaces.
+The admin event form recommends 16:9 images for consistency, but the public
+listing and detail pages are resilient when uploaded images do not follow that
+guideline. Admin image previews label the listing/card and detail contexts as
+adaptive image surfaces.
 
 The frontend stores the access token in React state and stores the refresh token
 in local storage for reload recovery. If HTTP-only cookies are preferred later,
