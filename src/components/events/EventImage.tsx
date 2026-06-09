@@ -8,7 +8,7 @@ type EventImageState = 'idle' | 'loaded' | 'error';
 type EventImageFitStrategy = 'adaptive' | 'cover';
 
 const imageShellClasses: Record<EventImageVariant, string> = {
-  card: 'aspect-[16/9] w-full',
+  card: 'mx-auto aspect-[16/9] w-full',
   detail: 'mx-auto aspect-[16/9] w-full',
 };
 
@@ -35,11 +35,10 @@ export function EventImage({
   const shellStyle: CSSProperties | undefined = adaptiveAspectRatio
     ? {
         aspectRatio: `${adaptiveAspectRatio} / 1`,
-        ...(variant === 'detail'
-          ? {
-              maxWidth: detailMaxWidthForRatio(adaptiveAspectRatio),
-            }
-          : {}),
+        maxWidth:
+          variant === 'detail'
+            ? detailMaxWidthForRatio(adaptiveAspectRatio)
+            : cardMaxWidthForRatio(adaptiveAspectRatio),
       }
     : undefined;
 
@@ -118,4 +117,10 @@ function detailMaxWidthForRatio(ratio: number) {
   if (ratio < 1.2) return 'min(100%, 34rem)';
   if (ratio > 2.1) return 'min(100%, 56rem)';
   return 'min(100%, 46rem)';
+}
+
+function cardMaxWidthForRatio(ratio: number) {
+  if (ratio < 0.85) return 'min(100%, 12rem)';
+  if (ratio < 1.2) return 'min(100%, 18rem)';
+  return '100%';
 }

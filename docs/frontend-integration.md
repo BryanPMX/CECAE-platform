@@ -30,8 +30,9 @@ The public event listing at `/eventos` uses `src/hooks/useEvents.ts` and the
 API-backed `EventsService` adapter. Listing cards keep a consistent public grid
 while using the shared adaptive event image component: once an image loads, the
 media frame adopts the uploaded image's natural aspect ratio and renders only
-that image. Square, vertical, and panoramic uploads are shown complete without a
-blurred or generated background.
+that image. Square and portrait uploads are capped to a comfortable card size,
+while landscape and panoramic uploads can use the card width. All formats are
+shown complete without a blurred or generated background.
 
 The event detail route at `/eventos/:id` renders the media and event content as
 two separate panels: a smart image panel first, then the event details panel
