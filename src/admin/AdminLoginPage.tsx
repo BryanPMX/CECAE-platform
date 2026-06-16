@@ -42,9 +42,12 @@ export function AdminLoginPage() {
   return (
     <>
       <Seo title="Admin CECAE" description="Portal administrativo de eventos CECAE." path="/admin/login" />
-      <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-surface px-4 py-8 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(26,58,107,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(26,58,107,0.055)_1px,transparent_1px)] bg-[size:48px_48px]" />
-        <section className="w-full max-w-[28rem] rounded-lg border border-line bg-white p-5 shadow-soft sm:p-7">
+      <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-navy px-4 py-8 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 -z-10 bg-hero-gradient" />
+        <div className="grid-overlay absolute inset-0 -z-10 opacity-80" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-surface/30 to-transparent" />
+        <div className="absolute inset-y-0 left-0 -z-10 w-1/2 bg-[linear-gradient(112deg,rgba(255,255,255,0.12)_0_22%,transparent_22%_100%)]" />
+        <section className="w-full max-w-[28rem] rounded-lg border border-white/20 bg-white/[0.96] p-5 shadow-[0_28px_70px_rgba(2,12,32,0.3)] backdrop-blur sm:p-7">
           <div className="flex flex-col items-center text-center">
             <img
               src="/cecae-footer-logo-1024x256.png"
