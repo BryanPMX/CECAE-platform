@@ -184,17 +184,17 @@ export function AdminEventFormPage() {
           <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
             <h2 className="font-display text-xl font-bold text-navy">Detalles del evento</h2>
             <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              <SelectField label="Tipo" value={form.type} onChange={(value) => update('type', value as EventType)}>
+              <SelectField label="Tipo" value={form.type} onChange={(value) => update('type', value as EventType)} required>
                 <option value="training">Capacitación</option>
                 <option value="webinar">Webinar</option>
                 <option value="talk">Plática</option>
               </SelectField>
-              <SelectField label="Modalidad" value={form.modality} onChange={(value) => update('modality', value as EventModality)}>
+              <SelectField label="Modalidad" value={form.modality} onChange={(value) => update('modality', value as EventModality)} required>
                 <option value="presencial">Presencial</option>
                 <option value="virtual">Virtual</option>
                 <option value="hibrida">Híbrida</option>
               </SelectField>
-              <SelectField label="Estado" value={form.status} onChange={(value) => update('status', value as EventStatus)}>
+              <SelectField label="Estado" value={form.status} onChange={(value) => update('status', value as EventStatus)} required>
                 <option value="draft">Borrador</option>
                 <option value="published">Publicado</option>
                 <option value="archived">Archivado</option>
@@ -314,7 +314,7 @@ function TextField({
 }) {
   return (
     <label className="grid gap-2 text-sm font-semibold text-navy">
-      {label}
+      <FieldLabel label={label} required={required} />
       <input
         type={type}
         value={value}
@@ -341,7 +341,7 @@ function TextArea({
 }) {
   return (
     <label className="grid gap-2 text-sm font-semibold text-navy">
-      {label}
+      <FieldLabel label={label} required={required} />
       <textarea
         value={value}
         onChange={(event) => onChange(event.target.value)}
@@ -358,23 +358,42 @@ function SelectField({
   value,
   onChange,
   children,
+  required = false,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   children: ReactNode;
+  required?: boolean;
 }) {
   return (
     <label className="grid gap-2 text-sm font-semibold text-navy">
-      {label}
+      <FieldLabel label={label} required={required} />
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
+        required={required}
         className="focus-ring min-h-11 rounded-md border border-line bg-white px-3 py-2 text-charcoal shadow-sm"
       >
         {children}
       </select>
     </label>
+  );
+}
+
+function FieldLabel({ label, required = false }: { label: string; required?: boolean }) {
+  return (
+    <span>
+      {label}
+      {required ? (
+        <>
+          <sup className="ml-1 text-sm font-bold leading-none text-red-600" aria-hidden="true">
+            *
+          </sup>
+          <span className="sr-only"> obligatorio</span>
+        </>
+      ) : null}
+    </span>
   );
 }
 
